@@ -1,0 +1,2144 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="color-scheme" content="light dark">
+<title>FinLedger Pro Next</title>
+<style>
+:root {
+  --bg: #f4f7fb;
+  --panel: #ffffff;
+  --panel2: #f8fafc;
+  --text: #172033;
+  --muted: #64748b;
+  --line: #dbe3ef;
+  --primary: #0f766e;
+  --primary2: #115e59;
+  --good: #15803d;
+  --bad: #be123c;
+  --warn: #b45309;
+  --info: #1d4ed8;
+  --shadow: 0 10px 30px rgba(15, 23, 42, .08);
+}
+[data-theme="dark"] {
+  --bg: #0b1120;
+  --panel: #111827;
+  --panel2: #172033;
+  --text: #e5edf8;
+  --muted: #94a3b8;
+  --line: #293548;
+  --primary: #14b8a6;
+  --primary2: #0d9488;
+  --good: #4ade80;
+  --bad: #fb7185;
+  --warn: #fbbf24;
+  --info: #60a5fa;
+  --shadow: 0 12px 32px rgba(0, 0, 0, .28);
+}
+* {
+  box-sizing: border-box;
+}
+html {
+  scroll-behavior: smooth;
+}
+body {
+  margin: 0;
+  font-family: ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  -webkit-font-smoothing: antialiased;
+}
+button, input, select, textarea {
+  font: inherit;
+}
+button {
+  cursor: pointer;
+}
+.hidden {
+  display: none !important;
+}
+.app {
+  min-height: 100vh;
+}
+.topbar {
+  position: sticky;
+  top: 0;
+  z-index: 20;
+  background: color-mix(in srgb, var(--panel) 91%, transparent);
+  backdrop-filter: blur(14px);
+  border-bottom: 1px solid var(--line);
+}
+.topbar-inner {
+  max-width: 1320px;
+  margin: auto;
+  padding: 12px 18px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+.logo {
+  width: 40px;
+  height: 40px;
+  border-radius: 13px;
+  background: linear-gradient(135deg, #10b981, #0f766e);
+  display: grid;
+  place-items: center;
+  color: white;
+  font-weight: 900;
+  font-size: 18px;
+  box-shadow: 0 4px 12px rgba(15, 118, 110, 0.3);
+}
+.brand h1 {
+  font-size: 17px;
+  font-weight: 800;
+  margin: 0;
+  letter-spacing: -0.01em;
+}
+.brand p {
+  font-size: 11px;
+  color: var(--muted);
+  margin: 2px 0 0;
+}
+.toolbar {
+  display: flex;
+  gap: 8px;
+}
+.iconbtn, .btn {
+  border: 1px solid var(--line);
+  background: var(--panel);
+  color: var(--text);
+  border-radius: 10px;
+  padding: 9px 12px;
+  font-weight: 700;
+  font-size: 13px;
+  transition: all 0.15s ease;
+}
+.iconbtn:hover, .btn:hover {
+  background: var(--panel2);
+}
+.btn.primary {
+  background: var(--primary);
+  border-color: var(--primary);
+  color: #fff;
+}
+.btn.primary:hover {
+  background: var(--primary2);
+  border-color: var(--primary2);
+}
+.btn.danger {
+  color: var(--bad);
+}
+.btn.danger:hover {
+  background: color-mix(in srgb, var(--bad) 10%, var(--panel));
+  border-color: color-mix(in srgb, var(--bad) 35%, var(--line));
+}
+.layout {
+  max-width: 1320px;
+  margin: auto;
+  padding: 20px 18px 50px;
+}
+.tabs {
+  display: flex;
+  gap: 7px;
+  overflow: auto;
+  padding: 4px 0 14px;
+  scrollbar-width: none;
+}
+.tabs::-webkit-scrollbar {
+  display: none;
+}
+.tab {
+  white-space: nowrap;
+  border: 1px solid var(--line);
+  color: var(--muted);
+  background: var(--panel);
+  padding: 9px 14px;
+  border-radius: 999px;
+  font-weight: 750;
+  font-size: 13px;
+  transition: all 0.15s ease;
+}
+.tab:hover {
+  color: var(--text);
+  background: var(--panel2);
+}
+.tab.active {
+  background: var(--text);
+  color: var(--panel);
+  border-color: var(--text);
+}
+.grid {
+  display: grid;
+  gap: 15px;
+}
+.kpis {
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  margin-bottom: 18px;
+}
+.card {
+  background: var(--panel);
+  border: 1px solid var(--line);
+  border-radius: 16px;
+  box-shadow: var(--shadow);
+}
+.pad {
+  padding: 17px;
+}
+.kpi-label {
+  font-size: 11px;
+  color: var(--muted);
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: .06em;
+}
+.kpi-value {
+  font-size: 24px;
+  font-weight: 900;
+  margin: 5px 0;
+  letter-spacing: -0.02em;
+}
+.kpi-note {
+  font-size: 11px;
+  color: var(--muted);
+  min-height: 15px;
+}
+.good {
+  color: var(--good);
+}
+.bad {
+  color: var(--bad);
+}
+.warn {
+  color: var(--warn);
+}
+.info {
+  color: var(--info);
+}
+.content2 {
+  grid-template-columns: 360px 1fr;
+}
+.section-title {
+  font-size: 15px;
+  font-weight: 800;
+  margin: 0 0 4px;
+}
+.section-sub {
+  font-size: 12px;
+  color: var(--muted);
+  margin: 0;
+}
+.card-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+  padding: 16px 17px;
+  border-bottom: 1px solid var(--line);
+}
+.form {
+  padding: 17px;
+  display: grid;
+  gap: 13px;
+}
+.form-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 11px;
+}
+.field label {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 11px;
+  font-weight: 800;
+  color: var(--muted);
+  margin: 0 0 5px;
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+}
+.field input, .field select, .field textarea, .filters input, .filters select {
+  width: 100%;
+  border: 1px solid var(--line);
+  background: var(--panel2);
+  color: var(--text);
+  border-radius: 10px;
+  padding: 10px 11px;
+  outline: none;
+  font-size: 13px;
+}
+.field input:focus, .field select:focus, .field textarea:focus, .filters input:focus, .filters select:focus {
+  border-color: var(--primary);
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--primary) 18%, transparent);
+}
+.field textarea {
+  resize: vertical;
+  min-height: 70px;
+}
+.filters {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+.filters > * {
+  max-width: 180px;
+}
+.table-wrap {
+  overflow: auto;
+}
+.table {
+  width: 100%;
+  border-collapse: collapse;
+  min-width: 760px;
+}
+.table th {
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: .04em;
+  color: var(--muted);
+  text-align: left;
+  background: var(--panel2);
+  padding: 11px 13px;
+  border-bottom: 1px solid var(--line);
+  font-weight: 800;
+}
+.table td {
+  padding: 12px 13px;
+  border-bottom: 1px solid var(--line);
+  font-size: 13px;
+  vertical-align: top;
+}
+.table tr:hover td {
+  background: color-mix(in srgb, var(--panel2) 70%, transparent);
+}
+.right {
+  text-align: right !important;
+}
+.center {
+  text-align: center !important;
+}
+.badge {
+  display: inline-flex;
+  align-items: center;
+  padding: 4px 8px;
+  border-radius: 999px;
+  font-size: 10px;
+  font-weight: 850;
+  background: var(--panel2);
+  border: 1px solid var(--line);
+}
+.badge.in {
+  color: var(--good);
+  border-color: color-mix(in srgb, var(--good) 30%, var(--line));
+}
+.badge.out {
+  color: var(--bad);
+  border-color: color-mix(in srgb, var(--bad) 30%, var(--line));
+}
+.badge.party {
+  color: var(--info);
+  border-color: color-mix(in srgb, var(--info) 30%, var(--line));
+}
+.actions {
+  display: flex;
+  gap: 10px;
+  justify-content: center;
+}
+.linkbtn {
+  border: 0;
+  background: transparent;
+  color: var(--info);
+  padding: 2px 4px;
+  font-size: 12px;
+  font-weight: 750;
+  border-radius: 6px;
+}
+.linkbtn:hover {
+  background: color-mix(in srgb, var(--info) 12%, transparent);
+}
+.linkbtn.delete {
+  color: var(--bad);
+}
+.linkbtn.delete:hover {
+  background: color-mix(in srgb, var(--bad) 12%, transparent);
+}
+.empty {
+  padding: 35px;
+  text-align: center;
+  color: var(--muted);
+  font-size: 13px;
+}
+.party-layout {
+  grid-template-columns: 330px 1fr;
+}
+.party-list {
+  max-height: 600px;
+  overflow: auto;
+}
+.party-item {
+  display: flex;
+  width: 100%;
+  justify-content: space-between;
+  align-items: center;
+  gap: 10px;
+  padding: 14px 16px;
+  text-align: left;
+  border: 0;
+  border-bottom: 1px solid var(--line);
+  background: transparent;
+  color: var(--text);
+  transition: background 0.15s ease;
+}
+.party-item:hover {
+  background: color-mix(in srgb, var(--panel2) 60%, transparent);
+}
+.party-item.active {
+  background: var(--panel2);
+  box-shadow: inset 4px 0 var(--primary);
+}
+.party-item small {
+  display: block;
+  color: var(--muted);
+  margin-top: 3px;
+  font-size: 11px;
+}
+.statements {
+  grid-template-columns: 1fr 1fr;
+}
+.totalbar {
+  display: flex;
+  justify-content: space-between;
+  padding: 14px 17px;
+  font-weight: 900;
+  border-top: 2px solid var(--line);
+}
+.recon {
+  grid-template-columns: repeat(3, 1fr);
+}
+.big-input {
+  font-size: 22px !important;
+  font-weight: 900 !important;
+}
+.settings-grid {
+  grid-template-columns: 1fr 1fr;
+}
+.setting-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 15px;
+  padding: 14px 0;
+  border-bottom: 1px solid var(--line);
+}
+.setting-row:last-child {
+  border-bottom: 0;
+}
+.statement-list {
+  padding: 0 17px;
+}
+.notice {
+  border: 1px solid color-mix(in srgb, var(--warn) 45%, var(--line));
+  background: color-mix(in srgb, var(--warn) 10%, var(--panel));
+  padding: 12px 14px;
+  border-radius: 12px;
+  font-size: 12px;
+  line-height: 1.5;
+}
+.modal, .lock {
+  position: fixed;
+  inset: 0;
+  z-index: 50;
+  background: rgba(2, 6, 23, .72);
+  backdrop-filter: blur(8px);
+  display: grid;
+  place-items: center;
+  padding: 18px;
+}
+.modal-card {
+  width: min(460px, 100%);
+  max-height: 92vh;
+  overflow: auto;
+  background: var(--panel);
+  border: 1px solid var(--line);
+  border-radius: 18px;
+  box-shadow: 0 30px 80px rgba(0, 0, 0, .35);
+}
+.modal-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 8px;
+  padding: 15px 17px;
+  border-top: 1px solid var(--line);
+}
+.pin-card {
+  width: min(350px, 100%);
+  background: #0f172a;
+  color: white;
+  border: 1px solid #334155;
+  border-radius: 22px;
+  padding: 25px;
+  text-align: center;
+  box-shadow: 0 25px 60px rgba(0, 0, 0, 0.45);
+}
+.pin-card h2 {
+  margin: 8px 0 5px;
+  font-size: 19px;
+  font-weight: 800;
+}
+.pin-card p {
+  color: #94a3b8;
+  font-size: 12px;
+  margin: 0;
+}
+.pin-dots {
+  display: flex;
+  justify-content: center;
+  gap: 14px;
+  margin: 22px 0 14px;
+}
+.pin-dot {
+  width: 13px;
+  height: 13px;
+  border: 2px solid #64748b;
+  border-radius: 50%;
+  transition: all 0.15s ease;
+}
+.pin-dot.on {
+  background: #2dd4bf;
+  border-color: #2dd4bf;
+  transform: scale(1.15);
+}
+.keypad {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 9px;
+}
+.keypad button {
+  padding: 13px;
+  border-radius: 11px;
+  border: 1px solid #334155;
+  background: #1e293b;
+  color: white;
+  font-weight: 850;
+  font-size: 15px;
+  transition: background 0.12s ease, transform 0.08s ease;
+}
+.keypad button:hover {
+  background: #334155;
+}
+.keypad button:active {
+  transform: scale(0.97);
+}
+.pin-error {
+  min-height: 18px;
+  color: #fb7185 !important;
+  margin-bottom: 10px !important;
+  font-weight: 600;
+}
+.toast {
+  position: fixed;
+  z-index: 70;
+  right: 18px;
+  bottom: 18px;
+  background: var(--text);
+  color: var(--panel);
+  padding: 11px 15px;
+  border-radius: 10px;
+  font-size: 13px;
+  font-weight: 750;
+  box-shadow: var(--shadow);
+}
+.balance-ok {
+  border-color: color-mix(in srgb, var(--good) 40%, var(--line));
+}
+.balance-bad {
+  border-color: color-mix(in srgb, var(--bad) 45%, var(--line));
+}
+.muted {
+  color: var(--muted);
+}
+.small {
+  font-size: 11px;
+}
+.math-preview {
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--primary);
+  text-transform: none;
+}
+
+@media (max-width: 1000px) {
+  .kpis {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  .content2, .party-layout {
+    grid-template-columns: 1fr;
+  }
+  .statements {
+    grid-template-columns: 1fr;
+  }
+  .settings-grid {
+    grid-template-columns: 1fr;
+  }
+}
+@media (max-width: 620px) {
+  .layout {
+    padding: 14px 11px 40px;
+  }
+  .topbar-inner {
+    padding: 10px 11px;
+  }
+  .brand p {
+    display: none;
+  }
+  .kpis, .recon {
+    grid-template-columns: 1fr;
+  }
+  .form-row {
+    grid-template-columns: 1fr;
+  }
+  .card-head {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+  .filters > * {
+    max-width: none;
+    flex: 1 1 130px;
+  }
+  .kpi-value {
+    font-size: 21px;
+  }
+}
+@media print {
+  .no-print, .tabs, .topbar, .lock, .modal, .toast {
+    display: none !important;
+  }
+  .layout {
+    max-width: none;
+    padding: 0;
+  }
+  .card {
+    box-shadow: none;
+    break-inside: avoid;
+  }
+  .view {
+    display: block !important;
+    margin-bottom: 18px;
+  }
+  body {
+    background: white;
+    color: black;
+  }
+}
+
+/* ===== Mobile & touch improvements ===== */
+html { -webkit-text-size-adjust: 100%; }
+.topbar { padding-top: env(safe-area-inset-top, 0px); }
+.lock { overflow: auto; }
+.keypad button { padding: 16px; font-size: 18px; }
+.setting-row input, .setting-row select { border: 1px solid var(--line); background: var(--panel2); color: var(--text); border-radius: 10px; padding: 10px 11px; font-size: 14px; min-height: 42px; width: 100%; }
+@media (max-width: 620px) {
+  .layout { padding: 12px 10px calc(88px + env(safe-area-inset-bottom, 0px)); }
+  .topbar-inner { padding: 8px 10px; }
+  .brand h1 { font-size: 15px; }
+  .iconbtn { min-width: 44px; min-height: 44px; font-size: 16px; }
+  .btn { min-height: 46px; font-size: 14px; }
+  .field input, .field select, .field textarea, .filters input, .filters select, .setting-row input, .setting-row select { font-size: 16px; min-height: 46px; }
+  .big-input { font-size: 22px !important; }
+  .linkbtn { padding: 10px 14px; font-size: 13px; }
+  .tabs { position: fixed; left: 0; right: 0; bottom: 0; z-index: 30; gap: 4px; overflow: hidden; padding: 6px 6px calc(6px + env(safe-area-inset-bottom, 0px)); background: var(--panel); border-top: 1px solid var(--line); box-shadow: 0 -6px 20px rgba(15, 23, 42, .08); }
+  .tab { flex: 1 1 0; min-width: 0; white-space: normal; text-align: center; font-size: 11px; line-height: 1.15; padding: 10px 2px; border-radius: 10px; border-color: transparent; }
+  .toast { left: 12px; right: 12px; bottom: calc(92px + env(safe-area-inset-bottom, 0px)); text-align: center; }
+  .kpis { grid-template-columns: 1fr 1fr; gap: 10px; }
+  .kpis > :last-child { grid-column: 1 / -1; }
+  .kpis .pad { padding: 12px; }
+  .kpi-value { font-size: 18px; }
+  .filters { width: 100%; }
+  .filters > * { max-width: none; flex: 1 1 45%; }
+  .filters #search { flex-basis: 100%; }
+  .party-list { max-height: 240px; }
+  .modal { align-items: end; padding: 0; }
+  .modal-card { width: 100%; border-radius: 18px 18px 0 0; padding-bottom: env(safe-area-inset-bottom, 0px); }
+  .modal-actions .btn { flex: 1; }
+  .table { min-width: 0; }
+  .table thead { display: none; }
+  .table, .table tbody { display: block; }
+  .table tr { display: grid; grid-template-columns: 1fr auto; gap: 4px 10px; padding: 12px 14px; border-bottom: 1px solid var(--line); }
+  .table td { display: block; padding: 0; border: 0; background: transparent !important; min-width: 0; }
+  #txBody td:nth-child(1), #ledgerBody td:nth-child(1) { grid-column: 1; grid-row: 1; font-size: 12px; color: var(--muted); }
+  #txBody td:nth-child(2) { grid-column: 2; grid-row: 1; justify-self: end; }
+  #txBody td:nth-child(3) { grid-column: 1; grid-row: 2; }
+  #txBody td:nth-child(5) { grid-column: 2; grid-row: 2; font-size: 15px; }
+  #txBody td:nth-child(4) { grid-column: 1 / -1; grid-row: 3; font-size: 12px; color: var(--muted); }
+  #txBody td:nth-child(6) { grid-column: 1 / -1; grid-row: 4; }
+  #txBody .actions { justify-content: flex-end; }
+  #ledgerBody td:nth-child(5) { grid-column: 2; grid-row: 1; }
+  #ledgerBody td:nth-child(2) { grid-column: 1 / -1; grid-row: 2; }
+  #ledgerBody td:nth-child(3), #ledgerBody td:nth-child(4) { grid-row: 3; font-size: 12px; }
+  #ledgerBody td:nth-child(3) { grid-column: 1; text-align: left !important; }
+  #ledgerBody td:nth-child(4) { grid-column: 2; }
+  #ledgerBody td:nth-child(3)::before { content: 'Debit: '; color: var(--muted); }
+  #ledgerBody td:nth-child(4)::before { content: 'Credit: '; color: var(--muted); }
+  #txBody td.empty, #ledgerBody td.empty { grid-column: 1 / -1; grid-row: auto; padding: 28px 10px; font-size: 13px; color: var(--muted); }
+}
+</style>
+</head>
+<body>
+<div class="app">
+  <!-- Sticky Topbar -->
+  <header class="topbar no-print">
+    <div class="topbar-inner">
+      <div class="brand">
+        <div class="logo" id="brandLogo">₹</div>
+        <div>
+          <h1>FinLedger Pro Next</h1>
+          <p>Private offline personal finance ledger</p>
+        </div>
+      </div>
+      <div class="toolbar">
+        <button class="iconbtn" id="themeBtn" title="Toggle Theme" aria-label="Toggle Theme">◐</button>
+        <button class="iconbtn" id="lockBtn" title="Lock Ledger" aria-label="Lock Ledger">🔒</button>
+        <button class="iconbtn" id="printBtn" title="Print Report" aria-label="Print Report">🖨</button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Main Content Layout -->
+  <main class="layout">
+    <!-- Navigation Tabs -->
+    <nav class="tabs no-print" id="tabs">
+      <button class="tab active" data-tab="transactions">Transactions</button>
+      <button class="tab" data-tab="ledgers">Party Ledgers</button>
+      <button class="tab" data-tab="reports">Reports</button>
+      <button class="tab" data-tab="reconcile">Reconcile</button>
+      <button class="tab" data-tab="settings">Settings</button>
+    </nav>
+
+    <!-- 5 KPI Summary Cards -->
+    <section class="grid kpis" id="kpis"></section>
+
+    <!-- VIEW 1: TRANSACTIONS -->
+    <section class="view" id="view-transactions">
+      <div class="grid content2">
+        <!-- Record / Edit Transaction Form -->
+        <aside class="card no-print">
+          <div class="card-head">
+            <div>
+              <h2 class="section-title" id="formTitle">Record transaction</h2>
+              <p class="section-sub">Cash, income, expense or party entry</p>
+            </div>
+          </div>
+          <form class="form" id="txForm" novalidate>
+            <input type="hidden" id="txId">
+            <div class="form-row">
+              <div class="field">
+                <label for="txDate">Date</label>
+                <input id="txDate" type="date" required>
+              </div>
+              <div class="field">
+                <label for="txType">Type</label>
+                <select id="txType" required></select>
+              </div>
+            </div>
+
+            <div class="field" id="categoryWrap">
+              <label for="txCategory">Category</label>
+              <input id="txCategory" list="categoryList" maxlength="80" placeholder="Food, Salary, Rent...">
+              <datalist id="categoryList">
+                <option value="Salary"></option>
+                <option value="Business Income"></option>
+                <option value="Food & Dining"></option>
+                <option value="Rent & Utilities"></option>
+                <option value="Transport & Fuel"></option>
+                <option value="Healthcare"></option>
+                <option value="Shopping"></option>
+                <option value="Family"></option>
+                <option value="General"></option>
+              </datalist>
+            </div>
+
+            <div class="field hidden" id="partyWrap">
+              <label for="txParty">
+                <span>Party name</span>
+                <span class="math-preview" id="partyRoleHint"></span>
+              </label>
+              <input id="txParty" list="partyList" maxlength="80" placeholder="Person or business">
+              <datalist id="partyList"></datalist>
+            </div>
+
+            <div class="field">
+              <label for="txAmount">
+                <span>Amount</span>
+                <span class="math-preview" id="amountPreview"></span>
+              </label>
+              <input id="txAmount" inputmode="decimal" placeholder="0.00 or 50+120" required>
+            </div>
+
+            <div class="field">
+              <label for="txNote">Notes</label>
+              <textarea id="txNote" maxlength="240" placeholder="Optional details"></textarea>
+            </div>
+
+            <p id="formError" class="small bad hidden" style="margin:0;font-weight:700;"></p>
+
+            <button class="btn primary" type="submit" id="saveTxBtn">Save transaction</button>
+            <button class="btn hidden" type="button" id="cancelEditBtn">Cancel edit</button>
+          </form>
+        </aside>
+
+        <!-- Transaction Register Table -->
+        <div class="card">
+          <div class="card-head">
+            <div>
+              <h2 class="section-title">Transaction register</h2>
+              <p class="section-sub" id="txCount"></p>
+            </div>
+            <div class="filters no-print">
+              <select id="filterPeriod" aria-label="Filter by period">
+                <option value="all">All time</option>
+                <option value="today">Today</option>
+                <option value="month">This month</option>
+                <option value="lastMonth">Last month</option>
+              </select>
+              <select id="filterType" aria-label="Filter by transaction type">
+                <option value="all">All types</option>
+              </select>
+              <input id="search" type="search" placeholder="Search...">
+            </div>
+          </div>
+          <div class="table-wrap">
+            <table class="table">
+              <thead>
+                <tr>
+                  <th>Date</th>
+                  <th>Type</th>
+                  <th>Particulars</th>
+                  <th>Notes</th>
+                  <th class="right">Cash impact</th>
+                  <th class="center no-print">Actions</th>
+                </tr>
+              </thead>
+              <tbody id="txBody"></tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- VIEW 2: PARTY LEDGERS -->
+    <section class="view hidden" id="view-ledgers">
+      <div class="grid party-layout">
+        <div class="card">
+          <div class="card-head">
+            <div>
+              <h2 class="section-title">Party accounts</h2>
+              <p class="section-sub">Debtors and creditors remain separate</p>
+            </div>
+          </div>
+          <div class="party-list" id="partyAccounts"></div>
+        </div>
+
+        <div class="card">
+          <div class="card-head">
+            <div>
+              <h2 class="section-title" id="ledgerTitle">Select an account</h2>
+              <p class="section-sub" id="ledgerSub">Chronological statement</p>
+            </div>
+            <div style="display:flex;align-items:center;gap:12px">
+              <strong id="ledgerBalance" style="font-size:16px"></strong>
+              <button class="btn no-print hidden" id="quickPartyTxBtn" type="button">+ New Entry</button>
+            </div>
+          </div>
+          <div class="table-wrap">
+            <table class="table">
+              <thead>
+                <tr>
+                  <th>Date</th>
+                  <th>Particulars</th>
+                  <th class="right">Debit</th>
+                  <th class="right">Credit</th>
+                  <th class="right">Balance</th>
+                </tr>
+              </thead>
+              <tbody id="ledgerBody"></tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- VIEW 3: REPORTS -->
+    <section class="view hidden" id="view-reports">
+      <div class="grid statements">
+        <div class="card">
+          <div class="card-head">
+            <div>
+              <h2 class="section-title">Income</h2>
+              <p class="section-sub">By category</p>
+            </div>
+          </div>
+          <div class="statement-list" id="incomeRows"></div>
+          <div class="totalbar">
+            <span>Total income</span>
+            <span class="good" id="incomeTotal"></span>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-head">
+            <div>
+              <h2 class="section-title">Expenses</h2>
+              <p class="section-sub">By category</p>
+            </div>
+          </div>
+          <div class="statement-list" id="expenseRows"></div>
+          <div class="totalbar">
+            <span>Total expenses</span>
+            <span class="bad" id="expenseTotal"></span>
+          </div>
+        </div>
+      </div>
+
+      <div class="card pad" style="margin-top:15px" id="balanceCard">
+        <h2 class="section-title">Personal balance sheet</h2>
+        <p class="section-sub" id="balanceStatus"></p>
+        <div class="grid statements" style="margin-top:16px">
+          <div>
+            <h3 style="font-size:13px;font-weight:800;margin:0 0 8px;text-transform:uppercase;color:var(--muted)">Assets</h3>
+            <div id="assetRows"></div>
+            <div class="totalbar" style="padding-left:0;padding-right:0">
+              <span>Total assets</span>
+              <span id="assetTotal"></span>
+            </div>
+          </div>
+          <div>
+            <h3 style="font-size:13px;font-weight:800;margin:0 0 8px;text-transform:uppercase;color:var(--muted)">Liabilities &amp; equity</h3>
+            <div id="liabilityRows"></div>
+            <div class="totalbar" style="padding-left:0;padding-right:0">
+              <span>Total liabilities &amp; equity</span>
+              <span id="liabilityTotal"></span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- VIEW 4: RECONCILE -->
+    <section class="view hidden" id="view-reconcile">
+      <div class="grid recon">
+        <div class="card pad">
+          <div class="kpi-label">Book cash</div>
+          <div class="kpi-value" id="bookCash"></div>
+          <div class="kpi-note">Opening cash plus transaction cash movement</div>
+        </div>
+
+        <div class="card pad">
+          <div class="field">
+            <label for="actualCash">Actual physical cash &amp; bank</label>
+            <input class="big-input" type="number" step="0.01" id="actualCash" placeholder="0.00">
+          </div>
+          <button class="btn" id="matchBookBtn" type="button" style="margin-top:10px">Match book</button>
+        </div>
+
+        <div class="card pad">
+          <div class="kpi-label">Difference</div>
+          <div class="kpi-value" id="cashDifference"></div>
+          <div class="kpi-note" id="differenceStatus"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- VIEW 5: SETTINGS -->
+    <section class="view hidden" id="view-settings">
+      <div class="grid settings-grid">
+        <div class="card pad">
+          <h2 class="section-title">Preferences</h2>
+          <div class="setting-row">
+            <div>
+              <strong>Currency</strong>
+              <div class="small muted">Display symbol</div>
+            </div>
+            <select id="currency" style="max-width:150px" class="field-control">
+              <option value="₹">₹ INR</option>
+              <option value="$">$ USD</option>
+              <option value="€">€ EUR</option>
+              <option value="£">£ GBP</option>
+            </select>
+          </div>
+
+          <div class="setting-row">
+            <div>
+              <strong>Theme</strong>
+              <div class="small muted">Light, dark or system</div>
+            </div>
+            <select id="theme" style="max-width:150px">
+              <option value="system">System</option>
+              <option value="light">Light</option>
+              <option value="dark">Dark</option>
+            </select>
+          </div>
+
+          <div class="setting-row">
+            <div>
+              <strong>Opening cash</strong>
+              <div class="small muted">Starting cash and bank balance</div>
+            </div>
+            <input id="openingCash" type="number" step="0.01" style="max-width:150px" placeholder="0.00">
+          </div>
+
+          <div class="setting-row">
+            <div>
+              <strong>Auto-lock</strong>
+              <div class="small muted">After inactivity</div>
+            </div>
+            <select id="autoLock" style="max-width:150px">
+              <option value="0">Manual only</option>
+              <option value="1">1 minute</option>
+              <option value="5">5 minutes</option>
+              <option value="10">10 minutes</option>
+            </select>
+          </div>
+
+          <div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:14px"><button class="btn" id="changePinBtn" type="button">Set PIN lock (optional)</button><button class="btn danger hidden" id="removePinBtn" type="button">Remove PIN</button></div>
+        </div>
+
+        <div class="card pad">
+          <h2 class="section-title">Data tools</h2>
+          <p class="section-sub">Your data stays in this browser unless you export it.</p>
+          <div style="display:grid;gap:9px;margin-top:15px">
+            <button class="btn primary" id="exportJsonBtn" type="button">Export JSON backup</button>
+            <button class="btn" id="exportCsvBtn" type="button">Export CSV</button>
+            <label class="btn" style="text-align:center;cursor:pointer">
+              Import JSON backup
+              <input class="hidden" type="file" id="importFile" accept="application/json,.json">
+            </label>
+            <button class="btn danger" id="resetBtn" type="button">Reset all finance data</button>
+          </div>
+          <div class="notice" style="margin-top:15px">
+            PIN protection deters casual access, but browser storage is not an encrypted vault. Keep exported backups secure.
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+</div>
+
+<!-- Custom Dialog Modal (replaces native alert/confirm/prompt) -->
+<div class="modal hidden no-print" id="dialogModal" role="dialog" aria-modal="true">
+  <div class="modal-card">
+    <div class="card-head">
+      <div>
+        <h3 class="section-title" id="dialogTitle">Confirm Action</h3>
+        <p class="section-sub" id="dialogMessage"></p>
+      </div>
+    </div>
+    <div class="form hidden" id="dialogInputWrap">
+      <div class="field">
+        <label for="dialogInput" id="dialogInputLabel">Enter 4-digit PIN</label>
+        <input id="dialogInput" type="password" inputmode="numeric" maxlength="4" placeholder="••••">
+        <p class="small bad hidden" id="dialogError" style="margin:6px 0 0;font-weight:700"></p>
+      </div>
+    </div>
+    <div class="modal-actions">
+      <button class="btn" type="button" id="dialogCancelBtn">Cancel</button>
+      <button class="btn primary" type="button" id="dialogConfirmBtn">Confirm</button>
+    </div>
+  </div>
+</div>
+
+<!-- PIN Lock Screen -->
+<div class="lock" id="lockScreen">
+  <div class="pin-card">
+    <div style="font-size:30px">🔐</div>
+    <h2 id="pinTitle">Unlock FinLedger</h2>
+    <p id="pinHelp">Enter your 4-digit PIN</p>
+    <div class="pin-dots" id="pinDots"></div>
+    <p class="pin-error" id="pinError"></p>
+    <div class="keypad" id="keypad"></div>
+    <button class="btn hidden" id="pinCancel" type="button" style="margin-top:12px;width:100%;background:transparent;color:#cbd5e1;border-color:#334155">Cancel</button>
+  </div>
+</div>
+
+<!-- Toast Notification -->
+<div class="toast hidden" id="toast"></div>
+
+<script>
+'use strict';
+
+// ==========================================
+// CONSTANTS & APPLICATION STATE
+// ==========================================
+const APP_VERSION = 1;
+const DB_KEY = 'finledger_next_state_v1';
+const PIN_KEY = 'finledger_next_pin_hash_v1';
+
+const TYPES = {
+  INCOME: { label: 'Income', cash: 1, party: false },
+  EXPENSE: { label: 'Expense', cash: -1, party: false },
+  LEND: { label: 'Money lent', cash: -1, party: true, role: 'DEBTOR' },
+  COLLECT: { label: 'Amount collected', cash: 1, party: true, role: 'DEBTOR' },
+  BORROW: { label: 'Money borrowed', cash: 1, party: true, role: 'CREDITOR' },
+  REPAY: { label: 'Amount repaid', cash: -1, party: true, role: 'CREDITOR' },
+  OPENING_DEBTOR: { label: 'Opening receivable', cash: 0, party: true, role: 'DEBTOR' },
+  OPENING_CREDITOR: { label: 'Opening payable', cash: 0, party: true, role: 'CREDITOR' }
+};
+
+const defaults = {
+  version: APP_VERSION,
+  settings: {
+    currency: '₹',
+    theme: 'system',
+    openingCash: 0,
+    actualCash: 0,
+    autoLock: 5
+  },
+  selectedParty: null,
+  transactions: [],
+  updatedAt: null
+};
+
+let state = loadState();
+let pinInput = '';
+let pinMode = 'unlock';
+let pendingPin = '';
+let inactivityTimer;
+let activeDialogResolver = null;
+
+// ==========================================
+// DOM HELPERS & UTILITIES
+// ==========================================
+const $ = id => document.getElementById(id);
+const qsa = s => [...document.querySelectorAll(s)];
+
+function clone(o) {
+  return JSON.parse(JSON.stringify(o));
+}
+
+function esc(v) {
+  return String(v ?? '').replace(/[&<>"']/g, c => ({
+    '&': '&amp;',
+    '<': '&lt;',
+    '>': '&gt;',
+    '"': '&quot;',
+    "'": '&#39;'
+  }[c]));
+}
+
+function num(v) {
+  const n = Number(v);
+  return Number.isFinite(n) ? n : 0;
+}
+
+function round(v) {
+  return Math.round((num(v) + Number.EPSILON) * 100) / 100;
+}
+
+function uuid() {
+  return crypto.randomUUID ? crypto.randomUUID() : Date.now().toString(36) + '-' + Math.random().toString(36).slice(2);
+}
+
+// ==========================================
+// CUSTOM MODAL DIALOGS (NO NATIVE ALERTS)
+// ==========================================
+function closeDialog(result = null) {
+  $('dialogModal').classList.add('hidden');
+  if (activeDialogResolver) {
+    const resolve = activeDialogResolver;
+    activeDialogResolver = null;
+    resolve(result);
+  }
+}
+
+function showConfirmDialog({ title, message, confirmText = 'Confirm', danger = false }) {
+  return new Promise(resolve => {
+    activeDialogResolver = resolve;
+    $('dialogTitle').textContent = title;
+    $('dialogMessage').textContent = message;
+    $('dialogInputWrap').classList.add('hidden');
+    $('dialogError').classList.add('hidden');
+    $('dialogCancelBtn').classList.remove('hidden');
+    $('dialogConfirmBtn').textContent = confirmText;
+    $('dialogConfirmBtn').className = danger ? 'btn danger' : 'btn primary';
+    $('dialogModal').classList.remove('hidden');
+
+    $('dialogConfirmBtn').onclick = () => closeDialog(true);
+    $('dialogCancelBtn').onclick = () => closeDialog(false);
+  });
+}
+
+function showPinVerifyDialog() {
+  return new Promise(resolve => {
+    activeDialogResolver = resolve;
+    $('dialogTitle').textContent = 'Verify Current PIN';
+    $('dialogMessage').textContent = 'Enter your current 4-digit PIN to continue.';
+    $('dialogInputWrap').classList.remove('hidden');
+    $('dialogInputLabel').textContent = 'Current 4-digit PIN';
+    $('dialogInput').value = '';
+    $('dialogError').classList.add('hidden');
+    $('dialogCancelBtn').classList.remove('hidden');
+    $('dialogConfirmBtn').textContent = 'Verify PIN';
+    $('dialogConfirmBtn').className = 'btn primary';
+    $('dialogModal').classList.remove('hidden');
+    setTimeout(() => $('dialogInput').focus(), 50);
+
+    $('dialogConfirmBtn').onclick = async () => {
+      const val = $('dialogInput').value.trim();
+      const hashed = await hashPin(val);
+      if (hashed !== localStorage.getItem(PIN_KEY)) {
+        $('dialogError').textContent = 'Incorrect current PIN. Please try again.';
+        $('dialogError').classList.remove('hidden');
+        return;
+      }
+      closeDialog(true);
+    };
+    $('dialogCancelBtn').onclick = () => closeDialog(false);
+  });
+}
+
+// ==========================================
+// STORAGE & VALIDATION
+// ==========================================
+function loadState() {
+  try {
+    const x = JSON.parse(localStorage.getItem(DB_KEY));
+    return normaliseState(x);
+  } catch {
+    return clone(defaults);
+  }
+}
+
+function normaliseState(x) {
+  const s = clone(defaults);
+  if (!x || typeof x !== 'object') return s;
+  s.settings = { ...s.settings, ...(x.settings || {}) };
+  s.selectedParty = typeof x.selectedParty === 'string' ? x.selectedParty : null;
+  s.transactions = Array.isArray(x.transactions)
+    ? x.transactions.filter(validTx).map(t => ({
+        ...t,
+        id: String(t.id || uuid()),
+        amount: round(t.amount),
+        category: String(t.category || '').slice(0, 80),
+        party: String(t.party || '').slice(0, 80),
+        note: String(t.note || '').slice(0, 240)
+      }))
+    : [];
+  return s;
+}
+
+function validTx(t) {
+  return (
+    t &&
+    Object.prototype.hasOwnProperty.call(TYPES, t.type) &&
+    /^\d{4}-\d{2}-\d{2}$/.test(t.date || '') &&
+    Number.isFinite(Number(t.amount)) &&
+    Number(t.amount) > 0
+  );
+}
+
+function save() {
+  state.updatedAt = new Date().toISOString();
+  localStorage.setItem(DB_KEY, JSON.stringify(state));
+  renderAll();
+}
+
+function money(v) {
+  const n = round(v);
+  const sign = n < 0 ? '-' : '';
+  return (
+    sign +
+    state.settings.currency +
+    Math.abs(n).toLocaleString('en-IN', {
+      minimumFractionDigits: 2,
+      maximumFractionDigits: 2
+    })
+  );
+}
+
+// Safe recursive-descent math expression parser for Amount field
+function parseAmount(s) {
+  s = String(s).replace(/,/g, '').trim();
+  if (!s || !/^[0-9+\-*/().\s]+$/.test(s)) return NaN;
+  const tokens = s.match(/\d*\.?\d+|[()+\-*/]/g);
+  if (!tokens || tokens.join('') !== s.replace(/\s/g, '')) return NaN;
+  let i = 0;
+
+  function expr() {
+    let v = term();
+    while (tokens[i] === '+' || tokens[i] === '-') {
+      const op = tokens[i++];
+      const r = term();
+      v = op === '+' ? v + r : v - r;
+    }
+    return v;
+  }
+
+  function term() {
+    let v = factor();
+    while (tokens[i] === '*' || tokens[i] === '/') {
+      const op = tokens[i++];
+      const r = factor();
+      v = op === '*' ? v * r : v / r;
+    }
+    return v;
+  }
+
+  function factor() {
+    if (tokens[i] === '-') {
+      i++;
+      return -factor();
+    }
+    if (tokens[i] === '+') {
+      i++;
+      return factor();
+    }
+    if (tokens[i] === '(') {
+      i++;
+      const v = expr();
+      if (tokens[i++] !== ')') throw 0;
+      return v;
+    }
+    const v = Number(tokens[i++]);
+    if (!Number.isFinite(v)) throw 0;
+    return v;
+  }
+
+  try {
+    const r = expr();
+    return i === tokens.length && Number.isFinite(r) ? round(r) : NaN;
+  } catch {
+    return NaN;
+  }
+}
+
+async function hashPin(pin) {
+  if (!(window.crypto && crypto.subtle)) return 'f' + [...pin].reduce((h, c) => (Math.imul(h, 31) + c.charCodeAt(0)) >>> 0, 7);
+  const bytes = new TextEncoder().encode(pin);
+  const hash = await crypto.subtle.digest('SHA-256', bytes);
+  return [...new Uint8Array(hash)].map(x => x.toString(16).padStart(2, '0')).join('');
+}
+
+// ==========================================
+// ACCOUNTING & LEDGER ENGINE
+// ==========================================
+function compute() {
+  let income = 0;
+  let expense = 0;
+  let cashFlow = 0;
+  let openingD = 0;
+  let openingC = 0;
+  const incomeCat = {};
+  const expenseCat = {};
+  const accounts = {};
+
+  const sorted = [...state.transactions].sort(
+    (a, b) => a.date.localeCompare(b.date) || String(a.id).localeCompare(String(b.id))
+  );
+
+  for (const t of sorted) {
+    const m = TYPES[t.type];
+    const a = num(t.amount);
+    cashFlow += a * m.cash;
+
+    if (t.type === 'INCOME') {
+      income += a;
+      const cat = t.category || 'General';
+      incomeCat[cat] = (incomeCat[cat] || 0) + a;
+    } else if (t.type === 'EXPENSE') {
+      expense += a;
+      const cat = t.category || 'General';
+      expenseCat[cat] = (expenseCat[cat] || 0) + a;
+    } else if (m.party) {
+      const partyName = t.party.trim();
+      const key = m.role + ':' + partyName.toLowerCase();
+      if (!accounts[key]) {
+        accounts[key] = {
+          key,
+          name: partyName,
+          role: m.role,
+          balance: 0,
+          history: []
+        };
+      }
+      let dr = 0;
+      let cr = 0;
+      if (t.type === 'OPENING_DEBTOR' || t.type === 'LEND') {
+        dr = a;
+        accounts[key].balance += a;
+        if (t.type === 'OPENING_DEBTOR') openingD += a;
+      } else if (t.type === 'COLLECT') {
+        cr = a;
+        accounts[key].balance -= a;
+      } else if (t.type === 'OPENING_CREDITOR' || t.type === 'BORROW') {
+        cr = a;
+        accounts[key].balance += a;
+        if (t.type === 'OPENING_CREDITOR') openingC += a;
+      } else if (t.type === 'REPAY') {
+        dr = a;
+        accounts[key].balance -= a;
+      }
+      accounts[key].history.push({
+        ...t,
+        dr,
+        cr,
+        running: round(accounts[key].balance)
+      });
+    }
+  }
+
+  const bookCash = round(num(state.settings.openingCash) + cashFlow);
+  const actual = round(num(state.settings.actualCash));
+  const difference = round(actual - bookCash);
+
+  let debtors = 0;
+  let creditors = 0;
+  Object.values(accounts).forEach(a => {
+    if (a.role === 'DEBTOR') debtors += a.balance;
+    else creditors += a.balance;
+  });
+
+  debtors = round(debtors);
+  creditors = round(creditors);
+  const net = round(income - expense);
+  const startingCapital = round(num(state.settings.openingCash) + openingD - openingC);
+  const equity = round(startingCapital + net + difference);
+  const assets = round(actual + debtors);
+  const liabEquity = round(creditors + equity);
+
+  return {
+    income: round(income),
+    expense: round(expense),
+    net,
+    bookCash,
+    actual,
+    difference,
+    debtors,
+    creditors,
+    incomeCat,
+    expenseCat,
+    accounts,
+    startingCapital,
+    equity,
+    assets,
+    liabEquity
+  };
+}
+
+// ==========================================
+// UI RENDERING
+// ==========================================
+function renderAll() {
+  applyTheme();
+  $('brandLogo').textContent = state.settings.currency || '₹';
+  const c = compute();
+
+  // Render 5 KPI Summary Cards
+  const kpiItems = [
+    ['Book cash', c.bookCash, '', 'Opening + cash flow'],
+    [
+      'Actual cash',
+      c.actual,
+      c.difference === 0 ? 'good' : c.difference < 0 ? 'bad' : 'info',
+      'Difference ' + (c.difference > 0 ? '+' : '') + money(c.difference)
+    ],
+    ['Receivables', c.debtors, 'good', 'Total debtors (Dr)'],
+    ['Payables', c.creditors, 'bad', 'Total creditors (Cr)'],
+    ['Net savings', c.net, c.net >= 0 ? 'good' : 'bad', 'Income minus expenses']
+  ];
+
+  $('kpis').innerHTML = kpiItems
+    .map(
+      x => `
+      <div class="card pad">
+        <div class="kpi-label">${x[0]}</div>
+        <div class="kpi-value ${x[2]}">${money(x[1])}</div>
+        <div class="kpi-note">${x[3]}</div>
+      </div>`
+    )
+    .join('');
+
+  renderTransactions();
+  renderLedgers(c);
+  renderReports(c);
+  renderReconcile(c);
+  syncSettings();
+}
+
+function renderTransactions() {
+  const ft = $('filterType').value;
+  const period = $('filterPeriod').value;
+  const search = $('search').value.trim().toLowerCase();
+  const now = new Date();
+  const today = now.toISOString().slice(0, 10);
+  const month = today.slice(0, 7);
+  const lm = new Date(now.getFullYear(), now.getMonth() - 1, 1).toISOString().slice(0, 7);
+
+  const arr = [...state.transactions]
+    .sort((a, b) => b.date.localeCompare(a.date) || String(b.id).localeCompare(String(a.id)))
+    .filter(t => {
+      if (ft !== 'all' && t.type !== ft) return false;
+      if (period === 'today' && t.date !== today) return false;
+      if (period === 'month' && !t.date.startsWith(month)) return false;
+      if (period === 'lastMonth' && !t.date.startsWith(lm)) return false;
+      return (
+        !search ||
+        [t.party, t.category, t.note, TYPES[t.type].label]
+          .join(' ')
+          .toLowerCase()
+          .includes(search)
+      );
+    });
+
+  $('txCount').textContent = `${arr.length} shown · ${state.transactions.length} total`;
+
+  $('txBody').innerHTML = arr.length
+    ? arr
+        .map(t => {
+          const m = TYPES[t.type];
+          const p = m.party ? t.party : t.category || 'General';
+          const impact =
+            m.cash === 0 ? 'No cash' : (m.cash > 0 ? '+' : '-') + money(t.amount);
+          return `
+          <tr>
+            <td>${esc(t.date)}</td>
+            <td><span class="badge ${m.party ? 'party' : m.cash > 0 ? 'in' : 'out'}">${esc(m.label)}</span></td>
+            <td>
+              <strong>${esc(p)}</strong>
+              ${m.party ? `<div class="small muted">${m.role === 'DEBTOR' ? 'Debtor' : 'Creditor'}</div>` : ''}
+            </td>
+            <td>${esc(t.note || '—')}</td>
+            <td class="right ${m.cash > 0 ? 'good' : m.cash < 0 ? 'bad' : 'muted'}"><strong>${impact}</strong></td>
+            <td class="center no-print">
+              <div class="actions">
+                <button class="linkbtn" type="button" onclick="editTx('${esc(t.id)}')">Edit</button>
+                <button class="linkbtn delete" type="button" onclick="deleteTx('${esc(t.id)}')">Delete</button>
+              </div>
+            </td>
+          </tr>`;
+        })
+        .join('')
+    : `<tr><td colspan="6" class="empty">No transactions yet. Add your first entry using the form.</td></tr>`;
+}
+
+function renderLedgers(c) {
+  const list = Object.values(c.accounts).sort(
+    (a, b) => a.role.localeCompare(b.role) || a.name.localeCompare(b.name)
+  );
+
+  $('partyList').innerHTML = [...new Set(list.map(a => a.name))]
+    .map(n => `<option value="${esc(n)}"></option>`)
+    .join('');
+
+  if (!list.length) {
+    $('partyAccounts').innerHTML = '<div class="empty">No party accounts yet.</div>';
+    $('ledgerTitle').textContent = 'Select an account';
+    $('ledgerSub').textContent = 'Chronological statement';
+    $('ledgerBalance').textContent = '';
+    $('quickPartyTxBtn').classList.add('hidden');
+    $('ledgerBody').innerHTML =
+      '<tr><td colspan="5" class="empty">Record a party transaction (Money lent, borrowed, collected, repaid) to create a ledger.</td></tr>';
+    return;
+  }
+
+  if (!state.selectedParty || !c.accounts[state.selectedParty]) {
+    state.selectedParty = list[0].key;
+  }
+
+  $('partyAccounts').innerHTML = list
+    .map(
+      a => `
+      <button class="party-item ${a.key === state.selectedParty ? 'active' : ''}" type="button" onclick="selectParty('${esc(a.key)}')">
+        <span>
+          <strong>${esc(a.name)}</strong>
+          <small>${a.role === 'DEBTOR' ? 'Debtor · receivable' : 'Creditor · payable'} · ${a.history.length} ${a.history.length === 1 ? 'entry' : 'entries'}</small>
+        </span>
+        <strong class="${a.role === 'DEBTOR' ? 'good' : 'bad'}">${money(a.balance)}</strong>
+      </button>`
+    )
+    .join('');
+
+  const a = c.accounts[state.selectedParty];
+  $('ledgerTitle').textContent = a.name;
+  $('ledgerSub').textContent =
+    a.role === 'DEBTOR' ? 'Debtor receivable account' : 'Creditor payable account';
+  $('ledgerBalance').textContent =
+    money(a.balance) + (a.role === 'DEBTOR' ? ' Dr' : ' Cr');
+  $('ledgerBalance').className = a.role === 'DEBTOR' ? 'good' : 'bad';
+  $('quickPartyTxBtn').classList.remove('hidden');
+
+  $('ledgerBody').innerHTML = a.history
+    .map(
+      t => `
+      <tr>
+        <td>${esc(t.date)}</td>
+        <td>
+          <strong>${esc(TYPES[t.type].label)}</strong>
+          <div class="small muted">${esc(t.note || '')}</div>
+        </td>
+        <td class="right">${t.dr ? money(t.dr) : '—'}</td>
+        <td class="right">${t.cr ? money(t.cr) : '—'}</td>
+        <td class="right"><strong>${money(t.running)} ${a.role === 'DEBTOR' ? 'Dr' : 'Cr'}</strong></td>
+      </tr>`
+    )
+    .join('');
+}
+
+function rows(obj) {
+  const e = Object.entries(obj).sort((a, b) => b[1] - a[1]);
+  return e.length
+    ? e
+        .map(
+          ([k, v]) => `
+        <div class="setting-row">
+          <span>${esc(k)}</span>
+          <strong>${money(v)}</strong>
+        </div>`
+        )
+        .join('')
+    : '<div class="empty">No entries</div>';
+}
+
+function renderReports(c) {
+  $('incomeRows').innerHTML = rows(c.incomeCat);
+  $('expenseRows').innerHTML = rows(c.expenseCat);
+  $('incomeTotal').textContent = money(c.income);
+  $('expenseTotal').textContent = money(c.expense);
+
+  $('assetRows').innerHTML = rows({
+    'Actual cash & bank': c.actual,
+    'Debtors receivable': c.debtors
+  });
+  $('liabilityRows').innerHTML = rows({
+    'Creditors payable': c.creditors,
+    'Personal equity': c.equity
+  });
+  $('assetTotal').textContent = money(c.assets);
+  $('liabilityTotal').textContent = money(c.liabEquity);
+
+  const diff = round(c.assets - c.liabEquity);
+  const ok = Math.abs(diff) < 0.01;
+  $('balanceStatus').textContent = ok
+    ? 'Balanced: Assets = Liabilities + Equity'
+    : 'Out of balance by ' + money(diff);
+  $('balanceStatus').className = 'section-sub ' + (ok ? 'good' : 'bad');
+  $('balanceCard').className = 'card pad ' + (ok ? 'balance-ok' : 'balance-bad');
+}
+
+function renderReconcile(c) {
+  $('bookCash').textContent = money(c.bookCash);
+  if (document.activeElement !== $('actualCash')) {
+    $('actualCash').value = state.settings.actualCash !== undefined ? state.settings.actualCash : '';
+  }
+  $('cashDifference').textContent =
+    (c.difference > 0 ? '+' : '') + money(c.difference);
+  $('cashDifference').className =
+    'kpi-value ' +
+    (c.difference === 0 ? 'good' : c.difference < 0 ? 'bad' : 'info');
+  $('differenceStatus').textContent =
+    c.difference === 0
+      ? 'Balanced'
+      : c.difference > 0
+      ? 'Excess or unrecorded inflow'
+      : 'Shortage or unrecorded outflow';
+}
+
+function syncSettings() {
+  $('currency').value = state.settings.currency;
+  $('theme').value = state.settings.theme;
+  if (document.activeElement !== $('openingCash')) {
+    $('openingCash').value = state.settings.openingCash !== undefined ? state.settings.openingCash : '';
+  }
+  $('autoLock').value = String(state.settings.autoLock);
+}
+
+function applyTheme() {
+  let t = state.settings.theme;
+  if (t === 'system') {
+    t = matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+  }
+  document.documentElement.dataset.theme = t;
+}
+
+// ==========================================
+// FORM & TRANSACTION ACTIONS
+// ==========================================
+function resetForm() {
+  $('txForm').reset();
+  $('txId').value = '';
+  $('txDate').value = new Date().toISOString().slice(0, 10);
+  $('txType').value = 'EXPENSE';
+  $('formTitle').textContent = 'Record transaction';
+  $('saveTxBtn').textContent = 'Save transaction';
+  $('cancelEditBtn').classList.add('hidden');
+  $('formError').classList.add('hidden');
+  $('amountPreview').textContent = '';
+  typeChanged();
+}
+
+function typeChanged() {
+  const m = TYPES[$('txType').value];
+  $('partyWrap').classList.toggle('hidden', !m.party);
+  $('categoryWrap').classList.toggle('hidden', m.party);
+  $('txParty').required = m.party;
+  $('txCategory').required = !m.party;
+  if (m.party) {
+    $('partyRoleHint').textContent = m.role === 'DEBTOR' ? 'Debtor (Receivable)' : 'Creditor (Payable)';
+  } else {
+    $('partyRoleHint').textContent = '';
+  }
+}
+
+function editTx(id) {
+  const t = state.transactions.find(x => x.id === id);
+  if (!t) return;
+  showTab('transactions');
+  $('txId').value = t.id;
+  $('txDate').value = t.date;
+  $('txType').value = t.type;
+  $('txCategory').value = t.category || '';
+  $('txParty').value = t.party || '';
+  $('txAmount').value = t.amount;
+  $('txNote').value = t.note || '';
+  $('formTitle').textContent = 'Edit transaction';
+  $('saveTxBtn').textContent = 'Save changes';
+  $('cancelEditBtn').classList.remove('hidden');
+  $('formError').classList.add('hidden');
+  typeChanged();
+  scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+async function deleteTx(id) {
+  const tx = state.transactions.find(x => x.id === id);
+  if (!tx) return;
+  const ok = await showConfirmDialog({
+    title: 'Delete Transaction',
+    message: `Are you sure you want to delete this ${TYPES[tx.type].label.toLowerCase()} entry of ${money(tx.amount)}?`,
+    confirmText: 'Delete',
+    danger: true
+  });
+  if (!ok) return;
+  state.transactions = state.transactions.filter(t => t.id !== id);
+  if ($('txId').value === id) resetForm();
+  save();
+  toast('Transaction deleted');
+}
+
+function selectParty(key) {
+  state.selectedParty = key;
+  localStorage.setItem(DB_KEY, JSON.stringify(state));
+  renderAll();
+}
+
+let toastTimer;
+function toast(msg) {
+  clearTimeout(toastTimer);
+  $('toast').textContent = msg;
+  $('toast').classList.remove('hidden');
+  toastTimer = setTimeout(() => $('toast').classList.add('hidden'), 2400);
+}
+
+function download(name, text, type) {
+  const b = new Blob([text], { type });
+  const u = URL.createObjectURL(b);
+  const a = document.createElement('a');
+  a.href = u;
+  a.download = name;
+  a.click();
+  setTimeout(() => URL.revokeObjectURL(u), 500);
+}
+
+function validateImport(raw) {
+  if (!raw || raw.app !== 'FinLedger Pro Next' || raw.version !== APP_VERSION || !raw.data) {
+    throw Error('Unsupported or invalid backup file.');
+  }
+  return normaliseState(raw.data);
+}
+
+function csvCell(v) {
+  return '"' + String(v ?? '').replace(/"/g, '""') + '"';
+}
+
+function showTab(tab) {
+  qsa('.tab').forEach(b => b.classList.toggle('active', b.dataset.tab === tab));
+  qsa('.view').forEach(v => v.classList.toggle('hidden', v.id !== `view-${tab}`));
+}
+
+function buildTypeOptions() {
+  const html = Object.entries(TYPES)
+    .map(([k, v]) => `<option value="${k}">${v.label}</option>`)
+    .join('');
+  $('txType').innerHTML = html;
+  $('filterType').innerHTML = '<option value="all">All types</option>' + html;
+}
+
+// ==========================================
+// PIN LOCK SCREEN & SECURITY
+// ==========================================
+function buildKeypad() {
+  const keys = ['1', '2', '3', '4', '5', '6', '7', '8', '9', 'Clear', '0', '⌫'];
+  $('keypad').innerHTML = keys
+    .map(k => `<button type="button" data-key="${k}">${k}</button>`)
+    .join('');
+  $('pinDots').innerHTML = '<i class="pin-dot"></i>'.repeat(4);
+}
+
+function updateDots() {
+  qsa('.pin-dot').forEach((d, i) => d.classList.toggle('on', i < pinInput.length));
+}
+
+function lock(mode = 'unlock') {
+  $('lockScreen').classList.remove('hidden');
+  pinInput = '';
+  pinMode = mode;
+  $('pinCancel').classList.toggle('hidden', mode === 'unlock');
+  $('pinError').textContent = '';
+  $('pinTitle').textContent =
+    mode === 'setup'
+      ? 'Set a 4-digit PIN'
+      : mode === 'confirm'
+      ? 'Confirm your PIN'
+      : 'Unlock FinLedger';
+  $('pinHelp').textContent =
+    mode === 'unlock'
+      ? 'Enter your 4-digit PIN'
+      : 'Choose a 4-digit PIN to protect this ledger';
+  updateDots();
+}
+
+async function processPin() {
+  const saved = localStorage.getItem(PIN_KEY);
+  if (pinMode === 'setup') {
+    pendingPin = pinInput;
+    lock('confirm');
+    return;
+  }
+  if (pinMode === 'confirm') {
+    if (pinInput !== pendingPin) {
+      pendingPin = '';
+      lock('setup');
+      $('pinError').textContent = 'PINs did not match. Try again.';
+      return;
+    }
+    localStorage.setItem(PIN_KEY, await hashPin(pinInput));
+    $('lockScreen').classList.add('hidden');
+    toast('PIN saved');
+    syncPinUi();
+    resetInactivity();
+    return;
+  }
+  if ((await hashPin(pinInput)) === saved) {
+    $('lockScreen').classList.add('hidden');
+    resetInactivity();
+  } else {
+    pinInput = '';
+    updateDots();
+    $('pinError').textContent = 'Incorrect PIN';
+  }
+}
+
+function handlePinKey(k) {
+  if (!k) return;
+  $('pinError').textContent = '';
+  if (k === 'Clear') pinInput = '';
+  else if (k === '⌫') pinInput = pinInput.slice(0, -1);
+  else if (/^\d$/.test(k) && pinInput.length < 4) pinInput += k;
+  updateDots();
+  if (pinInput.length === 4) {
+    setTimeout(processPin, 90);
+  }
+}
+
+const hasPin = () => !!localStorage.getItem(PIN_KEY);
+function syncPinUi() {
+  $('changePinBtn').textContent = hasPin() ? 'Change PIN' : 'Set PIN lock (optional)';
+  $('removePinBtn').classList.toggle('hidden', !hasPin());
+}
+
+function resetInactivity() {
+  clearTimeout(inactivityTimer);
+  const min = num(state.settings.autoLock);
+  if (min > 0 && hasPin() && $('lockScreen').classList.contains('hidden')) {
+    inactivityTimer = setTimeout(() => lock('unlock'), min * 60000);
+  }
+}
+
+// ==========================================
+// INITIALIZATION & EVENT LISTENERS
+// ==========================================
+function init() {
+  try { navigator.storage?.persist?.(); } catch {}
+  buildTypeOptions();
+  buildKeypad();
+  resetForm();
+
+  // Tab navigation
+  qsa('.tab').forEach(b => (b.onclick = () => showTab(b.dataset.tab)));
+
+  // Transaction Type change
+  $('txType').onchange = typeChanged;
+
+  // Live inline math expression preview on Amount input
+  $('txAmount').oninput = () => {
+    const raw = $('txAmount').value.trim();
+    const hasOperator = /[+\-*/()]/.test(raw);
+    if (!hasOperator) {
+      $('amountPreview').textContent = '';
+      return;
+    }
+    const evaluated = parseAmount(raw);
+    $('amountPreview').textContent =
+      Number.isFinite(evaluated) && evaluated > 0 ? `= ${money(evaluated)}` : 'Invalid expression';
+  };
+
+  // Submit Transaction Form
+  $('txForm').onsubmit = e => {
+    e.preventDefault();
+    $('formError').classList.add('hidden');
+    const amount = parseAmount($('txAmount').value);
+    if (!(amount > 0)) {
+      $('formError').textContent = 'Enter a valid amount or math expression greater than zero.';
+      $('formError').classList.remove('hidden');
+      $('txAmount').focus();
+      return;
+    }
+
+    const type = $('txType').value;
+    const m = TYPES[type];
+    const id = $('txId').value || uuid();
+    const tx = {
+      id,
+      date: $('txDate').value,
+      type,
+      amount,
+      category: m.party ? '' : $('txCategory').value.trim().slice(0, 80) || 'General',
+      party: m.party ? $('txParty').value.trim().slice(0, 80) : '',
+      note: $('txNote').value.trim().slice(0, 240)
+    };
+
+    if (!validTx(tx) || (m.party && !tx.party)) {
+      $('formError').textContent = m.party
+        ? 'Please enter a party name for this ledger entry.'
+        : 'Please complete all required transaction fields.';
+      $('formError').classList.remove('hidden');
+      return;
+    }
+
+    const i = state.transactions.findIndex(x => x.id === id);
+    if (i >= 0) state.transactions[i] = tx;
+    else state.transactions.push(tx);
+
+    if (m.party) {
+      state.selectedParty = m.role + ':' + tx.party.toLowerCase();
+    }
+
+    resetForm();
+    save();
+    toast(i >= 0 ? 'Transaction updated' : 'Transaction saved');
+  };
+
+  $('cancelEditBtn').onclick = resetForm;
+
+  // Quick party transaction shortcut from Party Ledgers view
+  $('quickPartyTxBtn').onclick = () => {
+    const c = compute();
+    const acct = c.accounts[state.selectedParty];
+    if (!acct) return;
+    showTab('transactions');
+    resetForm();
+    $('txType').value = acct.role === 'DEBTOR' ? 'COLLECT' : 'REPAY';
+    typeChanged();
+    $('txParty').value = acct.name;
+    $('txAmount').focus();
+  };
+
+  // Filters & Search
+  ['filterPeriod', 'filterType'].forEach(id => ($(id).onchange = renderTransactions));
+  $('search').oninput = renderTransactions;
+
+  // Reconciliation
+  $('actualCash').oninput = () => {
+    state.settings.actualCash = round($('actualCash').value);
+    save();
+  };
+
+  $('matchBookBtn').onclick = () => {
+    state.settings.actualCash = compute().bookCash;
+    save();
+    toast('Actual cash matched to book');
+  };
+
+  // Settings
+  $('currency').onchange = () => {
+    state.settings.currency = $('currency').value;
+    save();
+  };
+  $('theme').onchange = () => {
+    state.settings.theme = $('theme').value;
+    save();
+  };
+  $('openingCash').oninput = () => {
+    state.settings.openingCash = round($('openingCash').value);
+    save();
+  };
+  $('autoLock').onchange = () => {
+    state.settings.autoLock = num($('autoLock').value);
+    save();
+    resetInactivity();
+  };
+
+  // Topbar actions
+  $('themeBtn').onclick = () => {
+    state.settings.theme =
+      document.documentElement.dataset.theme === 'dark' ? 'light' : 'dark';
+    save();
+  };
+  $('lockBtn').onclick = () => (hasPin() ? lock('unlock') : toast('Set a PIN in Settings to use lock'));
+  $('printBtn').onclick = () => print();
+
+  // Change PIN with custom modal
+  $('changePinBtn').onclick = async () => {
+    const verified = !hasPin() || (await showPinVerifyDialog());
+    if (verified) lock('setup');
+  };
+  $('removePinBtn').onclick = async () => {
+    if (await showPinVerifyDialog()) {
+      localStorage.removeItem(PIN_KEY);
+      syncPinUi();
+      toast('PIN removed');
+    }
+  };
+
+  // Export JSON
+  $('exportJsonBtn').onclick = () => {
+    const out = {
+      app: 'FinLedger Pro Next',
+      version: APP_VERSION,
+      exportedAt: new Date().toISOString(),
+      data: state
+    };
+    download(
+      `finledger-backup-${new Date().toISOString().slice(0, 10)}.json`,
+      JSON.stringify(out, null, 2),
+      'application/json'
+    );
+    toast('Backup exported');
+  };
+
+  // Export CSV
+  $('exportCsvBtn').onclick = () => {
+    const head = ['Date', 'Type', 'Category', 'Party', 'Amount', 'Notes'];
+    const body = state.transactions.map(t =>
+      [t.date, TYPES[t.type].label, t.category, t.party, t.amount, t.note]
+        .map(csvCell)
+        .join(',')
+    );
+    download(
+      `finledger-transactions-${new Date().toISOString().slice(0, 10)}.csv`,
+      [head.map(csvCell).join(','), ...body].join('\n'),
+      'text/csv;charset=utf-8'
+    );
+    toast('CSV exported');
+  };
+
+  // Import JSON
+  $('importFile').onchange = e => {
+    const f = e.target.files[0];
+    if (!f) return;
+    const r = new FileReader();
+    r.onload = async () => {
+      try {
+        const imported = validateImport(JSON.parse(r.result));
+        const ok = await showConfirmDialog({
+          title: 'Restore Backup',
+          message: `Replace current data with ${imported.transactions.length} imported transactions?`,
+          confirmText: 'Restore Backup'
+        });
+        if (!ok) return;
+        state = imported;
+        save();
+        toast('Backup restored');
+      } catch (err) {
+        await showConfirmDialog({
+          title: 'Invalid Backup File',
+          message: err.message || 'The selected file is not a valid FinLedger Pro Next backup.',
+          confirmText: 'OK'
+        });
+      } finally {
+        e.target.value = '';
+      }
+    };
+    r.readAsText(f);
+  };
+
+  // Reset all data
+  $('resetBtn').onclick = async () => {
+    const ok = await showConfirmDialog({
+      title: 'Reset All Finance Data',
+      message: 'Permanently delete all transactions and settings? Your 4-digit PIN will remain intact.',
+      confirmText: 'Reset Everything',
+      danger: true
+    });
+    if (!ok) return;
+    state = clone(defaults);
+    save();
+    toast('Finance data reset');
+  };
+
+  $('pinCancel').onclick = () => {
+    pendingPin = '';
+    $('lockScreen').classList.add('hidden');
+    resetInactivity();
+  };
+
+  // Keypad clicks
+  $('keypad').onclick = e => {
+    const btn = e.target.closest('button[data-key]');
+    if (!btn) return;
+    handlePinKey(btn.dataset.key);
+  };
+
+  // Physical Keyboard support for PIN Lock screen and Dialogs
+  document.addEventListener('keydown', e => {
+    if (!$('lockScreen').classList.contains('hidden')) {
+      if (/^\d$/.test(e.key)) {
+        e.preventDefault();
+        handlePinKey(e.key);
+      } else if (e.key === 'Backspace') {
+        e.preventDefault();
+        handlePinKey('⌫');
+      } else if (e.key === 'Escape' || e.key === 'Delete') {
+        e.preventDefault();
+        handlePinKey('Clear');
+      }
+      return;
+    }
+    if (!$('dialogModal').classList.contains('hidden') && e.key === 'Escape') {
+      closeDialog(false);
+    }
+  });
+
+  // Inactivity listeners
+  ['click', 'keydown', 'touchstart'].forEach(ev =>
+    document.addEventListener(ev, resetInactivity, { passive: true })
+  );
+
+  matchMedia('(prefers-color-scheme: dark)').addEventListener?.('change', applyTheme);
+
+  renderAll();
+  syncPinUi();
+  if (hasPin()) lock('unlock');
+  else $('lockScreen').classList.add('hidden');
+}
+
+window.editTx = editTx;
+window.deleteTx = deleteTx;
+window.selectParty = selectParty;
+init();
+</script>
+</body>
+</html>
