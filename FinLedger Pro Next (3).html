@@ -1,0 +1,4345 @@
+<!doctype html>
+<html lang="en" data-theme="light" data-accent="teal" data-animations="smooth">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="color-scheme" content="light dark">
+<meta name="theme-color" content="#F2F2F7" id="metaThemeColor">
+<!-- Offline PWA & Apple iOS Web App Meta Tags -->
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="FinLedger Pro">
+<meta name="mobile-web-app-capable" content="yes">
+<link rel="manifest" href="./manifest.json">
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 128 128'%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0' y1='0' x2='1' y2='1'%3E%3Cstop offset='0%25' stop-color='%2310B981'/%3E%3Cstop offset='100%25' stop-color='%230F766E'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width='128' height='128' rx='30' fill='url(%23g)'/%3E%3Ctext x='64' y='88' text-anchor='middle' font-family='-apple-system,BlinkMacSystemFont,Segoe UI,sans-serif' font-size='76' font-weight='800' fill='%23FFFFFF'%3E%E2%82%B9%3C/text%3E%3C/svg%3E">
+<link rel="apple-touch-icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 180 180'%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0' y1='0' x2='1' y2='1'%3E%3Cstop offset='0%25' stop-color='%2310B981'/%3E%3Cstop offset='100%25' stop-color='%230F766E'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width='180' height='180' rx='40' fill='url(%23g)'/%3E%3Ctext x='90' y='124' text-anchor='middle' font-family='-apple-system,BlinkMacSystemFont,Segoe UI,sans-serif' font-size='106' font-weight='800' fill='%23FFFFFF'%3E%E2%82%B9%3C/text%3E%3C/svg%3E">
+<title>FinLedger Pro Next</title>
+<style>
+/* ==========================================================================
+   DESIGN TOKENS — APPLE iOS APPEARANCE THEMES & ACCENT SWATCHES
+   Explicit soft-tint variables guarantee 100% compatibility across Android
+   WebView, WebIntoApp APKs, Chrome, and iOS Safari.
+   ========================================================================== */
+:root {
+  /* Light Theme (iOS Light Default) */
+  --bg: #F2F2F7;
+  --panel: #FFFFFF;
+  --panel2: #F4F5F8;
+  --panel-glass: rgba(255, 255, 255, 0.80);
+  --tab-glass: rgba(255, 255, 255, 0.88);
+  --text: #111827;
+  --text2: #374151;
+  --muted: #6E6E73;
+  --line: rgba(60, 60, 67, 0.12);
+  --line-strong: rgba(60, 60, 67, 0.22);
+
+  /* Semantic Status Colors */
+  --good: #15803D;
+  --good-soft: rgba(21, 128, 61, 0.11);
+  --bad: #E11D48;
+  --bad-soft: rgba(225, 29, 72, 0.11);
+  --warn: #B45309;
+  --warn-soft: rgba(180, 83, 9, 0.13);
+  --info: #007AFF;
+  --info-soft: rgba(0, 122, 255, 0.11);
+
+  /* Default Accent: Emerald Teal */
+  --primary: #0F766E;
+  --primary2: #115E59;
+  --primary-soft: rgba(15, 118, 110, 0.12);
+  --primary-ring: rgba(15, 118, 110, 0.26);
+  --primary-ink: #FFFFFF;
+  --logo-grad: linear-gradient(145deg, #10B981, #0F766E);
+
+  /* Elevation & Geometry */
+  --radius-card: 20px;
+  --radius-control: 12px;
+  --shadow-card: 0 2px 10px rgba(15, 23, 42, 0.04), 0 10px 28px rgba(15, 23, 42, 0.05);
+  --shadow-float: 0 12px 34px rgba(15, 23, 42, 0.14);
+  --shadow-modal: 0 24px 64px rgba(2, 6, 23, 0.34);
+
+  /* Spring Motion Curves */
+  --spring: cubic-bezier(0.22, 1, 0.36, 1);
+  --spring-bounce: cubic-bezier(0.34, 1.4, 0.64, 1);
+  --dur-fast: 160ms;
+  --dur-med: 300ms;
+}
+
+/* Theme: iOS Dark */
+[data-theme="dark"] {
+  --bg: #0E1117;
+  --panel: #1C212E;
+  --panel2: #252B3B;
+  --panel-glass: rgba(24, 28, 38, 0.82);
+  --tab-glass: rgba(24, 28, 38, 0.90);
+  --text: #F2F5FA;
+  --text2: #CBD5E1;
+  --muted: #94A3B8;
+  --line: rgba(255, 255, 255, 0.10);
+  --line-strong: rgba(255, 255, 255, 0.18);
+  --good: #34D399;
+  --good-soft: rgba(52, 211, 153, 0.14);
+  --bad: #FB7185;
+  --bad-soft: rgba(251, 113, 133, 0.14);
+  --warn: #FBBF24;
+  --warn-soft: rgba(251, 191, 36, 0.15);
+  --info: #60A5FA;
+  --info-soft: rgba(96, 165, 250, 0.15);
+  --shadow-card: 0 4px 18px rgba(0, 0, 0, 0.28), inset 0 1px 0 rgba(255, 255, 255, 0.04);
+  --shadow-float: 0 14px 36px rgba(0, 0, 0, 0.48);
+}
+
+/* Theme: OLED True Black (Premium) */
+[data-theme="oled"] {
+  --bg: #000000;
+  --panel: #121318;
+  --panel2: #1C1E26;
+  --panel-glass: rgba(10, 11, 14, 0.84);
+  --tab-glass: rgba(14, 15, 20, 0.92);
+  --text: #F8FAFC;
+  --text2: #CBD5E1;
+  --muted: #8E95A5;
+  --line: rgba(255, 255, 255, 0.10);
+  --line-strong: rgba(255, 255, 255, 0.20);
+  --good: #4ADE80;
+  --good-soft: rgba(74, 222, 128, 0.14);
+  --bad: #FF4569;
+  --bad-soft: rgba(255, 69, 105, 0.15);
+  --warn: #FBBF24;
+  --warn-soft: rgba(251, 191, 36, 0.15);
+  --info: #38BDF8;
+  --info-soft: rgba(56, 189, 248, 0.15);
+  --shadow-card: 0 0 0 1px rgba(255, 255, 255, 0.04), 0 8px 24px rgba(0, 0, 0, 0.65);
+  --shadow-float: 0 16px 40px rgba(0, 0, 0, 0.78);
+}
+
+/* Theme: Warm Sand (Premium) */
+[data-theme="sand"] {
+  --bg: #F7F4EF;
+  --panel: #FFFDF9;
+  --panel2: #F2ECE2;
+  --panel-glass: rgba(255, 253, 249, 0.84);
+  --tab-glass: rgba(255, 253, 249, 0.92);
+  --text: #231F1A;
+  --text2: #4A433A;
+  --muted: #7C7265;
+  --line: rgba(74, 60, 42, 0.12);
+  --line-strong: rgba(74, 60, 42, 0.22);
+  --good: #166534;
+  --good-soft: rgba(22, 101, 52, 0.10);
+  --bad: #BE123C;
+  --bad-soft: rgba(190, 18, 60, 0.10);
+  --warn: #B45309;
+  --warn-soft: rgba(180, 83, 9, 0.13);
+  --info: #1D4ED8;
+  --info-soft: rgba(29, 78, 216, 0.10);
+  --shadow-card: 0 2px 10px rgba(68, 52, 32, 0.05), 0 10px 26px rgba(68, 52, 32, 0.06);
+  --shadow-float: 0 12px 32px rgba(68, 52, 32, 0.15);
+}
+
+/* ==========================================================================
+   ACCENT COLOR PALETTES (STANDARD & PREMIUM)
+   ========================================================================== */
+[data-accent="blue"] {
+  --primary: #007AFF; --primary2: #0062CC;
+  --primary-soft: rgba(0, 122, 255, 0.12); --primary-ring: rgba(0, 122, 255, 0.28);
+  --primary-ink: #FFFFFF; --logo-grad: linear-gradient(145deg, #38BDF8, #007AFF);
+}
+[data-theme="dark"][data-accent="blue"], [data-theme="oled"][data-accent="blue"] {
+  --primary: #0A84FF; --primary2: #409CFF;
+  --primary-soft: rgba(10, 132, 255, 0.18); --primary-ring: rgba(10, 132, 255, 0.34);
+  --primary-ink: #FFFFFF;
+}
+
+[data-accent="teal"] {
+  --primary: #0F766E; --primary2: #115E59;
+  --primary-soft: rgba(15, 118, 110, 0.12); --primary-ring: rgba(15, 118, 110, 0.28);
+  --primary-ink: #FFFFFF; --logo-grad: linear-gradient(145deg, #10B981, #0F766E);
+}
+[data-theme="dark"][data-accent="teal"], [data-theme="oled"][data-accent="teal"] {
+  --primary: #14B8A6; --primary2: #2DD4BF;
+  --primary-soft: rgba(20, 184, 166, 0.18); --primary-ring: rgba(20, 184, 166, 0.34);
+  --primary-ink: #042F2E;
+}
+
+[data-accent="green"] {
+  --primary: #16A34A; --primary2: #15803D;
+  --primary-soft: rgba(22, 163, 74, 0.12); --primary-ring: rgba(22, 163, 74, 0.28);
+  --primary-ink: #FFFFFF; --logo-grad: linear-gradient(145deg, #34C759, #15803D);
+}
+[data-theme="dark"][data-accent="green"], [data-theme="oled"][data-accent="green"] {
+  --primary: #34C759; --primary2: #4ADE80;
+  --primary-soft: rgba(52, 199, 89, 0.18); --primary-ring: rgba(52, 199, 89, 0.34);
+  --primary-ink: #052E16;
+}
+
+[data-accent="indigo"] {
+  --primary: #5856D6; --primary2: #4845B8;
+  --primary-soft: rgba(88, 86, 214, 0.12); --primary-ring: rgba(88, 86, 214, 0.28);
+  --primary-ink: #FFFFFF; --logo-grad: linear-gradient(145deg, #818CF8, #5856D6);
+}
+[data-theme="dark"][data-accent="indigo"], [data-theme="oled"][data-accent="indigo"] {
+  --primary: #6366F1; --primary2: #818CF8;
+  --primary-soft: rgba(99, 102, 241, 0.20); --primary-ring: rgba(99, 102, 241, 0.36);
+  --primary-ink: #FFFFFF;
+}
+
+[data-accent="graphite"] {
+  --primary: #334155; --primary2: #1E293B;
+  --primary-soft: rgba(51, 65, 85, 0.12); --primary-ring: rgba(51, 65, 85, 0.28);
+  --primary-ink: #FFFFFF; --logo-grad: linear-gradient(145deg, #64748B, #334155);
+}
+[data-theme="dark"][data-accent="graphite"], [data-theme="oled"][data-accent="graphite"] {
+  --primary: #94A3B8; --primary2: #CBD5E1;
+  --primary-soft: rgba(148, 163, 184, 0.18); --primary-ring: rgba(148, 163, 184, 0.34);
+  --primary-ink: #0F172A;
+}
+
+[data-accent="amethyst"] {
+  --primary: #9333EA; --primary2: #7E22CE;
+  --primary-soft: rgba(147, 51, 234, 0.12); --primary-ring: rgba(147, 51, 234, 0.28);
+  --primary-ink: #FFFFFF; --logo-grad: linear-gradient(145deg, #C084FC, #9333EA);
+}
+[data-theme="dark"][data-accent="amethyst"], [data-theme="oled"][data-accent="amethyst"] {
+  --primary: #BF5AF2; --primary2: #D896FF;
+  --primary-soft: rgba(191, 90, 242, 0.18); --primary-ring: rgba(191, 90, 242, 0.36);
+  --primary-ink: #1B0729;
+}
+
+[data-accent="rose"] {
+  --primary: #E11D48; --primary2: #BE123C;
+  --primary-soft: rgba(225, 29, 72, 0.12); --primary-ring: rgba(225, 29, 72, 0.28);
+  --primary-ink: #FFFFFF; --logo-grad: linear-gradient(145deg, #FB7185, #E11D48);
+}
+[data-theme="dark"][data-accent="rose"], [data-theme="oled"][data-accent="rose"] {
+  --primary: #FF375F; --primary2: #FF6482;
+  --primary-soft: rgba(255, 55, 95, 0.18); --primary-ring: rgba(255, 55, 95, 0.36);
+  --primary-ink: #FFFFFF;
+}
+
+[data-accent="gold"] {
+  --primary: #B45309; --primary2: #92400E;
+  --primary-soft: rgba(180, 83, 9, 0.12); --primary-ring: rgba(180, 83, 9, 0.28);
+  --primary-ink: #FFFFFF; --logo-grad: linear-gradient(145deg, #F59E0B, #B45309);
+}
+[data-theme="dark"][data-accent="gold"], [data-theme="oled"][data-accent="gold"] {
+  --primary: #F59E0B; --primary2: #FBBF24;
+  --primary-soft: rgba(245, 158, 11, 0.18); --primary-ring: rgba(245, 158, 11, 0.34);
+  --primary-ink: #271502;
+}
+
+/* ==========================================================================
+   BASE RESET & TYPOGRAPHY
+   ========================================================================== */
+*, *::before, *::after { box-sizing: border-box; }
+html { scroll-behavior: smooth; -webkit-text-size-adjust: 100%; }
+body {
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", "Segoe UI", system-ui, sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  transition: background-color 240ms ease, color 240ms ease;
+  overflow-x: hidden;
+}
+button, input, select, textarea { font: inherit; }
+button { cursor: pointer; -webkit-tap-highlight-color: transparent; }
+.hidden { display: none !important; }
+.num, .kpi-value, .totalbar, .big-input, #ledgerBalance, .table td.right {
+  font-variant-numeric: tabular-nums;
+}
+
+[data-animations="reduced"] *, [data-animations="reduced"] *::before, [data-animations="reduced"] *::after {
+  animation-duration: 0.01ms !important;
+  animation-iteration-count: 1 !important;
+  transition-duration: 0.01ms !important;
+  scroll-behavior: auto !important;
+}
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* ==========================================================================
+   SPRING KEYFRAMES
+   ========================================================================== */
+@keyframes viewIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+@keyframes cardRise {
+  from { opacity: 0; transform: translateY(8px) scale(0.985); }
+  to { opacity: 1; transform: translateY(0) scale(1); }
+}
+@keyframes modalFadeIn { from { opacity: 0; } to { opacity: 1; } }
+@keyframes modalPopIn {
+  from { opacity: 0; transform: scale(0.94) translateY(12px); }
+  to { opacity: 1; transform: scale(1) translateY(0); }
+}
+@keyframes sheetSlideUp {
+  from { opacity: 0.6; transform: translateY(100%); }
+  to { opacity: 1; transform: translateY(0); }
+}
+@keyframes islandDrop {
+  from { opacity: 0; transform: translate(-50%, -22px) scale(0.9); }
+  to { opacity: 1; transform: translate(-50%, 0) scale(1); }
+}
+@keyframes pinPop {
+  0% { transform: scale(0.75); }
+  60% { transform: scale(1.28); }
+  100% { transform: scale(1.1); }
+}
+@keyframes pinShake {
+  0%, 100% { transform: translateX(0); }
+  18% { transform: translateX(-11px); }
+  36% { transform: translateX(10px); }
+  54% { transform: translateX(-8px); }
+  72% { transform: translateX(6px); }
+  88% { transform: translateX(-3px); }
+}
+
+/* ==========================================================================
+   STICKY FROSTED TOPBAR
+   ========================================================================== */
+.app { min-height: 100vh; }
+.topbar {
+  position: sticky;
+  top: 0;
+  z-index: 25;
+  padding-top: env(safe-area-inset-top, 0px);
+  background: var(--panel-glass);
+  backdrop-filter: saturate(180%) blur(20px);
+  -webkit-backdrop-filter: saturate(180%) blur(20px);
+  border-bottom: 1px solid var(--line);
+}
+.topbar-inner {
+  max-width: 1320px;
+  margin: auto;
+  padding: 12px 18px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+.brand { display: flex; align-items: center; gap: 12px; min-width: 0; }
+.logo {
+  width: 40px;
+  height: 40px;
+  border-radius: 13px;
+  background: var(--logo-grad);
+  display: grid;
+  place-items: center;
+  color: #FFFFFF;
+  font-weight: 800;
+  font-size: 19px;
+  flex-shrink: 0;
+  box-shadow: 0 6px 16px var(--primary-ring);
+}
+.brand h1 { font-size: 17px; font-weight: 750; margin: 0; letter-spacing: -0.02em; line-height: 1.15; }
+.brand p { font-size: 11px; color: var(--muted); margin: 2px 0 0; font-weight: 500; }
+.toolbar { display: flex; gap: 8px; flex-shrink: 0; align-items: center; }
+
+/* ==========================================================================
+   BUTTONS & TACTILE SPRING FEEDBACK
+   ========================================================================== */
+.iconbtn, .btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 7px;
+  border: 1px solid var(--line);
+  background: var(--panel);
+  color: var(--text);
+  border-radius: var(--radius-control);
+  padding: 9px 14px;
+  font-weight: 650;
+  font-size: 13px;
+  line-height: 1.2;
+  transition: transform var(--dur-fast) var(--spring), background-color var(--dur-fast) ease, border-color var(--dur-fast) ease, box-shadow var(--dur-fast) ease;
+}
+.iconbtn { width: 40px; height: 40px; padding: 0; border-radius: 12px; }
+.iconbtn:hover, .btn:hover { background: var(--panel2); }
+.iconbtn:active, .btn:active, .tab:active, .party-item:active, .cal-pill:active, .theme-tile:active, .accent-chip:active, .period-pill:active {
+  transform: scale(0.96);
+}
+.btn.primary {
+  background: var(--primary);
+  border-color: var(--primary);
+  color: var(--primary-ink);
+  box-shadow: 0 4px 14px var(--primary-ring);
+}
+.btn.primary:hover { background: var(--primary2); border-color: var(--primary2); }
+.btn.soft { background: var(--primary-soft); border-color: transparent; color: var(--primary); }
+.btn.soft:hover { border-color: var(--primary-ring); }
+.btn.danger { color: var(--bad); border-color: var(--bad-soft); background: var(--bad-soft); }
+.btn.danger:hover { border-color: var(--bad); }
+.btn.sm { padding: 7px 11px; font-size: 12px; border-radius: 10px; }
+.btn:disabled { opacity: 0.45; cursor: not-allowed; transform: none !important; }
+
+/* ==========================================================================
+   LAYOUT & NAVIGATION TABS
+   ========================================================================== */
+.layout { max-width: 1320px; margin: auto; padding: 18px 18px 56px; }
+.tabs { display: flex; gap: 8px; overflow-x: auto; padding: 4px 2px 16px; scrollbar-width: none; }
+.tabs::-webkit-scrollbar { display: none; }
+.tab {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 7px;
+  white-space: nowrap;
+  border: 1px solid var(--line);
+  color: var(--muted);
+  background: var(--panel);
+  padding: 9px 15px;
+  border-radius: 999px;
+  font-weight: 650;
+  font-size: 13px;
+  transition: transform var(--dur-fast) var(--spring), background-color var(--dur-fast) ease, color var(--dur-fast) ease, border-color var(--dur-fast) ease;
+}
+.tab svg { width: 16px; height: 16px; flex-shrink: 0; }
+.tab:hover { color: var(--text); background: var(--panel2); }
+.tab.active {
+  background: var(--primary);
+  color: var(--primary-ink);
+  border-color: var(--primary);
+  box-shadow: 0 4px 14px var(--primary-ring);
+}
+.view { animation: viewIn var(--dur-med) var(--spring) both; }
+
+/* ==========================================================================
+   CARDS & KPI GRID
+   ========================================================================== */
+.grid { display: grid; gap: 16px; }
+.kpis { grid-template-columns: repeat(5, minmax(0, 1fr)); margin-bottom: 18px; }
+.card {
+  background: var(--panel);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-card);
+  box-shadow: var(--shadow-card);
+  transition: background-color 240ms ease, border-color 240ms ease;
+}
+.kpis .card { animation: cardRise var(--dur-med) var(--spring) both; }
+.kpis .card:nth-child(1) { animation-delay: 20ms; }
+.kpis .card:nth-child(2) { animation-delay: 55ms; }
+.kpis .card:nth-child(3) { animation-delay: 90ms; }
+.kpis .card:nth-child(4) { animation-delay: 125ms; }
+.kpis .card:nth-child(5) { animation-delay: 160ms; }
+
+.pad { padding: 18px; }
+.kpi-label { font-size: 11px; color: var(--muted); font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em; }
+.kpi-value { font-size: 23px; font-weight: 800; margin: 6px 0 4px; letter-spacing: -0.025em; }
+.kpi-note { font-size: 11.5px; color: var(--muted); min-height: 16px; }
+.good { color: var(--good); }
+.bad { color: var(--bad); }
+.warn { color: var(--warn); }
+.info { color: var(--info); }
+.muted { color: var(--muted); }
+.small { font-size: 12px; }
+
+.content2 { grid-template-columns: 370px minmax(0, 1fr); align-items: start; }
+.section-title { font-size: 16px; font-weight: 750; letter-spacing: -0.015em; margin: 0 0 3px; }
+.section-sub { font-size: 12px; color: var(--muted); margin: 0; }
+.card-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+  padding: 16px 18px;
+  border-bottom: 1px solid var(--line);
+}
+
+/* ==========================================================================
+   FORMS, LIVE BUDGET HINT & INPUTS
+   ========================================================================== */
+.form { padding: 18px; display: grid; gap: 14px; }
+.form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+.field label {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--muted);
+  margin: 0 0 6px;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+.field input, .field select, .field textarea, .filters input, .filters select, .setting-control {
+  width: 100%;
+  border: 1px solid var(--line);
+  background: var(--panel2);
+  color: var(--text);
+  border-radius: var(--radius-control);
+  padding: 10px 12px;
+  outline: none;
+  font-size: 14px;
+  transition: border-color var(--dur-fast) ease, box-shadow var(--dur-fast) ease, background-color var(--dur-fast) ease;
+}
+.field input:focus, .field select:focus, .field textarea:focus, .filters input:focus, .filters select:focus, .setting-control:focus {
+  border-color: var(--primary);
+  box-shadow: 0 0 0 3.5px var(--primary-ring);
+  background: var(--panel);
+}
+.field textarea { resize: vertical; min-height: 74px; }
+.math-preview {
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--primary);
+  text-transform: none;
+  letter-spacing: 0;
+  background: var(--primary-soft);
+  padding: 2px 7px;
+  border-radius: 999px;
+}
+.math-preview:empty { display: none; }
+
+.budget-hint {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 9px 12px;
+  border-radius: 12px;
+  font-size: 12px;
+  font-weight: 650;
+  line-height: 1.35;
+  border: 1px solid transparent;
+}
+.budget-hint.ok { background: var(--good-soft); color: var(--good); border-color: rgba(21, 128, 61, 0.22); }
+.budget-hint.warn { background: var(--warn-soft); color: var(--warn); border-color: rgba(180, 83, 9, 0.28); }
+.budget-hint.over { background: var(--bad-soft); color: var(--bad); border-color: rgba(225, 29, 72, 0.28); }
+
+/* ==========================================================================
+   WEBVIEW-SAFE CUSTOM DATE PICKER & CALENDAR SHEET
+   ========================================================================== */
+.date-control {
+  display: flex;
+  align-items: stretch;
+  width: 100%;
+  border: 1px solid var(--line);
+  background: var(--panel2);
+  color: var(--text);
+  border-radius: var(--radius-control);
+  overflow: hidden;
+  transition: border-color var(--dur-fast) ease, box-shadow var(--dur-fast) ease;
+}
+.date-control:focus-within { border-color: var(--primary); box-shadow: 0 0 0 3.5px var(--primary-ring); }
+.date-step-btn, .date-open-btn {
+  border: 0;
+  background: transparent;
+  color: var(--text);
+  padding: 0;
+  outline: none;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  transition: background-color var(--dur-fast) ease, color var(--dur-fast) ease;
+}
+.date-step-btn { flex: 0 0 36px; font-size: 19px; font-weight: 700; color: var(--muted); user-select: none; }
+.date-step-btn:first-child { border-right: 1px solid var(--line); }
+.date-step-btn:last-child { border-left: 1px solid var(--line); }
+.date-step-btn:hover, .date-open-btn:hover { background: var(--primary-soft); color: var(--primary); }
+.date-open-btn {
+  flex: 1 1 auto;
+  min-width: 0;
+  justify-content: space-between;
+  gap: 6px;
+  padding: 10px 10px;
+  font-size: 13.5px;
+  font-weight: 650;
+  white-space: nowrap;
+  font-variant-numeric: tabular-nums;
+}
+.date-open-btn .date-icon { flex: 0 0 auto; color: var(--muted); }
+
+.sheet-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+  padding: 15px 18px;
+  border-bottom: 1px solid var(--line);
+}
+.sheet-close {
+  border: 0;
+  background: var(--panel2);
+  color: var(--muted);
+  border-radius: 999px;
+  width: 32px;
+  height: 32px;
+  display: grid;
+  place-items: center;
+  font-size: 14px;
+  font-weight: 800;
+  flex-shrink: 0;
+}
+.sheet-close:hover { color: var(--text); }
+.cal-body { padding: 16px 18px 20px; display: grid; gap: 14px; }
+.cal-quick { display: flex; gap: 8px; flex-wrap: wrap; }
+.cal-pill {
+  border: 1px solid var(--line);
+  background: var(--panel2);
+  color: var(--text);
+  border-radius: 999px;
+  padding: 7px 14px;
+  font-size: 12.5px;
+  font-weight: 650;
+}
+.cal-pill:hover { border-color: var(--primary); color: var(--primary); background: var(--primary-soft); }
+.cal-nav { display: grid; grid-template-columns: 40px 1fr 96px 40px; gap: 8px; align-items: center; }
+.cal-nav-btn {
+  border: 1px solid var(--line);
+  background: var(--panel2);
+  color: var(--text);
+  border-radius: 11px;
+  height: 40px;
+  font-size: 19px;
+  font-weight: 700;
+  display: grid;
+  place-items: center;
+}
+.cal-nav-btn:hover { background: var(--primary-soft); color: var(--primary); }
+.cal-nav select {
+  width: 100%;
+  border: 1px solid var(--line);
+  background: var(--panel2);
+  color: var(--text);
+  border-radius: 11px;
+  padding: 0 10px;
+  height: 40px;
+  font-size: 13.5px;
+  font-weight: 650;
+  outline: none;
+}
+.cal-weekdays, .cal-days { display: grid; grid-template-columns: repeat(7, minmax(0, 1fr)); gap: 5px; }
+.cal-weekdays span { text-align: center; font-size: 11px; font-weight: 700; color: var(--muted); padding: 4px 0; text-transform: uppercase; }
+.cal-day {
+  border: 1.5px solid transparent;
+  background: transparent;
+  color: var(--text);
+  border-radius: 12px;
+  min-height: 40px;
+  font-size: 14px;
+  font-weight: 650;
+  font-variant-numeric: tabular-nums;
+  display: grid;
+  place-items: center;
+}
+.cal-day:hover { background: var(--panel2); border-color: var(--line); }
+.cal-day.today { border-color: var(--primary); color: var(--primary); font-weight: 800; }
+.cal-day.selected { background: var(--primary); border-color: var(--primary); color: var(--primary-ink); font-weight: 800; box-shadow: 0 4px 12px var(--primary-ring); }
+.cal-empty { min-height: 40px; }
+
+/* ==========================================================================
+   TABLES, FILTERS & BADGES
+   ========================================================================== */
+.filters { display: flex; flex-wrap: wrap; gap: 8px; }
+.filters > * { max-width: 175px; }
+.table-wrap { overflow-x: auto; }
+.table { width: 100%; border-collapse: collapse; min-width: 720px; }
+.table th {
+  font-size: 10.5px;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--muted);
+  text-align: left;
+  background: var(--panel2);
+  padding: 11px 14px;
+  border-bottom: 1px solid var(--line);
+  font-weight: 750;
+}
+.table td { padding: 13px 14px; border-bottom: 1px solid var(--line); font-size: 13.5px; vertical-align: middle; }
+.table tbody tr:last-child td { border-bottom: 0; }
+.table tr:hover td { background: var(--panel2); }
+.right { text-align: right !important; }
+.center { text-align: center !important; }
+
+.badge {
+  display: inline-flex;
+  align-items: center;
+  padding: 4px 9px;
+  border-radius: 999px;
+  font-size: 11px;
+  font-weight: 700;
+  background: var(--panel2);
+  color: var(--text2);
+}
+.badge.in { color: var(--good); background: var(--good-soft); }
+.badge.out { color: var(--bad); background: var(--bad-soft); }
+.badge.party { color: var(--info); background: var(--info-soft); }
+.badge.warn { color: var(--warn); background: var(--warn-soft); }
+
+.actions { display: flex; gap: 6px; justify-content: center; }
+.linkbtn {
+  border: 0;
+  background: var(--info-soft);
+  color: var(--info);
+  padding: 5px 10px;
+  font-size: 12px;
+  font-weight: 700;
+  border-radius: 8px;
+}
+.linkbtn.delete { background: var(--bad-soft); color: var(--bad); }
+.empty { padding: 34px 18px; text-align: center; color: var(--muted); font-size: 13.5px; }
+
+/* ==========================================================================
+   PARTY LEDGERS
+   ========================================================================== */
+.party-layout { grid-template-columns: 330px minmax(0, 1fr); align-items: start; }
+.party-list { max-height: 600px; overflow-y: auto; }
+.party-item {
+  display: flex;
+  width: 100%;
+  justify-content: space-between;
+  align-items: center;
+  gap: 10px;
+  padding: 14px 18px;
+  text-align: left;
+  border: 0;
+  border-bottom: 1px solid var(--line);
+  background: transparent;
+  color: var(--text);
+}
+.party-item:last-child { border-bottom: 0; }
+.party-item:hover { background: var(--panel2); }
+.party-item.active { background: var(--primary-soft); box-shadow: inset 4px 0 0 var(--primary); }
+.party-item small { display: block; color: var(--muted); margin-top: 3px; font-size: 11.5px; }
+
+/* ==========================================================================
+   REPORTS: PERIOD FILTER, VISUAL SVG ANALYTICS & MONTHLY BUDGETS
+   ========================================================================== */
+.period-bar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 14px 18px;
+  margin-bottom: 16px;
+}
+.period-pills {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  background: var(--panel2);
+  padding: 4px;
+  border-radius: 13px;
+  border: 1px solid var(--line);
+}
+.period-pill {
+  border: 0;
+  background: transparent;
+  color: var(--muted);
+  padding: 7px 13px;
+  border-radius: 9px;
+  font-size: 12.5px;
+  font-weight: 650;
+  transition: all var(--dur-fast) var(--spring);
+}
+.period-pill:hover { color: var(--text); }
+.period-pill.active {
+  background: var(--panel);
+  color: var(--text);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.10);
+}
+.custom-range-row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 10px;
+}
+.custom-date-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  border: 1px solid var(--line);
+  background: var(--panel2);
+  color: var(--text);
+  border-radius: 11px;
+  padding: 8px 12px;
+  font-size: 13px;
+  font-weight: 650;
+  font-variant-numeric: tabular-nums;
+}
+.custom-date-chip:hover { border-color: var(--primary); color: var(--primary); }
+.custom-date-chip span.lbl { font-size: 11px; text-transform: uppercase; color: var(--muted); font-weight: 750; }
+
+/* Visual Analytics Grid */
+.analytics-grid {
+  grid-template-columns: 1fr 1fr;
+  margin-bottom: 16px;
+}
+.analytics-full { grid-column: 1 / -1; }
+
+/* Income vs Expense Bars */
+.ie-bars { display: grid; gap: 14px; margin-top: 14px; }
+.ie-row-head { display: flex; justify-content: space-between; align-items: baseline; font-size: 13.5px; margin-bottom: 6px; }
+.ie-track { height: 11px; border-radius: 999px; background: var(--panel2); overflow: hidden; }
+.ie-fill { height: 100%; border-radius: 999px; transition: width 480ms var(--spring); }
+.ie-fill.income { background: var(--good); }
+.ie-fill.expense { background: var(--bad); }
+.ie-fill.net-pos { background: var(--primary); }
+.ie-fill.net-neg { background: var(--warn); }
+
+/* Donut Chart Layout */
+.donut-wrap {
+  display: grid;
+  grid-template-columns: 170px minmax(0, 1fr);
+  gap: 18px;
+  align-items: center;
+  margin-top: 12px;
+}
+.donut-svg-box {
+  position: relative;
+  width: 170px;
+  height: 170px;
+  margin: auto;
+}
+.donut-svg-box svg { width: 100%; height: 100%; display: block; }
+.donut-center {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 18px;
+  pointer-events: none;
+}
+.donut-center small { font-size: 10.5px; text-transform: uppercase; letter-spacing: 0.05em; color: var(--muted); font-weight: 700; }
+.donut-center strong { font-size: 15px; font-weight: 800; margin-top: 2px; font-variant-numeric: tabular-nums; }
+.donut-legend { display: grid; gap: 8px; }
+.legend-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  font-size: 12.5px;
+}
+.legend-left { display: flex; align-items: center; gap: 8px; min-width: 0; }
+.legend-dot { width: 10px; height: 10px; border-radius: 50%; flex-shrink: 0; }
+.legend-name { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; font-weight: 600; }
+.legend-val { font-weight: 750; white-space: nowrap; font-variant-numeric: tabular-nums; }
+
+/* 6-Month Cashflow Trend SVG */
+.trend-legend { display: flex; gap: 14px; align-items: center; font-size: 12px; font-weight: 650; color: var(--muted); }
+.trend-legend span { display: inline-flex; align-items: center; gap: 6px; }
+.trend-chart-wrap { width: 100%; overflow-x: auto; margin-top: 10px; }
+.trend-svg { width: 100%; min-width: 460px; height: 215px; display: block; }
+.trend-bar { cursor: pointer; transition: opacity 160ms ease; }
+.trend-bar:hover { opacity: 0.82; }
+.trend-detail-pill {
+  margin-top: 10px;
+  padding: 9px 13px;
+  border-radius: 12px;
+  background: var(--panel2);
+  border: 1px solid var(--line);
+  font-size: 12.5px;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 8px;
+}
+
+/* Monthly Budgets & Category Limits */
+.budget-summary-box {
+  padding: 14px 16px;
+  border-radius: 14px;
+  background: var(--panel2);
+  border: 1px solid var(--line);
+  margin-bottom: 14px;
+}
+.budget-list { display: grid; gap: 12px; }
+.budget-item {
+  padding: 14px 15px;
+  border-radius: 15px;
+  background: var(--panel2);
+  border: 1px solid var(--line);
+}
+.budget-item-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+.budget-title-wrap { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
+.budget-title-wrap strong { font-size: 14.5px; }
+.budget-amounts { font-size: 13px; font-weight: 700; font-variant-numeric: tabular-nums; margin-top: 4px; }
+.budget-track { height: 8px; border-radius: 999px; background: var(--panel); border: 1px solid var(--line); margin-top: 10px; overflow: hidden; }
+.budget-fill { height: 100%; border-radius: 999px; transition: width 460ms var(--spring); }
+.budget-fill.ok { background: var(--good); }
+.budget-fill.warn { background: #F59E0B; }
+.budget-fill.over { background: var(--bad); }
+.budget-item-foot {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 10px;
+  margin-top: 8px;
+  font-size: 12px;
+}
+
+/* Statements & Category Progress Bars */
+.statements { grid-template-columns: 1fr 1fr; }
+.statement-list { padding: 6px 18px; }
+.cat-row { padding: 12px 0; border-bottom: 1px solid var(--line); }
+.cat-row:last-child { border-bottom: 0; }
+.cat-row-top { display: flex; justify-content: space-between; align-items: baseline; gap: 12px; font-size: 14px; }
+.cat-pct { font-size: 11px; font-weight: 700; color: var(--muted); margin-left: 6px; }
+.cat-bar-track { height: 6px; border-radius: 999px; background: var(--panel2); margin-top: 8px; overflow: hidden; }
+.cat-bar-fill { height: 100%; border-radius: 999px; transition: width 460ms var(--spring); }
+.cat-bar-fill.income { background: var(--good); }
+.cat-bar-fill.expense { background: var(--primary); }
+
+.totalbar {
+  display: flex;
+  justify-content: space-between;
+  padding: 15px 18px;
+  font-weight: 800;
+  font-size: 14.5px;
+  border-top: 1px solid var(--line-strong);
+}
+.balance-ok { border-color: var(--good); }
+.balance-bad { border-color: var(--bad); }
+
+/* ==========================================================================
+   RECONCILE
+   ========================================================================== */
+.recon { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+.big-input { font-size: 24px !important; font-weight: 800 !important; letter-spacing: -0.02em; }
+
+/* ==========================================================================
+   SETTINGS, APPEARANCE, PWA STATUS & BACKUP CENTER
+   ========================================================================== */
+.settings-grid { grid-template-columns: 1fr 1fr; align-items: start; }
+.setting-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 14px;
+  padding: 13px 0;
+  border-bottom: 1px solid var(--line);
+}
+.setting-row:last-child { border-bottom: 0; }
+.setting-row strong { font-size: 14px; font-weight: 650; }
+
+.segmented {
+  display: inline-flex;
+  background: var(--panel2);
+  padding: 3px;
+  border-radius: 10px;
+  border: 1px solid var(--line);
+}
+.segmented button {
+  border: 0;
+  background: transparent;
+  color: var(--muted);
+  font-size: 12.5px;
+  font-weight: 650;
+  padding: 6px 12px;
+  border-radius: 8px;
+}
+.segmented button.active { background: var(--panel); color: var(--text); box-shadow: 0 2px 6px rgba(0, 0, 0, 0.10); }
+
+.group-label {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 11px;
+  font-weight: 750;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--muted);
+  margin: 16px 0 10px;
+}
+.pill-tag {
+  font-size: 9.5px;
+  font-weight: 800;
+  padding: 2px 7px;
+  border-radius: 999px;
+  background: var(--primary-soft);
+  color: var(--primary);
+}
+.theme-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(100px, 1fr)); gap: 9px; }
+.theme-tile {
+  border: 1.5px solid var(--line);
+  background: var(--panel2);
+  color: var(--text);
+  border-radius: 14px;
+  padding: 10px 8px;
+  text-align: center;
+  display: grid;
+  gap: 7px;
+  justify-items: center;
+}
+.theme-tile.active { border-color: var(--primary); background: var(--primary-soft); box-shadow: 0 0 0 3px var(--primary-ring); }
+.theme-preview { width: 100%; height: 36px; border-radius: 9px; border: 1px solid rgba(128, 128, 128, 0.22); }
+.theme-preview.tp-system { background: linear-gradient(135deg, #F2F2F7 50%, #1C212E 50%); }
+.theme-preview.tp-light { background: linear-gradient(180deg, #FFFFFF 45%, #F2F2F7 45%); }
+.theme-preview.tp-dark { background: linear-gradient(180deg, #1C212E 45%, #0E1117 45%); }
+.theme-preview.tp-oled { background: linear-gradient(180deg, #121318 45%, #000000 45%); }
+.theme-preview.tp-sand { background: linear-gradient(180deg, #FFFDF9 45%, #F0E9DD 45%); }
+.theme-tile span { font-size: 11.5px; font-weight: 700; }
+
+.accent-grid { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 9px; }
+.accent-chip {
+  border: 1.5px solid var(--line);
+  background: var(--panel2);
+  color: var(--text);
+  border-radius: 14px;
+  padding: 10px 6px;
+  display: grid;
+  justify-items: center;
+  gap: 6px;
+}
+.accent-chip.active { border-color: var(--primary); background: var(--primary-soft); }
+.swatch-dot {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  color: #FFFFFF;
+  box-shadow: inset 0 1px 2px rgba(255, 255, 255, 0.35), 0 3px 8px rgba(0, 0, 0, 0.16);
+}
+.swatch-dot svg { width: 14px; height: 14px; opacity: 0; transform: scale(0.5); transition: all var(--dur-fast) var(--spring-bounce); }
+.accent-chip.active .swatch-dot svg { opacity: 1; transform: scale(1); }
+.accent-chip span { font-size: 11px; font-weight: 650; text-align: center; }
+
+.backup-banner {
+  display: flex;
+  align-items: flex-start;
+  gap: 11px;
+  padding: 13px 14px;
+  border-radius: 14px;
+  margin-top: 12px;
+  font-size: 12.5px;
+  line-height: 1.45;
+  border: 1px solid var(--line);
+}
+.backup-banner.ok { background: var(--good-soft); border-color: rgba(21, 128, 61, 0.28); }
+.backup-banner.warn { background: var(--warn-soft); border-color: rgba(180, 83, 9, 0.32); }
+.backup-banner.info { background: var(--info-soft); border-color: rgba(0, 122, 255, 0.28); }
+.backup-banner svg { width: 18px; height: 18px; flex-shrink: 0; margin-top: 1px; }
+.backup-actions { display: grid; gap: 9px; margin-top: 14px; }
+.backup-row2 { display: grid; grid-template-columns: 1fr 1fr; gap: 9px; }
+.snapshot-list { display: grid; gap: 8px; margin-top: 10px; }
+.snapshot-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 10px;
+  padding: 11px 13px;
+  border-radius: 13px;
+  background: var(--panel2);
+  border: 1px solid var(--line);
+}
+.snapshot-meta { min-width: 0; }
+.snapshot-meta strong { display: block; font-size: 12.5px; font-weight: 700; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.snapshot-meta small { display: block; font-size: 11px; color: var(--muted); margin-top: 2px; }
+.snapshot-btns { display: flex; gap: 6px; flex-shrink: 0; }
+.notice {
+  border: 1px solid rgba(180, 83, 9, 0.28);
+  background: var(--warn-soft);
+  padding: 12px 14px;
+  border-radius: 13px;
+  font-size: 12px;
+  line-height: 1.5;
+  color: var(--text2);
+}
+
+/* ==========================================================================
+   MODALS, BACKUP TEXTAREAS & DYNAMIC ISLAND TOAST
+   ========================================================================== */
+.modal, .lock {
+  position: fixed;
+  inset: 0;
+  z-index: 60;
+  background: rgba(2, 6, 23, 0.58);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  display: grid;
+  place-items: center;
+  padding: 18px;
+  animation: modalFadeIn 200ms ease both;
+}
+.modal-card {
+  width: min(490px, 100%);
+  max-height: 90vh;
+  overflow-y: auto;
+  background: var(--panel);
+  border: 1px solid var(--line);
+  border-radius: 24px;
+  box-shadow: var(--shadow-modal);
+  animation: modalPopIn var(--dur-med) var(--spring) both;
+}
+.modal-body { padding: 16px 18px; display: grid; gap: 12px; }
+.modal-actions { display: flex; justify-content: flex-end; gap: 8px; padding: 14px 18px; border-top: 1px solid var(--line); }
+.code-box {
+  width: 100%;
+  min-height: 165px;
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+  font-size: 12px;
+  line-height: 1.45;
+  border: 1px solid var(--line);
+  background: var(--panel2);
+  color: var(--text);
+  border-radius: 13px;
+  padding: 12px;
+  outline: none;
+  resize: vertical;
+}
+.restore-preview {
+  padding: 12px 14px;
+  border-radius: 13px;
+  font-size: 12.5px;
+  line-height: 1.5;
+  background: var(--good-soft);
+  border: 1px solid rgba(21, 128, 61, 0.25);
+}
+.restore-preview.err { background: var(--bad-soft); border-color: rgba(225, 29, 72, 0.28); color: var(--bad); }
+
+.toast {
+  position: fixed;
+  z-index: 90;
+  top: calc(14px + env(safe-area-inset-top, 0px));
+  left: 50%;
+  transform: translateX(-50%);
+  display: inline-flex;
+  align-items: center;
+  gap: 9px;
+  max-width: min(92vw, 420px);
+  background: #14171F;
+  color: #F8FAFC;
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  padding: 11px 18px;
+  border-radius: 999px;
+  font-size: 13px;
+  font-weight: 650;
+  box-shadow: 0 14px 36px rgba(0, 0, 0, 0.34);
+  animation: islandDrop 320ms var(--spring-bounce) both;
+}
+.toast svg { width: 17px; height: 17px; flex-shrink: 0; }
+.toast.success svg { color: #34D399; }
+.toast.warn svg { color: #FBBF24; }
+.toast.error svg { color: #FB7185; }
+.toast.info svg { color: #60A5FA; }
+
+/* ==========================================================================
+   FROSTED DARK GLASS PIN LOCK SCREEN
+   ========================================================================== */
+.lock {
+  z-index: 80;
+  background: radial-gradient(circle at top, rgba(30, 41, 59, 0.92), rgba(2, 6, 23, 0.96));
+  backdrop-filter: saturate(160%) blur(24px);
+  -webkit-backdrop-filter: saturate(160%) blur(24px);
+  overflow-y: auto;
+}
+.pin-card { width: min(340px, 100%); color: #F8FAFC; padding: 20px 12px; text-align: center; }
+.pin-glyph {
+  width: 56px;
+  height: 56px;
+  margin: 0 auto 12px;
+  border-radius: 18px;
+  background: rgba(255, 255, 255, 0.10);
+  border: 1px solid rgba(255, 255, 255, 0.16);
+  display: grid;
+  place-items: center;
+}
+.pin-card h2 { margin: 0 0 5px; font-size: 20px; font-weight: 750; }
+.pin-card p { color: rgba(226, 232, 240, 0.72); font-size: 13px; margin: 0; }
+.pin-dots { display: flex; justify-content: center; gap: 18px; margin: 24px 0 12px; }
+.pin-dots.shake { animation: pinShake 380ms ease; }
+.pin-dot { width: 14px; height: 14px; border: 2px solid rgba(255, 255, 255, 0.45); border-radius: 50%; }
+.pin-dot.on { background: #FFFFFF; border-color: #FFFFFF; animation: pinPop 220ms var(--spring-bounce) both; }
+.pin-error { min-height: 20px; color: #FB7185 !important; margin-bottom: 14px !important; font-weight: 650; font-size: 12.5px !important; }
+.keypad { display: grid; grid-template-columns: repeat(3, 74px); justify-content: center; gap: 14px 20px; }
+.keypad button {
+  width: 74px;
+  height: 74px;
+  border-radius: 50%;
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  background: rgba(255, 255, 255, 0.11);
+  color: #FFFFFF;
+  font-weight: 600;
+  font-size: 24px;
+  display: grid;
+  place-items: center;
+}
+.keypad button[data-key="Clear"], .keypad button[data-key="⌫"] {
+  font-size: 14px;
+  font-weight: 700;
+  background: transparent;
+  border-color: transparent;
+  color: rgba(255, 255, 255, 0.85);
+}
+.keypad button:hover { background: rgba(255, 255, 255, 0.20); }
+.keypad button:active { transform: scale(0.92); background: rgba(255, 255, 255, 0.32); }
+
+/* ==========================================================================
+   RESPONSIVE BREAKPOINTS (TABLET & MOBILE iOS EXPERIENCE)
+   ========================================================================== */
+@media (max-width: 1020px) {
+  .kpis { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .content2, .party-layout, .statements, .settings-grid, .analytics-grid { grid-template-columns: 1fr; }
+}
+
+@media (max-width: 640px) {
+  .layout { padding: 12px 12px calc(102px + env(safe-area-inset-bottom, 0px)); }
+  .topbar-inner { padding: 10px 12px; }
+  .brand h1 { font-size: 15.5px; }
+  .brand p { display: none; }
+  .logo { width: 36px; height: 36px; border-radius: 11px; font-size: 17px; }
+  .iconbtn { min-width: 44px; min-height: 44px; }
+  .btn { min-height: 46px; font-size: 14.5px; }
+  .btn.sm { min-height: 36px; font-size: 12.5px; }
+
+  .field input, .field select, .field textarea, .filters input, .filters select, .setting-control { font-size: 16px; min-height: 46px; }
+  .date-control { min-height: 46px; }
+  .date-step-btn { flex: 0 0 44px; font-size: 21px; }
+  .date-open-btn { font-size: 15.5px; padding: 10px 11px; }
+  .cal-pill { min-height: 40px; font-size: 13.5px; padding: 8px 16px; }
+  .cal-nav { grid-template-columns: 44px 1fr 98px 44px; }
+  .cal-nav-btn, .cal-nav select { height: 44px; font-size: 15px; }
+  .cal-day, .cal-empty { min-height: 44px; font-size: 15px; }
+
+  .form-row, .recon, .backup-row2, .donut-wrap { grid-template-columns: 1fr; }
+  .accent-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .card-head { flex-direction: column; align-items: flex-start; }
+
+  .kpis { grid-template-columns: 1fr 1fr; gap: 10px; }
+  .kpis > :last-child { grid-column: 1 / -1; }
+  .kpis .pad { padding: 13px; }
+  .kpi-value { font-size: 19px; }
+
+  .tabs {
+    position: fixed;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 35;
+    gap: 2px;
+    overflow: hidden;
+    padding: 7px 6px calc(8px + env(safe-area-inset-bottom, 0px));
+    background: var(--tab-glass);
+    backdrop-filter: saturate(180%) blur(22px);
+    -webkit-backdrop-filter: saturate(180%) blur(22px);
+    border-top: 1px solid var(--line);
+    box-shadow: 0 -8px 26px rgba(15, 23, 42, 0.08);
+  }
+  .tab {
+    flex: 1 1 0;
+    min-width: 0;
+    flex-direction: column;
+    gap: 3px;
+    border-radius: 12px;
+    border-color: transparent;
+    background: transparent;
+    padding: 6px 2px;
+    font-size: 10px;
+  }
+  .tab svg { width: 20px; height: 20px; }
+  .tab.active { background: var(--primary-soft); color: var(--primary); border-color: transparent; box-shadow: none; }
+
+  .filters { width: 100%; }
+  .filters > * { max-width: none; flex: 1 1 46%; }
+  .filters #search { flex-basis: 100%; }
+  .party-list { max-height: 250px; }
+
+  .modal { align-items: end; padding: 0; }
+  .modal-card {
+    width: 100%;
+    border-radius: 24px 24px 0 0;
+    border-bottom: 0;
+    padding-bottom: env(safe-area-inset-bottom, 0px);
+    animation: sheetSlideUp 320ms var(--spring) both;
+  }
+  .modal-actions .btn { flex: 1; }
+
+  .table { min-width: 0; }
+  .table thead { display: none; }
+  .table, .table tbody { display: block; }
+  .table tr { display: grid; grid-template-columns: 1fr auto; gap: 5px 10px; padding: 13px 15px; border-bottom: 1px solid var(--line); }
+  .table tr:last-child { border-bottom: 0; }
+  .table td { display: block; padding: 0; border: 0; background: transparent !important; min-width: 0; }
+  #txBody td:nth-child(1), #ledgerBody td:nth-child(1) { grid-column: 1; grid-row: 1; font-size: 12px; color: var(--muted); }
+  #txBody td:nth-child(2) { grid-column: 2; grid-row: 1; justify-self: end; }
+  #txBody td:nth-child(3) { grid-column: 1; grid-row: 2; font-size: 14.5px; }
+  #txBody td:nth-child(5) { grid-column: 2; grid-row: 2; font-size: 15px; }
+  #txBody td:nth-child(4) { grid-column: 1 / -1; grid-row: 3; font-size: 12.5px; color: var(--muted); }
+  #txBody td:nth-child(6) { grid-column: 1 / -1; grid-row: 4; margin-top: 4px; }
+  #txBody .actions { justify-content: flex-end; }
+  .linkbtn { padding: 8px 13px; font-size: 13px; }
+
+  #ledgerBody td:nth-child(5) { grid-column: 2; grid-row: 1; font-size: 14px; }
+  #ledgerBody td:nth-child(2) { grid-column: 1 / -1; grid-row: 2; }
+  #ledgerBody td:nth-child(3), #ledgerBody td:nth-child(4) { grid-row: 3; font-size: 12.5px; }
+  #ledgerBody td:nth-child(3) { grid-column: 1; text-align: left !important; }
+  #ledgerBody td:nth-child(4) { grid-column: 2; }
+  #ledgerBody td:nth-child(3)::before { content: 'Debit: '; color: var(--muted); }
+  #ledgerBody td:nth-child(4)::before { content: 'Credit: '; color: var(--muted); }
+  #txBody td.empty, #ledgerBody td.empty { grid-column: 1 / -1; grid-row: auto; padding: 30px 12px; }
+}
+
+@media print {
+  .no-print, .tabs, .topbar, .lock, .modal, .toast { display: none !important; }
+  .layout { max-width: none; padding: 0; }
+  .card { box-shadow: none; border: 1px solid #D1D5DB; break-inside: avoid; }
+  .view { display: block !important; margin-bottom: 18px; animation: none !important; }
+  body { background: #FFFFFF; color: #000000; }
+}
+</style>
+</head>
+<body>
+<div class="app">
+  <!-- Sticky Frosted Glass Topbar -->
+  <header class="topbar no-print">
+    <div class="topbar-inner">
+      <div class="brand">
+        <div class="logo" id="brandLogo">₹</div>
+        <div>
+          <h1>FinLedger Pro Next</h1>
+          <p>Private offline personal finance ledger</p>
+        </div>
+      </div>
+      <div class="toolbar">
+        <!-- Subtle Topbar PWA Install Button (shown only when browser fires beforeinstallprompt) -->
+        <button class="btn soft sm hidden" id="topbarInstallBtn" type="button" title="Install Offline App">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+            <polyline points="7 10 12 15 17 10"></polyline>
+            <line x1="12" y1="15" x2="12" y2="3"></line>
+          </svg>
+          <span>Install</span>
+        </button>
+        <button class="iconbtn" id="themeBtn" type="button" title="Toggle Light / Dark" aria-label="Toggle Light or Dark Theme">
+          <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <circle cx="12" cy="12" r="9"></circle>
+            <path d="M12 3v18a9 9 0 0 0 0-18z" fill="currentColor"></path>
+          </svg>
+        </button>
+        <button class="iconbtn" id="lockBtn" type="button" title="Lock Ledger" aria-label="Lock Ledger">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <rect x="4" y="11" width="16" height="10" rx="2.5"></rect>
+            <path d="M8 11V7a4 4 0 0 1 8 0v4"></path>
+          </svg>
+        </button>
+        <button class="iconbtn" id="printBtn" type="button" title="Print Report" aria-label="Print Report">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <polyline points="6 9 6 2 18 2 18 9"></polyline>
+            <path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"></path>
+            <rect x="6" y="14" width="12" height="8"></rect>
+          </svg>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Main Workspace -->
+  <main class="layout">
+    <!-- Primary Navigation Tabs -->
+    <nav class="tabs no-print" id="tabs" aria-label="Primary Navigation">
+      <button class="tab active" data-tab="transactions" type="button">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <rect x="3" y="4" width="18" height="16" rx="3"></rect>
+          <line x1="7" y1="9" x2="17" y2="9"></line>
+          <line x1="7" y1="14" x2="13" y2="14"></line>
+        </svg>
+        <span>Transactions</span>
+      </button>
+      <button class="tab" data-tab="ledgers" type="button">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
+          <circle cx="9" cy="7" r="4"></circle>
+          <path d="M23 21v-2a4 4 0 0 0-3-3.87"></path>
+          <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
+        </svg>
+        <span>Parties</span>
+      </button>
+      <button class="tab" data-tab="reports" type="button">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <line x1="18" y1="20" x2="18" y2="10"></line>
+          <line x1="12" y1="20" x2="12" y2="4"></line>
+          <line x1="6" y1="20" x2="6" y2="14"></line>
+        </svg>
+        <span>Reports</span>
+      </button>
+      <button class="tab" data-tab="reconcile" type="button">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
+          <polyline points="22 4 12 14.01 9 11.01"></polyline>
+        </svg>
+        <span>Reconcile</span>
+      </button>
+      <button class="tab" data-tab="settings" type="button">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <circle cx="12" cy="12" r="3"></circle>
+          <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 1 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 1 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 1 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9c.26.6.85 1 1.51 1H21a2 2 0 1 1 0 4h-.09c-.66 0-1.25.4-1.51 1z"></path>
+        </svg>
+        <span>Settings</span>
+      </button>
+    </nav>
+
+    <!-- 5 KPI Summary Cards -->
+    <section class="grid kpis" id="kpis" aria-label="Financial Overview"></section>
+
+    <!-- ================================================================
+         VIEW 1: TRANSACTIONS
+         ================================================================ -->
+    <section class="view" id="view-transactions">
+      <div class="grid content2">
+        <aside class="card no-print">
+          <div class="card-head">
+            <div>
+              <h2 class="section-title" id="formTitle">Record transaction</h2>
+              <p class="section-sub">Cash, income, expense or party entry</p>
+            </div>
+          </div>
+          <form class="form" id="txForm" novalidate>
+            <input type="hidden" id="txId">
+            <div class="form-row">
+              <div class="field">
+                <label for="txDateBtn">Date</label>
+                <input id="txDate" type="hidden" required>
+                <div class="date-control">
+                  <button class="date-step-btn" id="datePrevBtn" type="button" aria-label="Previous day">‹</button>
+                  <button class="date-open-btn" id="txDateBtn" type="button" aria-label="Select date">
+                    <span id="txDateLabel"></span>
+                    <svg class="date-icon" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                      <rect x="3" y="4" width="18" height="18" rx="2.5"></rect>
+                      <line x1="16" y1="2" x2="16" y2="6"></line>
+                      <line x1="8" y1="2" x2="8" y2="6"></line>
+                      <line x1="3" y1="10" x2="21" y2="10"></line>
+                    </svg>
+                  </button>
+                  <button class="date-step-btn" id="dateNextBtn" type="button" aria-label="Next day">›</button>
+                </div>
+              </div>
+              <div class="field">
+                <label for="txType">Type</label>
+                <select id="txType" required></select>
+              </div>
+            </div>
+
+            <div class="field" id="categoryWrap">
+              <label for="txCategory">Category</label>
+              <input id="txCategory" list="categoryList" maxlength="80" placeholder="Food, Salary, Rent...">
+              <datalist id="categoryList">
+                <option value="Salary"></option>
+                <option value="Business Income"></option>
+                <option value="Food & Dining"></option>
+                <option value="Rent & Utilities"></option>
+                <option value="Transport & Fuel"></option>
+                <option value="Healthcare"></option>
+                <option value="Shopping"></option>
+                <option value="Family"></option>
+                <option value="General"></option>
+              </datalist>
+            </div>
+
+            <div class="field hidden" id="partyWrap">
+              <label for="txParty">
+                <span>Party name</span>
+                <span class="math-preview" id="partyRoleHint"></span>
+              </label>
+              <input id="txParty" list="partyList" maxlength="80" placeholder="Person or business">
+              <datalist id="partyList"></datalist>
+            </div>
+
+            <div class="field">
+              <label for="txAmount">
+                <span>Amount</span>
+                <span class="math-preview" id="amountPreview"></span>
+              </label>
+              <input id="txAmount" inputmode="decimal" placeholder="0.00 or 50+120" required>
+            </div>
+
+            <!-- Live Inline Monthly Budget Hint Pill -->
+            <div class="budget-hint ok hidden" id="txBudgetHint" role="status"></div>
+
+            <div class="field">
+              <label for="txNote">Notes</label>
+              <textarea id="txNote" maxlength="240" placeholder="Optional details"></textarea>
+            </div>
+
+            <p id="formError" class="small bad hidden" style="margin:0;font-weight:700;"></p>
+
+            <button class="btn primary" type="submit" id="saveTxBtn">Save transaction</button>
+            <button class="btn hidden" type="button" id="cancelEditBtn">Cancel edit</button>
+          </form>
+        </aside>
+
+        <div class="card">
+          <div class="card-head">
+            <div>
+              <h2 class="section-title">Transaction register</h2>
+              <p class="section-sub" id="txCount"></p>
+            </div>
+            <div class="filters no-print">
+              <select id="filterPeriod" aria-label="Filter by period">
+                <option value="all">All time</option>
+                <option value="today">Today</option>
+                <option value="month">This month</option>
+                <option value="lastMonth">Last month</option>
+              </select>
+              <select id="filterType" aria-label="Filter by transaction type">
+                <option value="all">All types</option>
+              </select>
+              <input id="search" type="search" placeholder="Search...">
+            </div>
+          </div>
+          <div class="table-wrap">
+            <table class="table">
+              <thead>
+                <tr>
+                  <th>Date</th>
+                  <th>Type</th>
+                  <th>Particulars</th>
+                  <th>Notes</th>
+                  <th class="right">Cash impact</th>
+                  <th class="center no-print">Actions</th>
+                </tr>
+              </thead>
+              <tbody id="txBody"></tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================================================================
+         VIEW 2: PARTY LEDGERS
+         ================================================================ -->
+    <section class="view hidden" id="view-ledgers">
+      <div class="grid party-layout">
+        <div class="card">
+          <div class="card-head">
+            <div>
+              <h2 class="section-title">Party accounts</h2>
+              <p class="section-sub">Debtors and creditors remain separate</p>
+            </div>
+          </div>
+          <div class="party-list" id="partyAccounts"></div>
+        </div>
+
+        <div class="card">
+          <div class="card-head">
+            <div>
+              <h2 class="section-title" id="ledgerTitle">Select an account</h2>
+              <p class="section-sub" id="ledgerSub">Chronological statement</p>
+            </div>
+            <div style="display:flex;align-items:center;gap:12px;flex-wrap:wrap">
+              <strong id="ledgerBalance" style="font-size:16px"></strong>
+              <button class="btn soft sm no-print hidden" id="quickPartyTxBtn" type="button">+ New Entry</button>
+            </div>
+          </div>
+          <div class="table-wrap">
+            <table class="table">
+              <thead>
+                <tr>
+                  <th>Date</th>
+                  <th>Particulars</th>
+                  <th class="right">Debit</th>
+                  <th class="right">Credit</th>
+                  <th class="right">Balance</th>
+                </tr>
+              </thead>
+              <tbody id="ledgerBody"></tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================================================================
+         VIEW 3: REPORTS (PERIOD FILTER + SVG CHARTS + BUDGETS + STATEMENTS)
+         ================================================================ -->
+    <section class="view hidden" id="view-reports">
+      <!-- Period Filter Bar -->
+      <div class="card period-bar no-print">
+        <div class="period-pills" id="reportPeriodPills" role="group" aria-label="Report period filter">
+          <button class="period-pill active" type="button" data-period="all">All time</button>
+          <button class="period-pill" type="button" data-period="month">This month</button>
+          <button class="period-pill" type="button" data-period="lastMonth">Last month</button>
+          <button class="period-pill" type="button" data-period="year">This year</button>
+          <button class="period-pill" type="button" data-period="custom">Custom</button>
+        </div>
+        <div class="custom-range-row hidden" id="customRangeRow">
+          <button class="custom-date-chip" id="reportFromBtn" type="button">
+            <span class="lbl">From</span>
+            <span id="reportFromLabel"></span>
+          </button>
+          <span class="muted small">to</span>
+          <button class="custom-date-chip" id="reportToBtn" type="button">
+            <span class="lbl">To</span>
+            <span id="reportToLabel"></span>
+          </button>
+        </div>
+        <span class="small muted" id="reportPeriodNote"></span>
+      </div>
+
+      <!-- Visual Analytics Section (Pure Inline SVG, 100% Offline) -->
+      <div class="grid analytics-grid">
+        <!-- Chart 1: Income vs Expense Overview -->
+        <div class="card pad">
+          <div style="display:flex;justify-content:space-between;align-items:flex-start;gap:10px;flex-wrap:wrap">
+            <div>
+              <h2 class="section-title">Income vs. Expense</h2>
+              <p class="section-sub" id="iePeriodSub">Selected period summary</p>
+            </div>
+            <span class="badge" id="savingsRatePill">Savings rate: 0%</span>
+          </div>
+          <div class="ie-bars" id="ieBars"></div>
+        </div>
+
+        <!-- Chart 2: Expense Breakdown SVG Donut -->
+        <div class="card pad">
+          <div>
+            <h2 class="section-title">Expense Breakdown</h2>
+            <p class="section-sub">Top categories in selected period</p>
+          </div>
+          <div id="donutContainer"></div>
+        </div>
+
+        <!-- Chart 3: 6-Month Cashflow Trend Grouped Bar Chart -->
+        <div class="card pad analytics-full">
+          <div style="display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap">
+            <div>
+              <h2 class="section-title">6-Month Cashflow Trend</h2>
+              <p class="section-sub">Monthly Income vs. Expense · Tap any bar to inspect</p>
+            </div>
+            <div class="trend-legend">
+              <span><i class="legend-dot" style="background:var(--good)"></i>Income</span>
+              <span><i class="legend-dot" style="background:var(--bad)"></i>Expense</span>
+            </div>
+          </div>
+          <div class="trend-chart-wrap" id="trendChartWrap"></div>
+          <div class="trend-detail-pill" id="trendDetailPill"></div>
+        </div>
+      </div>
+
+      <!-- Monthly Budgets & Category Limits Card -->
+      <div class="card pad" style="margin-bottom:16px">
+        <div style="display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap;margin-bottom:14px">
+          <div>
+            <h2 class="section-title">Monthly Budgets &amp; Category Limits</h2>
+            <p class="section-sub">Track monthly spending against your personal limits</p>
+          </div>
+          <div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap" class="no-print">
+            <select id="budgetMonthSelect" class="setting-control" style="width:auto;min-width:140px;padding:8px 11px" aria-label="Select budget month"></select>
+            <button class="btn primary sm" id="openBudgetModalBtn" type="button">+ Set Budget</button>
+          </div>
+        </div>
+        <div id="budgetSummaryWrap"></div>
+        <div class="budget-list" id="budgetList"></div>
+      </div>
+
+      <!-- Category Statements (Filtered by Report Period) -->
+      <div class="grid statements">
+        <div class="card">
+          <div class="card-head">
+            <div>
+              <h2 class="section-title">Income</h2>
+              <p class="section-sub" id="incomeSub">By category</p>
+            </div>
+          </div>
+          <div class="statement-list" id="incomeRows"></div>
+          <div class="totalbar">
+            <span>Total income</span>
+            <span class="good" id="incomeTotal"></span>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-head">
+            <div>
+              <h2 class="section-title">Expenses</h2>
+              <p class="section-sub" id="expenseSub">By category</p>
+            </div>
+          </div>
+          <div class="statement-list" id="expenseRows"></div>
+          <div class="totalbar">
+            <span>Total expenses</span>
+            <span class="bad" id="expenseTotal"></span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Cumulative Personal Balance Sheet -->
+      <div class="card pad" style="margin-top:16px" id="balanceCard">
+        <div style="display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap">
+          <div>
+            <h2 class="section-title">Personal balance sheet</h2>
+            <p class="section-sub" id="balanceStatus"></p>
+          </div>
+          <span class="badge">Cumulative position · All time</span>
+        </div>
+        <div class="grid statements" style="margin-top:16px">
+          <div>
+            <h3 style="font-size:12px;font-weight:750;margin:0 0 8px;text-transform:uppercase;letter-spacing:.05em;color:var(--muted)">Assets</h3>
+            <div id="assetRows"></div>
+            <div class="totalbar" style="padding-left:0;padding-right:0">
+              <span>Total assets</span>
+              <span id="assetTotal"></span>
+            </div>
+          </div>
+          <div>
+            <h3 style="font-size:12px;font-weight:750;margin:0 0 8px;text-transform:uppercase;letter-spacing:.05em;color:var(--muted)">Liabilities &amp; equity</h3>
+            <div id="liabilityRows"></div>
+            <div class="totalbar" style="padding-left:0;padding-right:0">
+              <span>Total liabilities &amp; equity</span>
+              <span id="liabilityTotal"></span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================================================================
+         VIEW 4: RECONCILE
+         ================================================================ -->
+    <section class="view hidden" id="view-reconcile">
+      <div class="grid recon">
+        <div class="card pad">
+          <div class="kpi-label">Book cash</div>
+          <div class="kpi-value" id="bookCash"></div>
+          <div class="kpi-note">Opening cash plus transaction cash movement</div>
+        </div>
+
+        <div class="card pad">
+          <div class="field">
+            <label for="actualCash">Actual physical cash &amp; bank</label>
+            <input class="big-input" type="number" step="0.01" id="actualCash" placeholder="0.00">
+          </div>
+          <button class="btn soft" id="matchBookBtn" type="button" style="margin-top:12px;width:100%">Match book cash</button>
+        </div>
+
+        <div class="card pad">
+          <div class="kpi-label">Difference</div>
+          <div class="kpi-value" id="cashDifference"></div>
+          <div class="kpi-note" id="differenceStatus"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================================================================
+         VIEW 5: SETTINGS — APPEARANCE, PWA, SECURITY & BACKUP CENTER
+         ================================================================ -->
+    <section class="view hidden" id="view-settings">
+      <div class="grid settings-grid">
+        <!-- Left Column: Appearance + Offline PWA + Preferences & Security -->
+        <div class="grid">
+          <div class="card pad">
+            <h2 class="section-title">Appearance &amp; Themes</h2>
+            <p class="section-sub">Customize Standard &amp; Premium palettes</p>
+
+            <div class="group-label">Theme Canvas</div>
+            <div class="theme-grid" id="themePicker">
+              <button class="theme-tile" type="button" data-theme-choice="system">
+                <span class="theme-preview tp-system" aria-hidden="true"></span>
+                <span>System</span>
+              </button>
+              <button class="theme-tile" type="button" data-theme-choice="light">
+                <span class="theme-preview tp-light" aria-hidden="true"></span>
+                <span>iOS Light</span>
+              </button>
+              <button class="theme-tile" type="button" data-theme-choice="dark">
+                <span class="theme-preview tp-dark" aria-hidden="true"></span>
+                <span>iOS Dark</span>
+              </button>
+              <button class="theme-tile" type="button" data-theme-choice="oled">
+                <span class="theme-preview tp-oled" aria-hidden="true"></span>
+                <span>OLED Black</span>
+              </button>
+              <button class="theme-tile" type="button" data-theme-choice="sand">
+                <span class="theme-preview tp-sand" aria-hidden="true"></span>
+                <span>Warm Sand</span>
+              </button>
+            </div>
+
+            <div class="group-label">Standard Accents</div>
+            <div class="accent-grid" id="standardAccents"></div>
+
+            <div class="group-label">Premium Accents <span class="pill-tag">PRO</span></div>
+            <div class="accent-grid" id="premiumAccents"></div>
+
+            <div class="setting-row" style="margin-top:12px">
+              <div>
+                <strong>Animations</strong>
+                <div class="small muted">Spring motion &amp; transitions</div>
+              </div>
+              <div class="segmented" id="animToggle" role="group" aria-label="Animation preference">
+                <button type="button" data-anim="smooth">Smooth</button>
+                <button type="button" data-anim="reduced">Reduced</button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Offline PWA Status & Companion File Generator -->
+          <div class="card pad">
+            <h2 class="section-title">Offline PWA Status</h2>
+            <p class="section-sub">Install as a standalone offline app on your home screen</p>
+            <div class="backup-banner info" id="pwaStatusBanner"></div>
+            <div class="backup-actions">
+              <button class="btn primary hidden" id="settingsInstallBtn" type="button">Install App (PWA)</button>
+              <div class="backup-row2">
+                <button class="btn soft sm" id="dlManifestBtn" type="button">Download manifest.json</button>
+                <button class="btn soft sm" id="dlSwBtn" type="button">Download sw.js</button>
+              </div>
+            </div>
+            <p class="small muted" style="margin:10px 0 0;line-height:1.45">
+              Upload <strong>manifest.json</strong> and <strong>sw.js</strong> next to <strong>index.html</strong> on GitHub Pages to enable instant offline caching &amp; native PWA install.
+            </p>
+          </div>
+
+          <div class="card pad">
+            <h2 class="section-title">Preferences &amp; Security</h2>
+            <div class="setting-row">
+              <div>
+                <strong>Currency</strong>
+                <div class="small muted">Display symbol</div>
+              </div>
+              <select id="currency" class="setting-control" style="max-width:140px">
+                <option value="₹">₹ INR</option>
+                <option value="$">$ USD</option>
+                <option value="€">€ EUR</option>
+                <option value="£">£ GBP</option>
+              </select>
+            </div>
+
+            <div class="setting-row">
+              <div>
+                <strong>Opening cash</strong>
+                <div class="small muted">Starting cash and bank balance</div>
+              </div>
+              <input id="openingCash" class="setting-control num" type="number" step="0.01" style="max-width:140px" placeholder="0.00">
+            </div>
+
+            <div class="setting-row">
+              <div>
+                <strong>Auto-lock</strong>
+                <div class="small muted">After inactivity</div>
+              </div>
+              <select id="autoLock" class="setting-control" style="max-width:140px">
+                <option value="0">Manual only</option>
+                <option value="1">1 minute</option>
+                <option value="5">5 minutes</option>
+                <option value="10">10 minutes</option>
+              </select>
+            </div>
+
+            <div style="display:flex;gap:9px;flex-wrap:wrap;margin-top:14px">
+              <button class="btn soft" id="changePinBtn" type="button">Set PIN lock (optional)</button>
+              <button class="btn danger hidden" id="removePinBtn" type="button">Remove PIN</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Right Column: Bulletproof Backup & Restore Center -->
+        <div class="grid">
+          <div class="card pad">
+            <h2 class="section-title">Backup &amp; Restore Center</h2>
+            <p class="section-sub">WebView &amp; APK-proof ways to keep your ledger safe</p>
+
+            <div class="backup-banner warn" id="backupStatusBanner"></div>
+
+            <div class="group-label">Recommended for Mobile &amp; APK</div>
+            <div class="backup-actions" style="margin-top:0">
+              <button class="btn primary" id="shareBackupBtn" type="button">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                  <path d="M4 12v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8"></path>
+                  <polyline points="16 6 12 2 8 6"></polyline>
+                  <line x1="12" y1="2" x2="12" y2="15"></line>
+                </svg>
+                <span>Share Backup (WhatsApp / Drive)</span>
+              </button>
+
+              <div class="backup-row2">
+                <button class="btn soft" id="copyJsonBtn" type="button">Copy JSON Backup</button>
+                <button class="btn" id="viewBackupTextBtn" type="button">View / Copy Text</button>
+              </div>
+
+              <button class="btn" id="pasteRestoreBtn" type="button">Paste Backup to Restore</button>
+            </div>
+
+            <div class="group-label">Files &amp; Spreadsheet (CSV)</div>
+            <div class="backup-actions" style="margin-top:0">
+              <div class="backup-row2">
+                <button class="btn" id="exportJsonBtn" type="button">Download JSON File</button>
+                <label class="btn" style="cursor:pointer">
+                  <span>Import JSON File</span>
+                  <input class="hidden" type="file" id="importFile" accept="application/json,.json,text/plain">
+                </label>
+              </div>
+              <button class="btn" id="csvCenterBtn" type="button">Export / Share CSV Spreadsheet</button>
+            </div>
+
+            <div class="group-label">Local Recovery Snapshots (Last 3)</div>
+            <p class="section-sub">Auto-saved before Restore or Reset. Tap anytime to save a checkpoint.</p>
+            <div style="margin-top:10px">
+              <button class="btn soft sm" id="saveSnapshotBtn" type="button">+ Save Recovery Snapshot</button>
+            </div>
+            <div class="snapshot-list" id="snapshotList"></div>
+
+            <div style="margin-top:18px;padding-top:15px;border-top:1px solid var(--line)">
+              <button class="btn danger" id="resetBtn" type="button" style="width:100%">Reset all finance data</button>
+            </div>
+
+            <div class="notice" style="margin-top:14px">
+              <strong>APK Tip:</strong> On Android APK wrappers, standard file downloads can hide inside internal storage. Use <strong>Share Backup</strong> (send to your own WhatsApp/Drive) or <strong>Copy JSON Backup</strong> for a 100% reliable backup.
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+</div>
+
+<!-- ========================================================================
+     MODAL 1: CUSTOM IN-APP CALENDAR SHEET (REUSED FOR TX & REPORT DATES)
+     ======================================================================== -->
+<div class="modal hidden no-print" id="dateModal" role="dialog" aria-modal="true" aria-labelledby="dateModalTitle">
+  <div class="modal-card">
+    <div class="sheet-head">
+      <h3 class="section-title" id="dateModalTitle" style="margin:0">Select date</h3>
+      <button class="sheet-close" id="dateModalClose" type="button" aria-label="Close calendar">✕</button>
+    </div>
+    <div class="cal-body">
+      <div class="cal-quick">
+        <button class="cal-pill" id="dateQuickToday" type="button">Today</button>
+        <button class="cal-pill" id="dateQuickYesterday" type="button">Yesterday</button>
+      </div>
+      <div class="cal-nav">
+        <button class="cal-nav-btn" id="calPrevMonth" type="button" aria-label="Previous month">‹</button>
+        <select id="calMonth" aria-label="Select month"></select>
+        <select id="calYear" aria-label="Select year"></select>
+        <button class="cal-nav-btn" id="calNextMonth" type="button" aria-label="Next month">›</button>
+      </div>
+      <div class="cal-weekdays" aria-hidden="true">
+        <span>Su</span><span>Mo</span><span>Tu</span><span>We</span><span>Th</span><span>Fr</span><span>Sa</span>
+      </div>
+      <div class="cal-days" id="calDays"></div>
+    </div>
+  </div>
+</div>
+
+<!-- ========================================================================
+     MODAL 2: SET / EDIT MONTHLY BUDGET MODAL
+     ======================================================================== -->
+<div class="modal hidden no-print" id="budgetModal" role="dialog" aria-modal="true" aria-labelledby="budgetModalTitle">
+  <div class="modal-card">
+    <div class="sheet-head">
+      <div>
+        <h3 class="section-title" id="budgetModalTitle" style="margin:0">Set Monthly Budget</h3>
+        <p class="section-sub">Applies every month for this expense category</p>
+      </div>
+      <button class="sheet-close" id="budgetModalClose" type="button" aria-label="Close">✕</button>
+    </div>
+    <form class="form" id="budgetForm" novalidate>
+      <input type="hidden" id="budgetOrigCategory">
+      <div class="field">
+        <label for="budgetCategoryInput">Expense Category</label>
+        <input id="budgetCategoryInput" list="categoryList" maxlength="80" placeholder="Food & Dining, Transport & Fuel..." required>
+      </div>
+      <div class="field">
+        <label for="budgetLimitInput">Monthly Limit</label>
+        <input id="budgetLimitInput" type="number" step="0.01" min="1" inputmode="decimal" placeholder="e.g. 3000" required>
+      </div>
+      <p class="small bad hidden" id="budgetFormError" style="margin:0;font-weight:700"></p>
+      <div style="display:flex;gap:8px;justify-content:flex-end;flex-wrap:wrap;margin-top:4px">
+        <button class="btn danger hidden" id="budgetDeleteBtn" type="button" style="margin-right:auto">Remove</button>
+        <button class="btn" id="budgetCancelBtn" type="button">Cancel</button>
+        <button class="btn primary" type="submit">Save Budget</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<!-- ========================================================================
+     MODAL 3: VIEW / COPY / SHARE BACKUP TEXT MODAL (JSON OR CSV)
+     ======================================================================== -->
+<div class="modal hidden no-print" id="textExportModal" role="dialog" aria-modal="true" aria-labelledby="textExportTitle">
+  <div class="modal-card">
+    <div class="sheet-head">
+      <div>
+        <h3 class="section-title" id="textExportTitle" style="margin:0">Backup Code</h3>
+        <p class="section-sub" id="textExportSub">Copy or share directly to WhatsApp, Notes, or Drive</p>
+      </div>
+      <button class="sheet-close" id="textExportClose" type="button" aria-label="Close">✕</button>
+    </div>
+    <div class="modal-body">
+      <textarea class="code-box" id="textExportBox" readonly aria-label="Exported backup text"></textarea>
+      <div class="backup-row2">
+        <button class="btn soft" id="textSelectAllBtn" type="button">Select All</button>
+        <button class="btn primary" id="textCopyBtn" type="button">Copy All</button>
+      </div>
+      <div class="backup-row2">
+        <button class="btn" id="textShareBtn" type="button">Share Text / File</button>
+        <button class="btn" id="textDownloadBtn" type="button">Download File</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ========================================================================
+     MODAL 4: PASTE BACKUP TO RESTORE MODAL
+     ======================================================================== -->
+<div class="modal hidden no-print" id="pasteRestoreModal" role="dialog" aria-modal="true" aria-labelledby="pasteRestoreTitle">
+  <div class="modal-card">
+    <div class="sheet-head">
+      <div>
+        <h3 class="section-title" id="pasteRestoreTitle" style="margin:0">Paste Backup to Restore</h3>
+        <p class="section-sub">Works 100% inside Android APK &amp; WebView</p>
+      </div>
+      <button class="sheet-close" id="pasteRestoreClose" type="button" aria-label="Close">✕</button>
+    </div>
+    <div class="modal-body">
+      <div style="display:flex;justify-content:space-between;align-items:center;gap:8px">
+        <span class="small muted">Paste your saved JSON backup text below:</span>
+        <button class="btn soft sm" id="pasteClipboardBtn" type="button">Paste from Clipboard</button>
+      </div>
+      <textarea class="code-box" id="pasteRestoreInput" placeholder='{"app":"FinLedger Pro Next","version":1,"data":{...}}'></textarea>
+      <div class="restore-preview hidden" id="pasteRestorePreview"></div>
+    </div>
+    <div class="modal-actions">
+      <button class="btn" type="button" id="pasteRestoreCancelBtn">Cancel</button>
+      <button class="btn primary" type="button" id="pasteRestoreConfirmBtn" disabled>Restore Backup</button>
+    </div>
+  </div>
+</div>
+
+<!-- ========================================================================
+     MODAL 5: CUSTOM CONFIRM & PIN VERIFICATION DIALOG
+     ======================================================================== -->
+<div class="modal hidden no-print" id="dialogModal" role="dialog" aria-modal="true">
+  <div class="modal-card">
+    <div class="sheet-head">
+      <div>
+        <h3 class="section-title" id="dialogTitle" style="margin:0">Confirm Action</h3>
+        <p class="section-sub" id="dialogMessage"></p>
+      </div>
+    </div>
+    <div class="form hidden" id="dialogInputWrap">
+      <div class="field">
+        <label for="dialogInput" id="dialogInputLabel">Enter 4-digit PIN</label>
+        <input id="dialogInput" type="password" inputmode="numeric" maxlength="4" placeholder="••••">
+        <p class="small bad hidden" id="dialogError" style="margin:6px 0 0;font-weight:700"></p>
+      </div>
+    </div>
+    <div class="modal-actions">
+      <button class="btn" type="button" id="dialogCancelBtn">Cancel</button>
+      <button class="btn primary" type="button" id="dialogConfirmBtn">Confirm</button>
+    </div>
+  </div>
+</div>
+
+<!-- ========================================================================
+     FROSTED DARK GLASS PIN LOCK SCREEN
+     ======================================================================== -->
+<div class="lock hidden" id="lockScreen">
+  <div class="pin-card">
+    <div class="pin-glyph" aria-hidden="true">
+      <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <rect x="4" y="11" width="16" height="10" rx="2.5"></rect>
+        <path d="M8 11V7a4 4 0 0 1 8 0v4"></path>
+      </svg>
+    </div>
+    <h2 id="pinTitle">Unlock FinLedger</h2>
+    <p id="pinHelp">Enter your 4-digit PIN</p>
+    <div class="pin-dots" id="pinDots"></div>
+    <p class="pin-error" id="pinError"></p>
+    <div class="keypad" id="keypad"></div>
+    <button class="btn hidden" id="pinCancel" type="button" style="margin-top:18px;width:220px;background:rgba(255,255,255,0.10);color:#F8FAFC;border-color:rgba(255,255,255,0.18)">Cancel</button>
+  </div>
+</div>
+
+<!-- Dynamic-Island Capsule Toast Notification -->
+<div class="toast hidden" id="toast" role="status" aria-live="polite"></div>
+
+<script>
+'use strict';
+
+// ==========================================================================
+// CONSTANTS, STORAGE KEYS & COMPATIBILITY CONFIGURATION
+// ==========================================================================
+const APP_VERSION = 1;
+const DB_KEY = 'finledger_next_state_v1';
+const PIN_KEY = 'finledger_next_pin_hash_v1';
+const SNAPSHOT_KEY = 'finledger_next_snapshots_v1';
+const MAX_SNAPSHOTS = 3;
+
+const MONTHS = [
+  'January', 'February', 'March', 'April', 'May', 'June',
+  'July', 'August', 'September', 'October', 'November', 'December'
+];
+const MONTHS_SHORT = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+const CAL_MIN_YEAR = 2020;
+const CAL_MAX_YEAR = 2035;
+
+const VALID_THEMES = ['system', 'light', 'dark', 'oled', 'sand'];
+const THEME_META_COLORS = {
+  light: '#F2F2F7',
+  dark: '#0E1117',
+  oled: '#000000',
+  sand: '#F7F4EF'
+};
+
+const ACCENTS = [
+  { id: 'blue', name: 'iOS Blue', tier: 'standard', swatch: '#007AFF' },
+  { id: 'teal', name: 'Emerald Teal', tier: 'standard', swatch: '#0F766E' },
+  { id: 'green', name: 'Mint Green', tier: 'standard', swatch: '#16A34A' },
+  { id: 'indigo', name: 'Indigo', tier: 'standard', swatch: '#5856D6' },
+  { id: 'graphite', name: 'Titanium', tier: 'premium', swatch: '#334155' },
+  { id: 'amethyst', name: 'Amethyst', tier: 'premium', swatch: '#9333EA' },
+  { id: 'rose', name: 'Sunset Rose', tier: 'premium', swatch: '#E11D48' },
+  { id: 'gold', name: 'Champagne', tier: 'premium', swatch: '#B45309' }
+];
+const VALID_ACCENTS = ACCENTS.map(a => a.id);
+
+// Harmonious iOS chart palette for Donut Chart categories
+const DONUT_COLORS = ['#007AFF', '#34C759', '#FF9500', '#AF52DE', '#FF2D55', '#5AC8FA', '#8E8E93'];
+
+// Exact internal keys preserved for 100% backward compatibility; updated user-facing labels
+const TYPES = {
+  INCOME: { label: 'Income', cash: 1, party: false },
+  EXPENSE: { label: 'Expense', cash: -1, party: false },
+  LEND: { label: 'Debtor', cash: -1, party: true, role: 'DEBTOR' },
+  COLLECT: { label: 'Debtor receive', cash: 1, party: true, role: 'DEBTOR' },
+  BORROW: { label: 'Creditor', cash: 1, party: true, role: 'CREDITOR' },
+  REPAY: { label: 'Creditor pay', cash: -1, party: true, role: 'CREDITOR' },
+  OPENING_DEBTOR: { label: 'Opening receivable', cash: 0, party: true, role: 'DEBTOR' },
+  OPENING_CREDITOR: { label: 'Opening payable', cash: 0, party: true, role: 'CREDITOR' }
+};
+
+const defaults = {
+  version: APP_VERSION,
+  settings: {
+    currency: '₹',
+    theme: 'system',
+    accent: 'teal',
+    animations: 'smooth',
+    openingCash: 0,
+    actualCash: 0,
+    autoLock: 5,
+    lastBackupAt: null,
+    budgets: {}
+  },
+  selectedParty: null,
+  transactions: [],
+  updatedAt: null
+};
+
+let state = loadState();
+let pinInput = '';
+let pinMode = 'unlock';
+let pendingPin = '';
+let inactivityTimer;
+let activeDialogResolver = null;
+let calViewYear = new Date().getFullYear();
+let calViewMonth = new Date().getMonth();
+let calTarget = 'txDate'; // 'txDate' | 'reportFrom' | 'reportTo'
+let currentExportPayload = { mode: 'json', filename: '', mime: '', text: '' };
+let parsedPasteCandidate = null;
+let deferredInstallPrompt = null;
+let swStatusState = 'checking'; // 'checking' | 'active' | 'unsupported' | 'local'
+
+// Reports Period & Budget Month UI state
+const reportUI = {
+  period: 'all', // 'all' | 'month' | 'lastMonth' | 'year' | 'custom'
+  customFrom: localISO(new Date(new Date().getFullYear(), new Date().getMonth(), 1)),
+  customTo: localISO(),
+  budgetMonth: localISO().slice(0, 7),
+  selectedTrendIdx: 5
+};
+
+// ==========================================================================
+// DOM & GENERAL UTILITIES
+// ==========================================================================
+const $ = id => document.getElementById(id);
+const qsa = s => [...document.querySelectorAll(s)];
+
+function clone(o) { return JSON.parse(JSON.stringify(o)); }
+
+function esc(v) {
+  return String(v ?? '').replace(/[&<>"']/g, c => ({
+    '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;'
+  }[c]));
+}
+
+function num(v) {
+  const n = Number(v);
+  return Number.isFinite(n) ? n : 0;
+}
+
+function round(v) { return Math.round((num(v) + Number.EPSILON) * 100) / 100; }
+
+function uuid() {
+  if (window.crypto && crypto.randomUUID) return crypto.randomUUID();
+  return Date.now().toString(36) + '-' + Math.random().toString(36).slice(2);
+}
+
+/** Local timezone YYYY-MM-DD formatter. */
+function localISO(d = new Date()) {
+  const y = d.getFullYear();
+  const m = String(d.getMonth() + 1).padStart(2, '0');
+  const day = String(d.getDate()).padStart(2, '0');
+  return `${y}-${m}-${day}`;
+}
+
+function formatDisplayDate(iso) {
+  if (!/^\d{4}-\d{2}-\d{2}$/.test(iso || '')) return '';
+  const [y, m, d] = iso.split('-');
+  return `${d}/${m}/${y}`;
+}
+
+function formatMonthLabel(ym) {
+  if (!/^\d{4}-\d{2}$/.test(ym || '')) return ym || '';
+  const [y, m] = ym.split('-').map(Number);
+  return `${MONTHS_SHORT[m - 1]} ${y}`;
+}
+
+function formatDateTime(isoStr) {
+  if (!isoStr) return '';
+  const d = new Date(isoStr);
+  if (Number.isNaN(d.getTime())) return '';
+  return d.toLocaleString('en-IN', {
+    day: '2-digit', month: 'short', year: 'numeric', hour: '2-digit', minute: '2-digit'
+  });
+}
+
+function money(v) {
+  const n = round(v);
+  const sign = n < 0 ? '-' : '';
+  return (
+    sign +
+    state.settings.currency +
+    Math.abs(n).toLocaleString('en-IN', {
+      minimumFractionDigits: 2,
+      maximumFractionDigits: 2
+    })
+  );
+}
+
+function moneyShort(v) {
+  const n = round(v);
+  const abs = Math.abs(n);
+  const sign = n < 0 ? '-' : '';
+  const c = state.settings.currency;
+  if (abs >= 10000000) return `${sign}${c}${(abs / 10000000).toFixed(1)}Cr`;
+  if (abs >= 100000) return `${sign}${c}${(abs / 100000).toFixed(1)}L`;
+  if (abs >= 1000) return `${sign}${c}${(abs / 1000).toFixed(abs >= 10000 ? 0 : 1)}k`;
+  return `${sign}${c}${Math.round(abs)}`;
+}
+
+// ==========================================================================
+// STORAGE, BACKWARD-COMPATIBLE NORMALISATION & SNAPSHOTS
+// ==========================================================================
+function loadState() {
+  try {
+    const raw = JSON.parse(localStorage.getItem(DB_KEY));
+    return normaliseState(raw);
+  } catch {
+    return clone(defaults);
+  }
+}
+
+function normaliseBudgets(rawBudgets) {
+  const clean = {};
+  if (!rawBudgets || typeof rawBudgets !== 'object') return clean;
+  Object.entries(rawBudgets).forEach(([k, v]) => {
+    const key = String(k || '').trim().slice(0, 80);
+    const val = round(v);
+    if (key && val > 0) clean[key] = val;
+  });
+  return clean;
+}
+
+function normaliseState(x) {
+  const s = clone(defaults);
+  if (!x || typeof x !== 'object') return s;
+
+  const incoming = x.settings && typeof x.settings === 'object' ? x.settings : {};
+  s.settings = {
+    currency: typeof incoming.currency === 'string' && incoming.currency.trim() ? incoming.currency : '₹',
+    theme: VALID_THEMES.includes(incoming.theme) ? incoming.theme : 'system',
+    accent: VALID_ACCENTS.includes(incoming.accent) ? incoming.accent : 'teal',
+    animations: incoming.animations === 'reduced' ? 'reduced' : 'smooth',
+    openingCash: round(incoming.openingCash),
+    actualCash: round(incoming.actualCash),
+    autoLock: Number.isFinite(Number(incoming.autoLock)) ? Number(incoming.autoLock) : 5,
+    lastBackupAt: typeof incoming.lastBackupAt === 'string' ? incoming.lastBackupAt : null,
+    budgets: normaliseBudgets(incoming.budgets)
+  };
+
+  s.selectedParty = typeof x.selectedParty === 'string' ? x.selectedParty : null;
+  s.transactions = Array.isArray(x.transactions)
+    ? x.transactions.filter(validTx).map(t => ({
+        id: String(t.id || uuid()),
+        date: t.date,
+        type: t.type,
+        amount: round(t.amount),
+        category: String(t.category || '').slice(0, 80),
+        party: String(t.party || '').slice(0, 80),
+        note: String(t.note || '').slice(0, 240)
+      }))
+    : [];
+  s.updatedAt = typeof x.updatedAt === 'string' ? x.updatedAt : null;
+  return s;
+}
+
+function validTx(t) {
+  return (
+    t &&
+    Object.prototype.hasOwnProperty.call(TYPES, t.type) &&
+    /^\d{4}-\d{2}-\d{2}$/.test(t.date || '') &&
+    Number.isFinite(Number(t.amount)) &&
+    Number(t.amount) > 0
+  );
+}
+
+function save() {
+  state.updatedAt = new Date().toISOString();
+  try {
+    localStorage.setItem(DB_KEY, JSON.stringify(state));
+  } catch {
+    toast('Storage is full — please export a backup.', 'warn');
+  }
+  renderAll();
+}
+
+function loadSnapshots() {
+  try {
+    const arr = JSON.parse(localStorage.getItem(SNAPSHOT_KEY));
+    return Array.isArray(arr) ? arr.filter(x => x && x.id && x.data) : [];
+  } catch {
+    return [];
+  }
+}
+
+function saveSnapshot(label = 'Manual checkpoint') {
+  try {
+    const list = loadSnapshots();
+    const snap = {
+      id: uuid(),
+      createdAt: new Date().toISOString(),
+      label: String(label).slice(0, 60),
+      txCount: state.transactions.length,
+      data: clone(state)
+    };
+    const next = [snap, ...list].slice(0, MAX_SNAPSHOTS);
+    localStorage.setItem(SNAPSHOT_KEY, JSON.stringify(next));
+    renderSnapshots();
+    return true;
+  } catch {
+    return false;
+  }
+}
+
+function deleteSnapshotById(id) {
+  try {
+    const next = loadSnapshots().filter(s => s.id !== id);
+    localStorage.setItem(SNAPSHOT_KEY, JSON.stringify(next));
+    renderSnapshots();
+    toast('Snapshot removed', 'info');
+  } catch {
+    toast('Could not remove snapshot', 'error');
+  }
+}
+
+// ==========================================================================
+// DYNAMIC-ISLAND TOAST NOTIFICATIONS
+// ==========================================================================
+let toastTimer;
+const TOAST_ICONS = {
+  success: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>',
+  warn: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"></path><line x1="12" y1="9" x2="12" y2="13"></line><line x1="12" y1="17" x2="12.01" y2="17"></line></svg>',
+  error: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><line x1="15" y1="9" x2="9" y2="15"></line><line x1="9" y1="9" x2="15" y2="15"></line></svg>',
+  info: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="16" x2="12" y2="12"></line><line x1="12" y1="8" x2="12.01" y2="8"></line></svg>'
+};
+
+function toast(msg, type = 'success', duration = 2600) {
+  clearTimeout(toastTimer);
+  const el = $('toast');
+  el.className = `toast ${type}`;
+  el.innerHTML = `${TOAST_ICONS[type] || TOAST_ICONS.success}<span>${esc(msg)}</span>`;
+  el.classList.remove('hidden');
+  el.style.animation = 'none';
+  void el.offsetWidth;
+  el.style.animation = '';
+  toastTimer = setTimeout(() => el.classList.add('hidden'), duration);
+}
+
+// ==========================================================================
+// SAFE RECURSIVE-DESCENT MATH PARSER & PIN HASH
+// ==========================================================================
+function parseAmount(s) {
+  s = String(s).replace(/,/g, '').trim();
+  if (!s || !/^[0-9+\-*/().\s]+$/.test(s)) return NaN;
+  const tokens = s.match(/\d*\.?\d+|[()+\-*/]/g);
+  if (!tokens || tokens.join('') !== s.replace(/\s/g, '')) return NaN;
+  let i = 0;
+
+  function expr() {
+    let v = term();
+    while (tokens[i] === '+' || tokens[i] === '-') {
+      const op = tokens[i++];
+      const r = term();
+      v = op === '+' ? v + r : v - r;
+    }
+    return v;
+  }
+  function term() {
+    let v = factor();
+    while (tokens[i] === '*' || tokens[i] === '/') {
+      const op = tokens[i++];
+      const r = factor();
+      v = op === '*' ? v * r : v / r;
+    }
+    return v;
+  }
+  function factor() {
+    if (tokens[i] === '-') { i++; return -factor(); }
+    if (tokens[i] === '+') { i++; return factor(); }
+    if (tokens[i] === '(') {
+      i++;
+      const v = expr();
+      if (tokens[i++] !== ')') throw 0;
+      return v;
+    }
+    const v = Number(tokens[i++]);
+    if (!Number.isFinite(v)) throw 0;
+    return v;
+  }
+
+  try {
+    const r = expr();
+    return i === tokens.length && Number.isFinite(r) ? round(r) : NaN;
+  } catch {
+    return NaN;
+  }
+}
+
+async function hashPin(pin) {
+  if (!(window.crypto && crypto.subtle)) {
+    return 'f' + [...pin].reduce((h, c) => (Math.imul(h, 31) + c.charCodeAt(0)) >>> 0, 7);
+  }
+  const bytes = new TextEncoder().encode(pin);
+  const hash = await crypto.subtle.digest('SHA-256', bytes);
+  return [...new Uint8Array(hash)].map(x => x.toString(16).padStart(2, '0')).join('');
+}
+
+// ==========================================================================
+// CUSTOM DATE PICKER & CALENDAR MODAL (SUPPORTS TX DATE + REPORT RANGE)
+// ==========================================================================
+function setTxDate(isoDate) {
+  const iso = /^\d{4}-\d{2}-\d{2}$/.test(isoDate || '') ? isoDate : localISO();
+  $('txDate').value = iso;
+  $('txDateLabel').textContent = formatDisplayDate(iso);
+  updateTxBudgetHint();
+}
+
+function shiftTxDate(days) {
+  const current = /^\d{4}-\d{2}-\d{2}$/.test($('txDate').value) ? $('txDate').value : localISO();
+  const [y, m, d] = current.split('-').map(Number);
+  const next = new Date(y, m - 1, d + days, 12, 0, 0);
+  setTxDate(localISO(next));
+}
+
+function getCalendarTargetValue() {
+  if (calTarget === 'reportFrom') return reportUI.customFrom;
+  if (calTarget === 'reportTo') return reportUI.customTo;
+  return $('txDate').value || localISO();
+}
+
+function applyCalendarSelection(iso) {
+  if (calTarget === 'reportFrom') {
+    reportUI.customFrom = iso;
+    if (reportUI.customTo < reportUI.customFrom) reportUI.customTo = iso;
+    renderReports(compute());
+  } else if (calTarget === 'reportTo') {
+    reportUI.customTo = iso;
+    if (reportUI.customFrom > reportUI.customTo) reportUI.customFrom = iso;
+    renderReports(compute());
+  } else {
+    setTxDate(iso);
+  }
+  closeDateModal();
+}
+
+function buildCalendarSelectors(extraYear) {
+  $('calMonth').innerHTML = MONTHS.map((name, idx) => `<option value="${idx}">${name}</option>`).join('');
+  const minY = Math.min(CAL_MIN_YEAR, Number.isFinite(extraYear) ? extraYear : CAL_MIN_YEAR);
+  const maxY = Math.max(CAL_MAX_YEAR, Number.isFinite(extraYear) ? extraYear : CAL_MAX_YEAR);
+  let yearHtml = '';
+  for (let y = minY; y <= maxY; y++) yearHtml += `<option value="${y}">${y}</option>`;
+  $('calYear').innerHTML = yearHtml;
+}
+
+function renderCalendar() {
+  if (!$('calYear').querySelector(`option[value="${calViewYear}"]`)) {
+    buildCalendarSelectors(calViewYear);
+  }
+  $('calMonth').value = String(calViewMonth);
+  $('calYear').value = String(calViewYear);
+
+  const selectedIso = getCalendarTargetValue();
+  const todayIso = localISO();
+  const firstWeekday = new Date(calViewYear, calViewMonth, 1).getDay();
+  const daysInMonth = new Date(calViewYear, calViewMonth + 1, 0).getDate();
+
+  let html = '';
+  for (let i = 0; i < firstWeekday; i++) html += '<span class="cal-empty" aria-hidden="true"></span>';
+  for (let day = 1; day <= daysInMonth; day++) {
+    const iso = `${calViewYear}-${String(calViewMonth + 1).padStart(2, '0')}-${String(day).padStart(2, '0')}`;
+    const classes = ['cal-day'];
+    if (iso === todayIso) classes.push('today');
+    if (iso === selectedIso) classes.push('selected');
+    html += `<button class="${classes.join(' ')}" type="button" data-iso="${iso}" aria-label="${formatDisplayDate(iso)}">${day}</button>`;
+  }
+  $('calDays').innerHTML = html;
+}
+
+function openDateModal(target = 'txDate') {
+  calTarget = target;
+  $('dateModalTitle').textContent =
+    target === 'reportFrom' ? 'Select From Date'
+    : target === 'reportTo' ? 'Select To Date'
+    : 'Select Date';
+  const current = getCalendarTargetValue();
+  const [y, m] = current.split('-').map(Number);
+  calViewYear = y;
+  calViewMonth = m - 1;
+  renderCalendar();
+  $('dateModal').classList.remove('hidden');
+}
+
+function closeDateModal() { $('dateModal').classList.add('hidden'); }
+
+function stepCalendarMonth(delta) {
+  const next = new Date(calViewYear, calViewMonth + delta, 1);
+  calViewYear = next.getFullYear();
+  calViewMonth = next.getMonth();
+  renderCalendar();
+}
+
+// ==========================================================================
+// CUSTOM DIALOGS & BUDGET MODAL
+// ==========================================================================
+function closeDialog(result = null) {
+  $('dialogModal').classList.add('hidden');
+  if (activeDialogResolver) {
+    const resolve = activeDialogResolver;
+    activeDialogResolver = null;
+    resolve(result);
+  }
+}
+
+function showConfirmDialog({ title, message, confirmText = 'Confirm', danger = false, hideCancel = false }) {
+  return new Promise(resolve => {
+    activeDialogResolver = resolve;
+    $('dialogTitle').textContent = title;
+    $('dialogMessage').textContent = message;
+    $('dialogInputWrap').classList.add('hidden');
+    $('dialogError').classList.add('hidden');
+    $('dialogCancelBtn').classList.toggle('hidden', hideCancel);
+    $('dialogConfirmBtn').textContent = confirmText;
+    $('dialogConfirmBtn').className = danger ? 'btn danger' : 'btn primary';
+    $('dialogModal').classList.remove('hidden');
+    $('dialogConfirmBtn').onclick = () => closeDialog(true);
+    $('dialogCancelBtn').onclick = () => closeDialog(false);
+  });
+}
+
+function showPinVerifyDialog() {
+  return new Promise(resolve => {
+    activeDialogResolver = resolve;
+    $('dialogTitle').textContent = 'Verify Current PIN';
+    $('dialogMessage').textContent = 'Enter your current 4-digit PIN to continue.';
+    $('dialogInputWrap').classList.remove('hidden');
+    $('dialogInputLabel').textContent = 'Current 4-digit PIN';
+    $('dialogInput').value = '';
+    $('dialogError').classList.add('hidden');
+    $('dialogCancelBtn').classList.remove('hidden');
+    $('dialogConfirmBtn').textContent = 'Verify PIN';
+    $('dialogConfirmBtn').className = 'btn primary';
+    $('dialogModal').classList.remove('hidden');
+    setTimeout(() => $('dialogInput').focus(), 60);
+
+    $('dialogConfirmBtn').onclick = async () => {
+      const val = $('dialogInput').value.trim();
+      const hashed = await hashPin(val);
+      if (hashed !== localStorage.getItem(PIN_KEY)) {
+        $('dialogError').textContent = 'Incorrect current PIN. Please try again.';
+        $('dialogError').classList.remove('hidden');
+        return;
+      }
+      closeDialog(true);
+    };
+    $('dialogCancelBtn').onclick = () => closeDialog(false);
+  });
+}
+
+function openBudgetModal(existingCategory = '') {
+  const budgets = state.settings.budgets || {};
+  $('budgetFormError').classList.add('hidden');
+  if (existingCategory && budgets[existingCategory]) {
+    $('budgetModalTitle').textContent = 'Edit Monthly Budget';
+    $('budgetOrigCategory').value = existingCategory;
+    $('budgetCategoryInput').value = existingCategory;
+    $('budgetLimitInput').value = budgets[existingCategory];
+    $('budgetDeleteBtn').classList.remove('hidden');
+  } else {
+    $('budgetModalTitle').textContent = 'Set Monthly Budget';
+    $('budgetOrigCategory').value = '';
+    $('budgetCategoryInput').value = '';
+    $('budgetLimitInput').value = '';
+    $('budgetDeleteBtn').classList.add('hidden');
+  }
+  $('budgetModal').classList.remove('hidden');
+  setTimeout(() => $('budgetCategoryInput').focus(), 60);
+}
+
+function closeBudgetModal() { $('budgetModal').classList.add('hidden'); }
+
+// ==========================================================================
+// PWA SERVICE WORKER, INSTALL PROMPT & COMPANION FILE GENERATORS
+// ==========================================================================
+function generateManifestJson() {
+  return JSON.stringify({
+    name: 'FinLedger Pro Next',
+    short_name: 'FinLedger',
+    description: 'Private offline personal finance ledger',
+    start_url: './index.html',
+    scope: './',
+    display: 'standalone',
+    background_color: '#F2F2F7',
+    theme_color: '#0F766E',
+    icons: [
+      {
+        src: "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 192 192'%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0' y1='0' x2='1' y2='1'%3E%3Cstop offset='0%25' stop-color='%2310B981'/%3E%3Cstop offset='100%25' stop-color='%230F766E'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width='192' height='192' rx='44' fill='url(%23g)'/%3E%3Ctext x='96' y='132' text-anchor='middle' font-family='sans-serif' font-size='112' font-weight='800' fill='%23FFFFFF'%3E%E2%82%B9%3C/text%3E%3C/svg%3E",
+        sizes: '192x192',
+        type: 'image/svg+xml',
+        purpose: 'any maskable'
+      },
+      {
+        src: "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 512 512'%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0' y1='0' x2='1' y2='1'%3E%3Cstop offset='0%25' stop-color='%2310B981'/%3E%3Cstop offset='100%25' stop-color='%230F766E'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width='512' height='512' rx='112' fill='url(%23g)'/%3E%3Ctext x='256' y='352' text-anchor='middle' font-family='sans-serif' font-size='300' font-weight='800' fill='%23FFFFFF'%3E%E2%82%B9%3C/text%3E%3C/svg%3E",
+        sizes: '512x512',
+        type: 'image/svg+xml',
+        purpose: 'any maskable'
+      }
+    ]
+  }, null, 2);
+}
+
+function generateServiceWorkerJs() {
+  return `const CACHE_NAME = 'finledger-pro-next-v2';
+const ASSETS = ['./', './index.html', './manifest.json'];
+
+self.addEventListener('install', event => {
+  event.waitUntil(
+    caches.open(CACHE_NAME).then(cache => cache.addAll(ASSETS)).then(() => self.skipWaiting())
+  );
+});
+
+self.addEventListener('activate', event => {
+  event.waitUntil(
+    caches.keys().then(keys =>
+      Promise.all(keys.filter(k => k !== CACHE_NAME).map(k => caches.delete(k)))
+    ).then(() => self.clients.claim())
+  );
+});
+
+self.addEventListener('fetch', event => {
+  if (event.request.method !== 'GET') return;
+  event.respondWith(
+    caches.match(event.request).then(cached => {
+      const networkFetch = fetch(event.request)
+        .then(res => {
+          if (res && res.status === 200 && res.type === 'basic') {
+            const copy = res.clone();
+            caches.open(CACHE_NAME).then(cache => cache.put(event.request, copy));
+          }
+          return res;
+        })
+        .catch(() => cached);
+      return cached || networkFetch;
+    })
+  );
+});
+`;
+}
+
+function renderPwaStatus() {
+  const el = $('pwaStatusBanner');
+  const isStandalone = window.matchMedia('(display-mode: standalone)').matches || window.navigator.standalone === true;
+
+  if (isStandalone) {
+    el.className = 'backup-banner ok';
+    el.innerHTML = `${TOAST_ICONS.success}<div><strong>Running as Installed App</strong><br><span class="muted">Offline storage is active on this device.</span></div>`;
+  } else if (swStatusState === 'active') {
+    el.className = 'backup-banner ok';
+    el.innerHTML = `${TOAST_ICONS.success}<div><strong>Offline Cache Active (PWA Ready)</strong><br><span class="muted">Service Worker is registered. Works without internet.</span></div>`;
+  } else if (swStatusState === 'local') {
+    el.className = 'backup-banner info';
+    el.innerHTML = `${TOAST_ICONS.info}<div><strong>Offline Storage Active</strong><br><span class="muted">Host on HTTPS (GitHub Pages) with manifest.json &amp; sw.js for full PWA offline cache.</span></div>`;
+  } else {
+    el.className = 'backup-banner info';
+    el.innerHTML = `${TOAST_ICONS.info}<div><strong>PWA Ready to Activate</strong><br><span class="muted">Upload manifest.json &amp; sw.js next to index.html to enable full offline caching.</span></div>`;
+  }
+
+  const canInstall = !!deferredInstallPrompt && !isStandalone;
+  $('topbarInstallBtn').classList.toggle('hidden', !canInstall);
+  $('settingsInstallBtn').classList.toggle('hidden', !canInstall);
+}
+
+async function triggerPwaInstall() {
+  if (!deferredInstallPrompt) {
+    toast('Use your browser menu → Add to Home screen', 'info', 3000);
+    return;
+  }
+  try {
+    deferredInstallPrompt.prompt();
+    const choice = await deferredInstallPrompt.userChoice;
+    deferredInstallPrompt = null;
+    renderPwaStatus();
+    if (choice && choice.outcome === 'accepted') {
+      toast('FinLedger installed!', 'success');
+    }
+  } catch {
+    deferredInstallPrompt = null;
+    renderPwaStatus();
+  }
+}
+
+function setupPwa() {
+  window.addEventListener('beforeinstallprompt', e => {
+    e.preventDefault();
+    deferredInstallPrompt = e;
+    renderPwaStatus();
+  });
+
+  window.addEventListener('appinstalled', () => {
+    deferredInstallPrompt = null;
+    renderPwaStatus();
+    toast('FinLedger Pro installed on home screen', 'success');
+  });
+
+  window.addEventListener('load', () => {
+    const isHttp = location.protocol === 'https:' || location.hostname === 'localhost' || location.hostname === '127.0.0.1';
+    if (!isHttp || !('serviceWorker' in navigator)) {
+      swStatusState = 'local';
+      renderPwaStatus();
+      return;
+    }
+    navigator.serviceWorker.register('./sw.js')
+      .then(() => {
+        swStatusState = 'active';
+        renderPwaStatus();
+      })
+      .catch(() => {
+        swStatusState = 'unsupported';
+        renderPwaStatus();
+      });
+  });
+}
+
+// ==========================================================================
+// BULLETPROOF BACKUP & RESTORE ENGINE (WEBINTOAPP / WEBVIEW SAFE)
+// ==========================================================================
+function buildJsonBackupString() {
+  return JSON.stringify({
+    app: 'FinLedger Pro Next',
+    version: APP_VERSION,
+    exportedAt: new Date().toISOString(),
+    data: state
+  }, null, 2);
+}
+
+function csvCell(v) { return '"' + String(v ?? '').replace(/"/g, '""') + '"'; }
+
+function buildCsvString() {
+  const head = ['Date', 'Type', 'Category', 'Party', 'Amount', 'Notes'];
+  const body = state.transactions.map(t =>
+    [t.date, TYPES[t.type].label, t.category, t.party, t.amount, t.note].map(csvCell).join(',')
+  );
+  return [head.map(csvCell).join(','), ...body].join('\n');
+}
+
+function markBackupCompleted() {
+  state.settings.lastBackupAt = new Date().toISOString();
+  try { localStorage.setItem(DB_KEY, JSON.stringify(state)); } catch {}
+  renderBackupBanner();
+}
+
+async function copyTextSafe(text) {
+  try {
+    if (navigator.clipboard && window.isSecureContext) {
+      await navigator.clipboard.writeText(text);
+      return true;
+    }
+  } catch {}
+  try {
+    const ta = document.createElement('textarea');
+    ta.value = text;
+    ta.setAttribute('readonly', '');
+    ta.style.position = 'fixed';
+    ta.style.top = '-9999px';
+    document.body.appendChild(ta);
+    ta.focus();
+    ta.select();
+    ta.setSelectionRange(0, ta.value.length);
+    const ok = document.execCommand('copy');
+    document.body.removeChild(ta);
+    return !!ok;
+  } catch {
+    return false;
+  }
+}
+
+async function sharePayload({ filename, mime, text, title, mode = 'json' }) {
+  if (typeof navigator.share === 'function') {
+    try {
+      if (typeof File === 'function' && typeof navigator.canShare === 'function') {
+        const file = new File([text], filename, { type: mime });
+        if (navigator.canShare({ files: [file] })) {
+          await navigator.share({ title, text: `${title} (${filename})`, files: [file] });
+          if (mode === 'json') markBackupCompleted();
+          toast('Backup shared successfully', 'success');
+          return;
+        }
+      }
+    } catch (err) {
+      if (err && err.name === 'AbortError') return;
+    }
+    try {
+      await navigator.share({ title, text });
+      if (mode === 'json') markBackupCompleted();
+      toast('Backup text shared', 'success');
+      return;
+    } catch (err) {
+      if (err && err.name === 'AbortError') return;
+    }
+  }
+  openTextExportModal(mode);
+  toast('Share unavailable here — tap Copy All to save it safely', 'info', 3400);
+}
+
+function triggerBlobDownload(filename, text, mime, isJson = false, silentHint = false) {
+  try {
+    const blob = new Blob([text], { type: mime });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = filename;
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    setTimeout(() => URL.revokeObjectURL(url), 1000);
+    if (isJson) markBackupCompleted();
+    if (!silentHint) {
+      toast('Download triggered. On APK, use Share or Copy Backup to guarantee access.', 'info', 3600);
+    } else {
+      toast(`Downloaded ${filename}`, 'success');
+    }
+  } catch {
+    toast('Direct download blocked — use Share or Copy Backup instead.', 'warn', 3600);
+  }
+}
+
+function openTextExportModal(mode = 'json') {
+  const isCsv = mode === 'csv';
+  const text = isCsv ? buildCsvString() : buildJsonBackupString();
+  const filename = isCsv ? `finledger-transactions-${localISO()}.csv` : `finledger-backup-${localISO()}.json`;
+  const mime = isCsv ? 'text/csv;charset=utf-8' : 'application/json';
+  currentExportPayload = { mode, filename, mime, text };
+  $('textExportTitle').textContent = isCsv ? 'CSV Spreadsheet Export' : 'JSON Backup Code';
+  $('textExportSub').textContent = isCsv
+    ? `${state.transactions.length} transactions ready to copy, share, or download`
+    : 'Copy or share this code to WhatsApp, Google Drive, or Notes';
+  $('textExportBox').value = text;
+  $('textExportModal').classList.remove('hidden');
+}
+
+function closeTextExportModal() { $('textExportModal').classList.add('hidden'); }
+
+function parseAndValidateBackup(rawInput) {
+  let obj = rawInput;
+  if (typeof rawInput === 'string') {
+    const cleaned = rawInput.replace(/^\uFEFF/, '').trim();
+    if (!cleaned) throw new Error('Backup text is empty.');
+    try {
+      obj = JSON.parse(cleaned);
+    } catch {
+      const start = cleaned.indexOf('{');
+      const end = cleaned.lastIndexOf('}');
+      if (start >= 0 && end > start) obj = JSON.parse(cleaned.slice(start, end + 1));
+      else throw new Error('Could not find valid JSON backup data.');
+    }
+  }
+  if (!obj || typeof obj !== 'object') throw new Error('Unsupported or invalid backup format.');
+  if (obj.app === 'FinLedger Pro Next' && obj.data && typeof obj.data === 'object') {
+    if (obj.version && obj.version !== APP_VERSION) throw new Error(`Unsupported backup version (${obj.version}).`);
+    return { normalised: normaliseState(obj.data), exportedAt: obj.exportedAt || obj.data.updatedAt || null };
+  }
+  if (Array.isArray(obj.transactions)) {
+    return { normalised: normaliseState(obj), exportedAt: obj.updatedAt || null };
+  }
+  throw new Error('File is not a recognised FinLedger Pro Next backup.');
+}
+
+function openPasteRestoreModal() {
+  parsedPasteCandidate = null;
+  $('pasteRestoreInput').value = '';
+  $('pasteRestorePreview').classList.add('hidden');
+  $('pasteRestoreConfirmBtn').disabled = true;
+  $('pasteRestoreModal').classList.remove('hidden');
+  setTimeout(() => $('pasteRestoreInput').focus(), 80);
+}
+
+function closePasteRestoreModal() {
+  $('pasteRestoreModal').classList.add('hidden');
+  parsedPasteCandidate = null;
+}
+
+function inspectPastedBackup() {
+  const val = $('pasteRestoreInput').value.trim();
+  const prev = $('pasteRestorePreview');
+  if (!val) {
+    parsedPasteCandidate = null;
+    prev.classList.add('hidden');
+    $('pasteRestoreConfirmBtn').disabled = true;
+    return;
+  }
+  try {
+    const res = parseAndValidateBackup(val);
+    parsedPasteCandidate = res;
+    const count = res.normalised.transactions.length;
+    const cur = res.normalised.settings.currency || '₹';
+    const openCash = round(res.normalised.settings.openingCash).toLocaleString('en-IN', {
+      minimumFractionDigits: 2, maximumFractionDigits: 2
+    });
+    const expDate = res.exportedAt ? formatDateTime(res.exportedAt) : 'Unknown date';
+    prev.className = 'restore-preview';
+    prev.innerHTML = `<strong>Valid backup detected</strong><br>${count} ${count === 1 ? 'transaction' : 'transactions'} · Opening cash ${esc(cur)}${esc(openCash)} · Saved ${esc(expDate)}`;
+    $('pasteRestoreConfirmBtn').disabled = false;
+  } catch (err) {
+    parsedPasteCandidate = null;
+    prev.className = 'restore-preview err';
+    prev.textContent = err.message || 'Invalid JSON backup text.';
+    $('pasteRestoreConfirmBtn').disabled = true;
+  }
+}
+
+// ==========================================================================
+// ACCOUNTING, PERIOD ANALYTICS & BUDGET COMPUTATION ENGINE
+// ==========================================================================
+function compute() {
+  let income = 0, expense = 0, cashFlow = 0, openingD = 0, openingC = 0;
+  const incomeCat = {}, expenseCat = {}, accounts = {};
+
+  const sorted = [...state.transactions].sort(
+    (a, b) => a.date.localeCompare(b.date) || String(a.id).localeCompare(String(b.id))
+  );
+
+  for (const t of sorted) {
+    const m = TYPES[t.type];
+    const a = num(t.amount);
+    cashFlow += a * m.cash;
+
+    if (t.type === 'INCOME') {
+      income += a;
+      const cat = t.category || 'General';
+      incomeCat[cat] = (incomeCat[cat] || 0) + a;
+    } else if (t.type === 'EXPENSE') {
+      expense += a;
+      const cat = t.category || 'General';
+      expenseCat[cat] = (expenseCat[cat] || 0) + a;
+    } else if (m.party) {
+      const partyName = t.party.trim();
+      const key = m.role + ':' + partyName.toLowerCase();
+      if (!accounts[key]) accounts[key] = { key, name: partyName, role: m.role, balance: 0, history: [] };
+      let dr = 0, cr = 0;
+      if (t.type === 'OPENING_DEBTOR' || t.type === 'LEND') {
+        dr = a; accounts[key].balance += a;
+        if (t.type === 'OPENING_DEBTOR') openingD += a;
+      } else if (t.type === 'COLLECT') {
+        cr = a; accounts[key].balance -= a;
+      } else if (t.type === 'OPENING_CREDITOR' || t.type === 'BORROW') {
+        cr = a; accounts[key].balance += a;
+        if (t.type === 'OPENING_CREDITOR') openingC += a;
+      } else if (t.type === 'REPAY') {
+        dr = a; accounts[key].balance -= a;
+      }
+      accounts[key].history.push({ ...t, dr, cr, running: round(accounts[key].balance) });
+    }
+  }
+
+  const bookCash = round(num(state.settings.openingCash) + cashFlow);
+  const actual = round(num(state.settings.actualCash));
+  const difference = round(actual - bookCash);
+
+  let debtors = 0, creditors = 0;
+  Object.values(accounts).forEach(a => {
+    if (a.role === 'DEBTOR') debtors += a.balance;
+    else creditors += a.balance;
+  });
+
+  debtors = round(debtors);
+  creditors = round(creditors);
+  const net = round(income - expense);
+  const startingCapital = round(num(state.settings.openingCash) + openingD - openingC);
+  const equity = round(startingCapital + net + difference);
+  const assets = round(actual + debtors);
+  const liabEquity = round(creditors + equity);
+
+  return {
+    income: round(income), expense: round(expense), net,
+    bookCash, actual, difference, debtors, creditors,
+    incomeCat, expenseCat, accounts, startingCapital, equity, assets, liabEquity
+  };
+}
+
+/** Filters transactions for the active Reports Period Filter. */
+function getReportPeriodData() {
+  const now = new Date();
+  const todayIso = localISO(now);
+  const thisMonth = todayIso.slice(0, 7);
+  const lastMonth = localISO(new Date(now.getFullYear(), now.getMonth() - 1, 1)).slice(0, 7);
+  const thisYear = todayIso.slice(0, 4);
+
+  let label = 'All time';
+  const filtered = state.transactions.filter(t => {
+    if (reportUI.period === 'month') return t.date.startsWith(thisMonth);
+    if (reportUI.period === 'lastMonth') return t.date.startsWith(lastMonth);
+    if (reportUI.period === 'year') return t.date.startsWith(thisYear);
+    if (reportUI.period === 'custom') return t.date >= reportUI.customFrom && t.date <= reportUI.customTo;
+    return true;
+  });
+
+  if (reportUI.period === 'month') label = formatMonthLabel(thisMonth);
+  else if (reportUI.period === 'lastMonth') label = formatMonthLabel(lastMonth);
+  else if (reportUI.period === 'year') label = `Year ${thisYear}`;
+  else if (reportUI.period === 'custom') label = `${formatDisplayDate(reportUI.customFrom)} – ${formatDisplayDate(reportUI.customTo)}`;
+
+  let income = 0, expense = 0;
+  const incomeCat = {}, expenseCat = {};
+  for (const t of filtered) {
+    const a = num(t.amount);
+    if (t.type === 'INCOME') {
+      income += a;
+      const cat = t.category || 'General';
+      incomeCat[cat] = (incomeCat[cat] || 0) + a;
+    } else if (t.type === 'EXPENSE') {
+      expense += a;
+      const cat = t.category || 'General';
+      expenseCat[cat] = (expenseCat[cat] || 0) + a;
+    }
+  }
+  return {
+    label,
+    income: round(income),
+    expense: round(expense),
+    net: round(income - expense),
+    incomeCat,
+    expenseCat
+  };
+}
+
+/** Computes last 6 calendar months Income vs Expense series for the Trend Bar Chart. */
+function getSixMonthTrend() {
+  const now = new Date();
+  const buckets = [];
+  const map = {};
+  for (let offset = 5; offset >= 0; offset--) {
+    const d = new Date(now.getFullYear(), now.getMonth() - offset, 1);
+    const ym = localISO(d).slice(0, 7);
+    const item = { ym, short: MONTHS_SHORT[d.getMonth()], full: formatMonthLabel(ym), income: 0, expense: 0 };
+    buckets.push(item);
+    map[ym] = item;
+  }
+  for (const t of state.transactions) {
+    const ym = (t.date || '').slice(0, 7);
+    const b = map[ym];
+    if (!b) continue;
+    if (t.type === 'INCOME') b.income = round(b.income + num(t.amount));
+    else if (t.type === 'EXPENSE') b.expense = round(b.expense + num(t.amount));
+  }
+  return buckets;
+}
+
+/** Computes spent per category (case-insensitive key) for a given YYYY-MM month. */
+function getMonthlyExpenseByCategory(ym, excludeTxId = '') {
+  const totals = {};
+  for (const t of state.transactions) {
+    if (t.type !== 'EXPENSE') continue;
+    if (excludeTxId && t.id === excludeTxId) continue;
+    if (!t.date.startsWith(ym)) continue;
+    const key = (t.category || 'General').trim().toLowerCase();
+    totals[key] = round((totals[key] || 0) + num(t.amount));
+  }
+  return totals;
+}
+
+/** Finds matching budget entry for a category name (case-insensitive). */
+function findBudgetEntry(catName) {
+  const target = String(catName || '').trim().toLowerCase();
+  if (!target) return null;
+  const budgets = state.settings.budgets || {};
+  for (const [k, limit] of Object.entries(budgets)) {
+    if (k.trim().toLowerCase() === target) return { category: k, limit: round(limit) };
+  }
+  return null;
+}
+
+// ==========================================================================
+// THEME, ACCENT & ANIMATION ENGINE
+// ==========================================================================
+function applyAppearance() {
+  let resolvedTheme = state.settings.theme;
+  if (resolvedTheme === 'system') {
+    resolvedTheme = matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+  }
+  const root = document.documentElement;
+  root.dataset.theme = resolvedTheme;
+  root.dataset.accent = VALID_ACCENTS.includes(state.settings.accent) ? state.settings.accent : 'teal';
+  root.dataset.animations = state.settings.animations === 'reduced' ? 'reduced' : 'smooth';
+
+  const meta = $('metaThemeColor');
+  if (meta) meta.content = THEME_META_COLORS[resolvedTheme] || '#F2F2F7';
+
+  qsa('#themePicker .theme-tile').forEach(btn => {
+    btn.classList.toggle('active', btn.dataset.themeChoice === state.settings.theme);
+  });
+  qsa('.accent-chip').forEach(btn => {
+    btn.classList.toggle('active', btn.dataset.accentChoice === state.settings.accent);
+  });
+  qsa('#animToggle button').forEach(btn => {
+    btn.classList.toggle('active', btn.dataset.anim === state.settings.animations);
+  });
+}
+
+function buildAccentSwatches() {
+  const checkSvg = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>';
+  const renderChip = a => `
+    <button class="accent-chip" type="button" data-accent-choice="${a.id}" aria-label="${esc(a.name)} accent">
+      <span class="swatch-dot" style="background:${a.swatch}">${checkSvg}</span>
+      <span>${esc(a.name)}</span>
+    </button>`;
+  $('standardAccents').innerHTML = ACCENTS.filter(a => a.tier === 'standard').map(renderChip).join('');
+  $('premiumAccents').innerHTML = ACCENTS.filter(a => a.tier === 'premium').map(renderChip).join('');
+}
+
+// ==========================================================================
+// UI RENDERING
+// ==========================================================================
+function renderAll() {
+  applyAppearance();
+  $('brandLogo').textContent = state.settings.currency || '₹';
+  const c = compute();
+
+  const kpiItems = [
+    ['Book cash', c.bookCash, '', 'Opening + cash flow'],
+    [
+      'Actual cash',
+      c.actual,
+      c.difference === 0 ? 'good' : c.difference < 0 ? 'bad' : 'info',
+      'Difference ' + (c.difference > 0 ? '+' : '') + money(c.difference)
+    ],
+    ['Receivables', c.debtors, 'good', 'Total debtors (Dr)'],
+    ['Payables', c.creditors, 'bad', 'Total creditors (Cr)'],
+    ['Net savings', c.net, c.net >= 0 ? 'good' : 'bad', 'Income minus expenses']
+  ];
+
+  $('kpis').innerHTML = kpiItems
+    .map(x => `
+      <div class="card pad">
+        <div class="kpi-label">${x[0]}</div>
+        <div class="kpi-value ${x[2]}">${money(x[1])}</div>
+        <div class="kpi-note">${x[3]}</div>
+      </div>`)
+    .join('');
+
+  renderTransactions();
+  renderLedgers(c);
+  renderReports(c);
+  renderReconcile(c);
+  syncSettings();
+  renderBackupBanner();
+  renderSnapshots();
+  renderPwaStatus();
+  updateTxBudgetHint();
+}
+
+function renderTransactions() {
+  const ft = $('filterType').value;
+  const period = $('filterPeriod').value;
+  const search = $('search').value.trim().toLowerCase();
+  const now = new Date();
+  const today = localISO(now);
+  const month = today.slice(0, 7);
+  const lm = localISO(new Date(now.getFullYear(), now.getMonth() - 1, 1)).slice(0, 7);
+
+  const arr = [...state.transactions]
+    .sort((a, b) => b.date.localeCompare(a.date) || String(b.id).localeCompare(String(a.id)))
+    .filter(t => {
+      if (ft !== 'all' && t.type !== ft) return false;
+      if (period === 'today' && t.date !== today) return false;
+      if (period === 'month' && !t.date.startsWith(month)) return false;
+      if (period === 'lastMonth' && !t.date.startsWith(lm)) return false;
+      return !search || [t.party, t.category, t.note, TYPES[t.type].label].join(' ').toLowerCase().includes(search);
+    });
+
+  $('txCount').textContent = `${arr.length} shown · ${state.transactions.length} total`;
+
+  $('txBody').innerHTML = arr.length
+    ? arr.map(t => {
+        const m = TYPES[t.type];
+        const p = m.party ? t.party : t.category || 'General';
+        const impact = m.cash === 0 ? 'No cash' : (m.cash > 0 ? '+' : '-') + money(t.amount);
+        return `
+          <tr>
+            <td class="num">${esc(t.date)}</td>
+            <td><span class="badge ${m.party ? 'party' : m.cash > 0 ? 'in' : 'out'}">${esc(m.label)}</span></td>
+            <td>
+              <strong>${esc(p)}</strong>
+              ${m.party ? `<div class="small muted">${m.role === 'DEBTOR' ? 'Debtor' : 'Creditor'}</div>` : ''}
+            </td>
+            <td>${esc(t.note || '—')}</td>
+            <td class="right ${m.cash > 0 ? 'good' : m.cash < 0 ? 'bad' : 'muted'}"><strong>${impact}</strong></td>
+            <td class="center no-print">
+              <div class="actions">
+                <button class="linkbtn" type="button" data-action="edit-tx" data-id="${esc(t.id)}">Edit</button>
+                <button class="linkbtn delete" type="button" data-action="delete-tx" data-id="${esc(t.id)}">Delete</button>
+              </div>
+            </td>
+          </tr>`;
+      }).join('')
+    : `<tr><td colspan="6" class="empty">No transactions yet. Add your first entry using the form.</td></tr>`;
+}
+
+function renderLedgers(c) {
+  const list = Object.values(c.accounts).sort(
+    (a, b) => a.role.localeCompare(b.role) || a.name.localeCompare(b.name)
+  );
+  $('partyList').innerHTML = [...new Set(list.map(a => a.name))]
+    .map(n => `<option value="${esc(n)}"></option>`)
+    .join('');
+
+  if (!list.length) {
+    $('partyAccounts').innerHTML = '<div class="empty">No party accounts yet.</div>';
+    $('ledgerTitle').textContent = 'Select an account';
+    $('ledgerSub').textContent = 'Chronological statement';
+    $('ledgerBalance').textContent = '';
+    $('quickPartyTxBtn').classList.add('hidden');
+    $('ledgerBody').innerHTML =
+      '<tr><td colspan="5" class="empty">Record a Debtor or Creditor entry to create a party ledger.</td></tr>';
+    return;
+  }
+
+  if (!state.selectedParty || !c.accounts[state.selectedParty]) state.selectedParty = list[0].key;
+
+  $('partyAccounts').innerHTML = list.map(a => `
+    <button class="party-item ${a.key === state.selectedParty ? 'active' : ''}" type="button" data-party-key="${esc(a.key)}">
+      <span>
+        <strong>${esc(a.name)}</strong>
+        <small>${a.role === 'DEBTOR' ? 'Debtor · receivable' : 'Creditor · payable'} · ${a.history.length} ${a.history.length === 1 ? 'entry' : 'entries'}</small>
+      </span>
+      <strong class="num ${a.role === 'DEBTOR' ? 'good' : 'bad'}">${money(a.balance)}</strong>
+    </button>`).join('');
+
+  const a = c.accounts[state.selectedParty];
+  $('ledgerTitle').textContent = a.name;
+  $('ledgerSub').textContent = a.role === 'DEBTOR' ? 'Debtor receivable account' : 'Creditor payable account';
+  $('ledgerBalance').textContent = money(a.balance) + (a.role === 'DEBTOR' ? ' Dr' : ' Cr');
+  $('ledgerBalance').className = 'num ' + (a.role === 'DEBTOR' ? 'good' : 'bad');
+  $('quickPartyTxBtn').classList.remove('hidden');
+
+  $('ledgerBody').innerHTML = a.history.map(t => `
+    <tr>
+      <td class="num">${esc(t.date)}</td>
+      <td>
+        <strong>${esc(TYPES[t.type].label)}</strong>
+        <div class="small muted">${esc(t.note || '')}</div>
+      </td>
+      <td class="right">${t.dr ? money(t.dr) : '—'}</td>
+      <td class="right">${t.cr ? money(t.cr) : '—'}</td>
+      <td class="right"><strong>${money(t.running)} ${a.role === 'DEBTOR' ? 'Dr' : 'Cr'}</strong></td>
+    </tr>`).join('');
+}
+
+// ==========================================================================
+// REPORTS, CHARTS & MONTHLY BUDGETS RENDERING
+// ==========================================================================
+function renderCategoryBars(obj, total, kind) {
+  const entries = Object.entries(obj).sort((a, b) => b[1] - a[1]);
+  if (!entries.length) return '<div class="empty">No entries in this period</div>';
+  return entries.map(([k, v]) => {
+    const pct = total > 0 ? Math.min(100, Math.round((v / total) * 1000) / 10) : 0;
+    return `
+      <div class="cat-row">
+        <div class="cat-row-top">
+          <span>${esc(k)}<span class="cat-pct num">${pct.toFixed(pct >= 10 || pct === 0 ? 0 : 1)}%</span></span>
+          <strong class="num">${money(v)}</strong>
+        </div>
+        <div class="cat-bar-track" aria-hidden="true">
+          <div class="cat-bar-fill ${kind}" style="width:${pct}%"></div>
+        </div>
+      </div>`;
+  }).join('');
+}
+
+function renderIncomeExpenseChart(p) {
+  $('iePeriodSub').textContent = p.label;
+  const rate = p.income > 0 ? Math.round(((p.income - p.expense) / p.income) * 100) : 0;
+  const pill = $('savingsRatePill');
+  pill.textContent = p.income > 0 ? `Savings rate: ${rate}%` : 'No income recorded';
+  pill.className = 'badge ' + (p.income <= 0 ? '' : rate >= 20 ? 'in' : rate >= 0 ? 'warn' : 'out');
+
+  const maxVal = Math.max(p.income, p.expense, Math.abs(p.net), 1);
+  const incW = Math.round((p.income / maxVal) * 100);
+  const expW = Math.round((p.expense / maxVal) * 100);
+  const netW = Math.round((Math.abs(p.net) / maxVal) * 100);
+
+  $('ieBars').innerHTML = `
+    <div>
+      <div class="ie-row-head"><span>Income</span><strong class="num good">${money(p.income)}</strong></div>
+      <div class="ie-track"><div class="ie-fill income" style="width:${incW}%"></div></div>
+    </div>
+    <div>
+      <div class="ie-row-head"><span>Expenses</span><strong class="num bad">${money(p.expense)}</strong></div>
+      <div class="ie-track"><div class="ie-fill expense" style="width:${expW}%"></div></div>
+    </div>
+    <div>
+      <div class="ie-row-head"><span>Net Savings</span><strong class="num ${p.net >= 0 ? 'good' : 'bad'}">${money(p.net)}</strong></div>
+      <div class="ie-track"><div class="ie-fill ${p.net >= 0 ? 'net-pos' : 'net-neg'}" style="width:${netW}%"></div></div>
+    </div>`;
+}
+
+function renderDonutChart(p) {
+  const container = $('donutContainer');
+  const sorted = Object.entries(p.expenseCat).sort((a, b) => b[1] - a[1]);
+  if (!sorted.length || p.expense <= 0) {
+    container.innerHTML = '<div class="empty">No expenses in this period to chart.</div>';
+    return;
+  }
+
+  const slices = [];
+  let othersSum = 0;
+  sorted.forEach(([name, value], idx) => {
+    if (idx < 6) slices.push({ name, value, color: DONUT_COLORS[idx] });
+    else othersSum += value;
+  });
+  if (othersSum > 0) slices.push({ name: 'Others', value: round(othersSum), color: DONUT_COLORS[6] });
+
+  const r = 64;
+  const circ = 2 * Math.PI * r;
+  let offset = 0;
+  const segs = slices.map(s => {
+    const frac = s.value / p.expense;
+    const len = Math.max(frac * circ, 1.5);
+    const seg = `<circle cx="85" cy="85" r="${r}" fill="none" stroke="${s.color}" stroke-width="22" stroke-dasharray="${len.toFixed(2)} ${(circ - len).toFixed(2)}" stroke-dashoffset="${(-offset).toFixed(2)}" transform="rotate(-90 85 85)"/>`;
+    offset += frac * circ;
+    return seg;
+  }).join('');
+
+  const legend = slices.map(s => {
+    const pct = Math.round((s.value / p.expense) * 1000) / 10;
+    return `
+      <div class="legend-row">
+        <div class="legend-left">
+          <span class="legend-dot" style="background:${s.color}"></span>
+          <span class="legend-name">${esc(s.name)}</span>
+        </div>
+        <span class="legend-val">${money(s.value)} <span class="muted small">(${pct.toFixed(pct >= 10 ? 0 : 1)}%)</span></span>
+      </div>`;
+  }).join('');
+
+  container.innerHTML = `
+    <div class="donut-wrap">
+      <div class="donut-svg-box">
+        <svg viewBox="0 0 170 170" role="img" aria-label="Expense breakdown donut chart">
+          <circle cx="85" cy="85" r="${r}" fill="none" stroke="var(--panel2)" stroke-width="22"/>
+          ${segs}
+        </svg>
+        <div class="donut-center">
+          <small>Expenses</small>
+          <strong>${moneyShort(p.expense)}</strong>
+        </div>
+      </div>
+      <div class="donut-legend">${legend}</div>
+    </div>`;
+}
+
+function renderTrendChart() {
+  const data = getSixMonthTrend();
+  const maxVal = Math.max(...data.flatMap(d => [d.income, d.expense]), 1);
+  const W = 560, H = 210, padL = 54, padR = 16, padT = 18, padB = 30;
+  const chartW = W - padL - padR;
+  const chartH = H - padT - padB;
+  const groupW = chartW / data.length;
+  const barW = Math.min(24, groupW * 0.28);
+  const gap = 5;
+
+  let gridLines = '';
+  for (let step = 0; step <= 3; step++) {
+    const y = padT + chartH - (chartH * step / 3);
+    const val = (maxVal * step) / 3;
+    gridLines += `
+      <line x1="${padL}" y1="${y.toFixed(1)}" x2="${W - padR}" y2="${y.toFixed(1)}" stroke="var(--line)" stroke-dasharray="${step === 0 ? 'none' : '3 4'}"/>
+      <text x="${padL - 8}" y="${(y + 4).toFixed(1)}" text-anchor="end" font-size="10" fill="var(--muted)" font-weight="600">${esc(moneyShort(val))}</text>`;
+  }
+
+  let bars = '';
+  data.forEach((d, idx) => {
+    const cx = padL + groupW * idx + groupW / 2;
+    const incH = Math.max(d.income > 0 ? 4 : 0, (d.income / maxVal) * chartH);
+    const expH = Math.max(d.expense > 0 ? 4 : 0, (d.expense / maxVal) * chartH);
+    const incY = padT + chartH - incH;
+    const expY = padT + chartH - expH;
+    const isSel = idx === reportUI.selectedTrendIdx;
+
+    bars += `
+      <g class="trend-bar" data-trend-idx="${idx}">
+        ${isSel ? `<rect x="${(cx - groupW / 2 + 4).toFixed(1)}" y="${padT - 4}" width="${(groupW - 8).toFixed(1)}" height="${chartH + 8}" rx="10" fill="var(--primary-soft)"/>` : ''}
+        <rect x="${(cx - barW - gap / 2).toFixed(1)}" y="${incY.toFixed(1)}" width="${barW.toFixed(1)}" height="${incH.toFixed(1)}" rx="5" fill="var(--good)"/>
+        <rect x="${(cx + gap / 2).toFixed(1)}" y="${expY.toFixed(1)}" width="${barW.toFixed(1)}" height="${expH.toFixed(1)}" rx="5" fill="var(--bad)"/>
+        <text x="${cx.toFixed(1)}" y="${H - 9}" text-anchor="middle" font-size="11" font-weight="${isSel ? '800' : '600'}" fill="${isSel ? 'var(--primary)' : 'var(--muted)'}">${esc(d.short)}</text>
+      </g>`;
+  });
+
+  $('trendChartWrap').innerHTML = `
+    <svg class="trend-svg" viewBox="0 0 ${W} ${H}" role="img" aria-label="6-month cashflow trend">
+      ${gridLines}
+      ${bars}
+    </svg>`;
+
+  const active = data[reportUI.selectedTrendIdx] || data[data.length - 1];
+  const net = round(active.income - active.expense);
+  $('trendDetailPill').innerHTML = `
+    <strong>${esc(active.full)}</strong>
+    <span>Income: <strong class="good num">${money(active.income)}</strong></span>
+    <span>Expense: <strong class="bad num">${money(active.expense)}</strong></span>
+    <span>Net: <strong class="${net >= 0 ? 'good' : 'bad'} num">${money(net)}</strong></span>`;
+}
+
+function populateBudgetMonthOptions() {
+  const monthSet = new Set();
+  const now = new Date();
+  for (let i = 0; i < 12; i++) {
+    monthSet.add(localISO(new Date(now.getFullYear(), now.getMonth() - i, 1)).slice(0, 7));
+  }
+  state.transactions.forEach(t => {
+    if (/^\d{4}-\d{2}/.test(t.date)) monthSet.add(t.date.slice(0, 7));
+  });
+  monthSet.add(reportUI.budgetMonth);
+  const sorted = [...monthSet].sort((a, b) => b.localeCompare(a));
+  $('budgetMonthSelect').innerHTML = sorted.map(ym => `<option value="${ym}">${formatMonthLabel(ym)}</option>`).join('');
+  $('budgetMonthSelect').value = reportUI.budgetMonth;
+}
+
+function renderBudgets() {
+  populateBudgetMonthOptions();
+  const budgets = state.settings.budgets || {};
+  const entries = Object.entries(budgets).sort((a, b) => a[0].localeCompare(b[0]));
+  const spentMap = getMonthlyExpenseByCategory(reportUI.budgetMonth);
+
+  if (!entries.length) {
+    $('budgetSummaryWrap').innerHTML = '';
+    $('budgetList').innerHTML = `
+      <div class="empty" style="padding:24px 12px">
+        No monthly budgets set yet. Tap <strong>+ Set Budget</strong> to limit spending for categories like Food &amp; Dining or Transport.
+      </div>`;
+    return;
+  }
+
+  let totalBudgeted = 0;
+  let totalSpentInBudgeted = 0;
+
+  const cardsHtml = entries.map(([cat, limit]) => {
+    const spent = spentMap[cat.trim().toLowerCase()] || 0;
+    totalBudgeted += limit;
+    totalSpentInBudgeted += spent;
+    const pct = limit > 0 ? (spent / limit) * 100 : 0;
+    const barW = Math.min(100, Math.round(pct * 10) / 10);
+    const status = pct >= 100 ? 'over' : pct >= 80 ? 'warn' : 'ok';
+    const badgeHtml =
+      status === 'over' ? '<span class="badge out">Over Budget</span>'
+      : status === 'warn' ? '<span class="badge warn">80%+ Near Limit</span>'
+      : `<span class="badge in">${Math.round(pct)}% used</span>`;
+    const diff = round(limit - spent);
+    const remainText = diff >= 0
+      ? `<span class="good num">${money(diff)} remaining</span>`
+      : `<span class="bad num">Over by ${money(Math.abs(diff))}</span>`;
+
+    return `
+      <div class="budget-item">
+        <div class="budget-item-top">
+          <div>
+            <div class="budget-title-wrap">
+              <strong>${esc(cat)}</strong>
+              ${badgeHtml}
+            </div>
+            <div class="budget-amounts">${money(spent)} <span class="muted">/ ${money(limit)}</span></div>
+          </div>
+          <div class="actions no-print">
+            <button class="linkbtn" type="button" data-budget-action="edit" data-cat="${esc(cat)}">Edit</button>
+            <button class="linkbtn delete" type="button" data-budget-action="delete" data-cat="${esc(cat)}">Delete</button>
+          </div>
+        </div>
+        <div class="budget-track" aria-hidden="true">
+          <div class="budget-fill ${status}" style="width:${barW}%"></div>
+        </div>
+        <div class="budget-item-foot">
+          ${remainText}
+          <span class="muted">${formatMonthLabel(reportUI.budgetMonth)}</span>
+        </div>
+      </div>`;
+  }).join('');
+
+  const sumPct = totalBudgeted > 0 ? (totalSpentInBudgeted / totalBudgeted) * 100 : 0;
+  const sumStatus = sumPct >= 100 ? 'over' : sumPct >= 80 ? 'warn' : 'ok';
+  const sumDiff = round(totalBudgeted - totalSpentInBudgeted);
+
+  $('budgetSummaryWrap').innerHTML = `
+    <div class="budget-summary-box">
+      <div style="display:flex;justify-content:space-between;align-items:baseline;gap:10px;flex-wrap:wrap">
+        <span class="small muted" style="font-weight:750;text-transform:uppercase">Total Budgeted (${formatMonthLabel(reportUI.budgetMonth)})</span>
+        <strong class="num">${money(totalSpentInBudgeted)} <span class="muted">/ ${money(totalBudgeted)}</span></strong>
+      </div>
+      <div class="budget-track" style="margin-top:8px">
+        <div class="budget-fill ${sumStatus}" style="width:${Math.min(100, Math.round(sumPct))}%"></div>
+      </div>
+      <div class="small" style="margin-top:7px;display:flex;justify-content:space-between">
+        <span class="${sumDiff >= 0 ? 'good' : 'bad'} num" style="font-weight:700">${sumDiff >= 0 ? `${money(sumDiff)} left overall` : `Over total budget by ${money(Math.abs(sumDiff))}`}</span>
+        <span class="muted num">${Math.round(sumPct)}%</span>
+      </div>
+    </div>`;
+
+  $('budgetList').innerHTML = cardsHtml;
+}
+
+function simpleRows(obj) {
+  return Object.entries(obj).map(([k, v]) => `
+    <div class="setting-row">
+      <span>${esc(k)}</span>
+      <strong class="num">${money(v)}</strong>
+    </div>`).join('');
+}
+
+function renderReports(c) {
+  // Sync Period Filter UI
+  qsa('#reportPeriodPills .period-pill').forEach(btn => {
+    btn.classList.toggle('active', btn.dataset.period === reportUI.period);
+  });
+  $('customRangeRow').classList.toggle('hidden', reportUI.period !== 'custom');
+  $('reportFromLabel').textContent = formatDisplayDate(reportUI.customFrom);
+  $('reportToLabel').textContent = formatDisplayDate(reportUI.customTo);
+
+  const p = getReportPeriodData();
+  $('reportPeriodNote').textContent = `Showing: ${p.label}`;
+  $('incomeSub').textContent = `By category · ${p.label}`;
+  $('expenseSub').textContent = `By category · ${p.label}`;
+
+  // Visual Analytics
+  renderIncomeExpenseChart(p);
+  renderDonutChart(p);
+  renderTrendChart();
+
+  // Monthly Budgets
+  renderBudgets();
+
+  // Filtered Income & Expense Statements
+  $('incomeRows').innerHTML = renderCategoryBars(p.incomeCat, p.income, 'income');
+  $('expenseRows').innerHTML = renderCategoryBars(p.expenseCat, p.expense, 'expense');
+  $('incomeTotal').textContent = money(p.income);
+  $('expenseTotal').textContent = money(p.expense);
+
+  // Cumulative Balance Sheet (Always All-Time so Assets = Liabilities + Equity)
+  $('assetRows').innerHTML = simpleRows({
+    'Actual cash & bank': c.actual,
+    'Debtors receivable': c.debtors
+  });
+  $('liabilityRows').innerHTML = simpleRows({
+    'Creditors payable': c.creditors,
+    'Personal equity': c.equity
+  });
+  $('assetTotal').textContent = money(c.assets);
+  $('liabilityTotal').textContent = money(c.liabEquity);
+
+  const diff = round(c.assets - c.liabEquity);
+  const ok = Math.abs(diff) < 0.01;
+  $('balanceStatus').textContent = ok
+    ? 'Balanced: Assets = Liabilities + Equity'
+    : 'Out of balance by ' + money(diff);
+  $('balanceStatus').className = 'section-sub ' + (ok ? 'good' : 'bad');
+  $('balanceCard').className = 'card pad ' + (ok ? 'balance-ok' : 'balance-bad');
+}
+
+function renderReconcile(c) {
+  $('bookCash').textContent = money(c.bookCash);
+  if (document.activeElement !== $('actualCash')) {
+    $('actualCash').value = state.settings.actualCash !== undefined ? state.settings.actualCash : '';
+  }
+  $('cashDifference').textContent = (c.difference > 0 ? '+' : '') + money(c.difference);
+  $('cashDifference').className = 'kpi-value ' + (c.difference === 0 ? 'good' : c.difference < 0 ? 'bad' : 'info');
+  $('differenceStatus').textContent =
+    c.difference === 0 ? 'Balanced'
+    : c.difference > 0 ? 'Excess or unrecorded inflow'
+    : 'Shortage or unrecorded outflow';
+}
+
+function syncSettings() {
+  $('currency').value = state.settings.currency;
+  if (document.activeElement !== $('openingCash')) {
+    $('openingCash').value = state.settings.openingCash !== undefined ? state.settings.openingCash : '';
+  }
+  $('autoLock').value = String(state.settings.autoLock);
+}
+
+function renderBackupBanner() {
+  const el = $('backupStatusBanner');
+  if (state.settings.lastBackupAt) {
+    el.className = 'backup-banner ok';
+    el.innerHTML = `${TOAST_ICONS.success}<div><strong>Last backed up:</strong> ${esc(formatDateTime(state.settings.lastBackupAt))}<br><span class="muted">Remember to back up again after adding new entries.</span></div>`;
+  } else {
+    el.className = 'backup-banner warn';
+    el.innerHTML = `${TOAST_ICONS.warn}<div><strong>No backup taken yet</strong><br><span class="muted">Tap Share Backup or Copy JSON Backup to keep a safe copy outside this app.</span></div>`;
+  }
+}
+
+function renderSnapshots() {
+  const list = loadSnapshots();
+  const el = $('snapshotList');
+  if (!list.length) {
+    el.innerHTML = '<div class="small muted" style="padding:6px 2px">No local snapshots saved yet.</div>';
+    return;
+  }
+  el.innerHTML = list.map(s => `
+    <div class="snapshot-item">
+      <div class="snapshot-meta">
+        <strong>${esc(s.label)}</strong>
+        <small>${esc(formatDateTime(s.createdAt))} · ${s.txCount} ${s.txCount === 1 ? 'tx' : 'txs'}</small>
+      </div>
+      <div class="snapshot-btns">
+        <button class="btn soft sm" type="button" data-action="restore-snap" data-id="${esc(s.id)}">Restore</button>
+        <button class="btn danger sm" type="button" data-action="delete-snap" data-id="${esc(s.id)}">✕</button>
+      </div>
+    </div>`).join('');
+}
+
+// ==========================================================================
+// LIVE BUDGET HINT IN TRANSACTION FORM
+// ==========================================================================
+function updateTxBudgetHint() {
+  const hint = $('txBudgetHint');
+  if ($('txType').value !== 'EXPENSE') {
+    hint.classList.add('hidden');
+    return;
+  }
+  const cat = $('txCategory').value.trim();
+  const budget = findBudgetEntry(cat);
+  if (!budget) {
+    hint.classList.add('hidden');
+    return;
+  }
+
+  const ym = ($('txDate').value || localISO()).slice(0, 7);
+  const editId = $('txId').value || '';
+  const spentMap = getMonthlyExpenseByCategory(ym, editId);
+  const currentSpent = spentMap[budget.category.trim().toLowerCase()] || 0;
+  const typedVal = parseAmount($('txAmount').value);
+  const adding = Number.isFinite(typedVal) && typedVal > 0 ? typedVal : 0;
+  const projected = round(currentSpent + adding);
+  const left = round(budget.limit - projected);
+  const pct = (projected / budget.limit) * 100;
+
+  hint.classList.remove('hidden');
+  if (left < 0) {
+    hint.className = 'budget-hint over';
+    hint.textContent = adding > 0
+      ? `Over ${formatMonthLabel(ym)} budget by ${money(Math.abs(left))} (${money(projected)} / ${money(budget.limit)})`
+      : `Monthly budget exceeded: ${money(currentSpent)} / ${money(budget.limit)}`;
+  } else if (pct >= 80) {
+    hint.className = 'budget-hint warn';
+    hint.textContent = `Near ${formatMonthLabel(ym)} limit: ${money(projected)} / ${money(budget.limit)} (${money(left)} left)`;
+  } else {
+    hint.className = 'budget-hint ok';
+    hint.textContent = `${formatMonthLabel(ym)} budget: ${money(projected)} / ${money(budget.limit)} (${money(left)} left)`;
+  }
+}
+
+// ==========================================================================
+// FORM & TRANSACTION ACTIONS
+// ==========================================================================
+function resetForm() {
+  $('txForm').reset();
+  $('txId').value = '';
+  setTxDate(localISO());
+  $('txType').value = 'EXPENSE';
+  $('formTitle').textContent = 'Record transaction';
+  $('saveTxBtn').textContent = 'Save transaction';
+  $('cancelEditBtn').classList.add('hidden');
+  $('formError').classList.add('hidden');
+  $('amountPreview').textContent = '';
+  typeChanged();
+}
+
+function typeChanged() {
+  const m = TYPES[$('txType').value];
+  $('partyWrap').classList.toggle('hidden', !m.party);
+  $('categoryWrap').classList.toggle('hidden', m.party);
+  $('txParty').required = m.party;
+  $('txCategory').required = !m.party;
+  $('partyRoleHint').textContent = m.party
+    ? m.role === 'DEBTOR' ? 'Debtor (Receivable)' : 'Creditor (Payable)'
+    : '';
+  updateTxBudgetHint();
+}
+
+function editTx(id) {
+  const t = state.transactions.find(x => x.id === id);
+  if (!t) return;
+  showTab('transactions');
+  $('txId').value = t.id;
+  setTxDate(t.date);
+  $('txType').value = t.type;
+  $('txCategory').value = t.category || '';
+  $('txParty').value = t.party || '';
+  $('txAmount').value = t.amount;
+  $('txNote').value = t.note || '';
+  $('formTitle').textContent = 'Edit transaction';
+  $('saveTxBtn').textContent = 'Save changes';
+  $('cancelEditBtn').classList.remove('hidden');
+  $('formError').classList.add('hidden');
+  $('amountPreview').textContent = '';
+  typeChanged();
+  scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+async function deleteTx(id) {
+  const tx = state.transactions.find(x => x.id === id);
+  if (!tx) return;
+  const ok = await showConfirmDialog({
+    title: 'Delete Transaction',
+    message: `Are you sure you want to delete this ${TYPES[tx.type].label.toLowerCase()} entry of ${money(tx.amount)}?`,
+    confirmText: 'Delete',
+    danger: true
+  });
+  if (!ok) return;
+  state.transactions = state.transactions.filter(t => t.id !== id);
+  if ($('txId').value === id) resetForm();
+  save();
+  toast('Transaction deleted', 'info');
+}
+
+function selectParty(key) {
+  state.selectedParty = key;
+  try { localStorage.setItem(DB_KEY, JSON.stringify(state)); } catch {}
+  renderAll();
+}
+
+function showTab(tab) {
+  qsa('.tab').forEach(b => b.classList.toggle('active', b.dataset.tab === tab));
+  qsa('.view').forEach(v => {
+    const active = v.id === `view-${tab}`;
+    v.classList.toggle('hidden', !active);
+    if (active) {
+      v.style.animation = 'none';
+      void v.offsetWidth;
+      v.style.animation = '';
+    }
+  });
+}
+
+function buildTypeOptions() {
+  const html = Object.entries(TYPES).map(([k, v]) => `<option value="${k}">${v.label}</option>`).join('');
+  $('txType').innerHTML = html;
+  $('filterType').innerHTML = '<option value="all">All types</option>' + html;
+}
+
+// ==========================================================================
+// PIN LOCK SCREEN & INACTIVITY SECURITY
+// ==========================================================================
+function buildKeypad() {
+  const keys = ['1', '2', '3', '4', '5', '6', '7', '8', '9', 'Clear', '0', '⌫'];
+  $('keypad').innerHTML = keys.map(k => `<button type="button" data-key="${k}">${k}</button>`).join('');
+  $('pinDots').innerHTML = '<i class="pin-dot"></i>'.repeat(4);
+}
+
+function updateDots() {
+  qsa('.pin-dot').forEach((d, i) => d.classList.toggle('on', i < pinInput.length));
+}
+
+function triggerPinShake() {
+  const dots = $('pinDots');
+  dots.classList.remove('shake');
+  void dots.offsetWidth;
+  dots.classList.add('shake');
+}
+
+function lock(mode = 'unlock') {
+  $('lockScreen').classList.remove('hidden');
+  pinInput = '';
+  pinMode = mode;
+  $('pinCancel').classList.toggle('hidden', mode === 'unlock');
+  $('pinError').textContent = '';
+  $('pinTitle').textContent = mode === 'setup' ? 'Set a 4-digit PIN' : mode === 'confirm' ? 'Confirm your PIN' : 'Unlock FinLedger';
+  $('pinHelp').textContent = mode === 'unlock' ? 'Enter your 4-digit PIN' : 'Choose a 4-digit PIN to protect this ledger';
+  updateDots();
+}
+
+async function processPin() {
+  const saved = localStorage.getItem(PIN_KEY);
+  if (pinMode === 'setup') { pendingPin = pinInput; lock('confirm'); return; }
+  if (pinMode === 'confirm') {
+    if (pinInput !== pendingPin) {
+      pendingPin = '';
+      lock('setup');
+      $('pinError').textContent = 'PINs did not match. Try again.';
+      triggerPinShake();
+      return;
+    }
+    localStorage.setItem(PIN_KEY, await hashPin(pinInput));
+    $('lockScreen').classList.add('hidden');
+    toast('PIN lock enabled', 'success');
+    syncPinUi();
+    resetInactivity();
+    return;
+  }
+  if ((await hashPin(pinInput)) === saved) {
+    $('lockScreen').classList.add('hidden');
+    resetInactivity();
+  } else {
+    pinInput = '';
+    updateDots();
+    $('pinError').textContent = 'Incorrect PIN';
+    triggerPinShake();
+  }
+}
+
+function handlePinKey(k) {
+  if (!k) return;
+  $('pinError').textContent = '';
+  if (k === 'Clear') pinInput = '';
+  else if (k === '⌫') pinInput = pinInput.slice(0, -1);
+  else if (/^\d$/.test(k) && pinInput.length < 4) pinInput += k;
+  updateDots();
+  if (pinInput.length === 4) setTimeout(processPin, 110);
+}
+
+const hasPin = () => !!localStorage.getItem(PIN_KEY);
+function syncPinUi() {
+  $('changePinBtn').textContent = hasPin() ? 'Change PIN' : 'Set PIN lock (optional)';
+  $('removePinBtn').classList.toggle('hidden', !hasPin());
+}
+
+function resetInactivity() {
+  clearTimeout(inactivityTimer);
+  const min = num(state.settings.autoLock);
+  if (min > 0 && hasPin() && $('lockScreen').classList.contains('hidden')) {
+    inactivityTimer = setTimeout(() => lock('unlock'), min * 60000);
+  }
+}
+
+// ==========================================================================
+// INITIALIZATION & EVENT WIRING
+// ==========================================================================
+function init() {
+  try { navigator.storage?.persist?.(); } catch {}
+  setupPwa();
+  buildTypeOptions();
+  buildCalendarSelectors();
+  buildAccentSwatches();
+  buildKeypad();
+  resetForm();
+
+  // Primary navigation tabs
+  qsa('.tab').forEach(b => (b.onclick = () => showTab(b.dataset.tab)));
+
+  // Delegated click handlers
+  $('txBody').onclick = e => {
+    const btn = e.target.closest('button[data-action]');
+    if (!btn) return;
+    if (btn.dataset.action === 'edit-tx') editTx(btn.dataset.id);
+    else if (btn.dataset.action === 'delete-tx') deleteTx(btn.dataset.id);
+  };
+
+  $('partyAccounts').onclick = e => {
+    const btn = e.target.closest('button[data-party-key]');
+    if (!btn) return;
+    selectParty(btn.dataset.partyKey);
+  };
+
+  // Reports Period Filter & Custom Date Triggers
+  $('reportPeriodPills').onclick = e => {
+    const btn = e.target.closest('button[data-period]');
+    if (!btn) return;
+    reportUI.period = btn.dataset.period;
+    const now = new Date();
+    if (reportUI.period === 'month') {
+      reportUI.budgetMonth = localISO(now).slice(0, 7);
+    } else if (reportUI.period === 'lastMonth') {
+      reportUI.budgetMonth = localISO(new Date(now.getFullYear(), now.getMonth() - 1, 1)).slice(0, 7);
+    }
+    renderReports(compute());
+  };
+  $('reportFromBtn').onclick = () => openDateModal('reportFrom');
+  $('reportToBtn').onclick = () => openDateModal('reportTo');
+
+  // Interactive 6-Month Trend Bars
+  $('trendChartWrap').onclick = e => {
+    const g = e.target.closest('[data-trend-idx]');
+    if (!g) return;
+    reportUI.selectedTrendIdx = Number(g.dataset.trendIdx);
+    renderTrendChart();
+  };
+
+  // Monthly Budgets Controls
+  $('budgetMonthSelect').onchange = () => {
+    reportUI.budgetMonth = $('budgetMonthSelect').value;
+    renderBudgets();
+  };
+  $('openBudgetModalBtn').onclick = () => openBudgetModal('');
+  $('budgetModalClose').onclick = closeBudgetModal;
+  $('budgetCancelBtn').onclick = closeBudgetModal;
+  $('budgetModal').onclick = e => { if (e.target === $('budgetModal')) closeBudgetModal(); };
+
+  $('budgetForm').onsubmit = e => {
+    e.preventDefault();
+    $('budgetFormError').classList.add('hidden');
+    const cat = $('budgetCategoryInput').value.trim().slice(0, 80);
+    const limit = round($('budgetLimitInput').value);
+    const orig = $('budgetOrigCategory').value;
+    if (!cat) {
+      $('budgetFormError').textContent = 'Please enter a category name.';
+      $('budgetFormError').classList.remove('hidden');
+      return;
+    }
+    if (!(limit > 0)) {
+      $('budgetFormError').textContent = 'Enter a monthly limit greater than zero.';
+      $('budgetFormError').classList.remove('hidden');
+      return;
+    }
+    if (!state.settings.budgets) state.settings.budgets = {};
+    if (orig && orig !== cat) delete state.settings.budgets[orig];
+    // Prevent case-insensitive duplicate keys
+    const existing = findBudgetEntry(cat);
+    if (existing && existing.category !== cat) delete state.settings.budgets[existing.category];
+    state.settings.budgets[cat] = limit;
+    closeBudgetModal();
+    save();
+    toast(`Budget saved for ${cat}`, 'success');
+  };
+
+  $('budgetDeleteBtn').onclick = async () => {
+    const orig = $('budgetOrigCategory').value;
+    if (!orig) return;
+    delete state.settings.budgets[orig];
+    closeBudgetModal();
+    save();
+    toast(`Removed budget for ${orig}`, 'info');
+  };
+
+  $('budgetList').onclick = async e => {
+    const btn = e.target.closest('button[data-budget-action]');
+    if (!btn) return;
+    const cat = btn.dataset.cat;
+    if (btn.dataset.budgetAction === 'edit') {
+      openBudgetModal(cat);
+    } else if (btn.dataset.budgetAction === 'delete') {
+      const ok = await showConfirmDialog({
+        title: 'Remove Budget Limit',
+        message: `Remove the monthly budget limit for "${cat}"? Your transactions will not be affected.`,
+        confirmText: 'Remove',
+        danger: true
+      });
+      if (!ok) return;
+      delete state.settings.budgets[cat];
+      save();
+      toast(`Budget removed for ${cat}`, 'info');
+    }
+  };
+
+  // Snapshots List
+  $('snapshotList').onclick = async e => {
+    const btn = e.target.closest('button[data-action]');
+    if (!btn) return;
+    const id = btn.dataset.id;
+    if (btn.dataset.action === 'delete-snap') { deleteSnapshotById(id); return; }
+    if (btn.dataset.action === 'restore-snap') {
+      const snap = loadSnapshots().find(s => s.id === id);
+      if (!snap) return;
+      const ok = await showConfirmDialog({
+        title: 'Restore Local Snapshot',
+        message: `Restore "${snap.label}" (${snap.txCount} transactions from ${formatDateTime(snap.createdAt)})? Your current state will also be saved first.`,
+        confirmText: 'Restore Snapshot'
+      });
+      if (!ok) return;
+      saveSnapshot('Auto-save before snapshot restore');
+      state = normaliseState(snap.data);
+      save();
+      toast('Snapshot restored', 'success');
+    }
+  };
+
+  // Custom Date Stepper & Calendar Sheet
+  $('datePrevBtn').onclick = () => shiftTxDate(-1);
+  $('dateNextBtn').onclick = () => shiftTxDate(1);
+  $('txDateBtn').onclick = () => openDateModal('txDate');
+  $('dateModalClose').onclick = closeDateModal;
+  $('dateModal').onclick = e => { if (e.target === $('dateModal')) closeDateModal(); };
+  $('dateQuickToday').onclick = () => applyCalendarSelection(localISO());
+  $('dateQuickYesterday').onclick = () => {
+    const d = new Date();
+    d.setDate(d.getDate() - 1);
+    applyCalendarSelection(localISO(d));
+  };
+  $('calPrevMonth').onclick = () => stepCalendarMonth(-1);
+  $('calNextMonth').onclick = () => stepCalendarMonth(1);
+  $('calMonth').onchange = () => { calViewMonth = Number($('calMonth').value); renderCalendar(); };
+  $('calYear').onchange = () => { calViewYear = Number($('calYear').value); renderCalendar(); };
+  $('calDays').onclick = e => {
+    const btn = e.target.closest('button[data-iso]');
+    if (!btn) return;
+    applyCalendarSelection(btn.dataset.iso);
+  };
+
+  // Transaction Form & Live Math + Budget Hint
+  $('txType').onchange = typeChanged;
+  $('txCategory').oninput = updateTxBudgetHint;
+  $('txAmount').oninput = () => {
+    const raw = $('txAmount').value.trim();
+    if (!/[+\-*/()]/.test(raw)) {
+      $('amountPreview').textContent = '';
+    } else {
+      const evaluated = parseAmount(raw);
+      $('amountPreview').textContent = Number.isFinite(evaluated) && evaluated > 0 ? `= ${money(evaluated)}` : 'Invalid math';
+    }
+    updateTxBudgetHint();
+  };
+
+  $('txForm').onsubmit = e => {
+    e.preventDefault();
+    $('formError').classList.add('hidden');
+    const amount = parseAmount($('txAmount').value);
+    if (!(amount > 0)) {
+      $('formError').textContent = 'Enter a valid amount or math expression greater than zero.';
+      $('formError').classList.remove('hidden');
+      $('txAmount').focus();
+      return;
+    }
+
+    const type = $('txType').value;
+    const m = TYPES[type];
+    const id = $('txId').value || uuid();
+    const tx = {
+      id,
+      date: $('txDate').value,
+      type,
+      amount,
+      category: m.party ? '' : $('txCategory').value.trim().slice(0, 80) || 'General',
+      party: m.party ? $('txParty').value.trim().slice(0, 80) : '',
+      note: $('txNote').value.trim().slice(0, 240)
+    };
+
+    if (!validTx(tx) || (m.party && !tx.party)) {
+      $('formError').textContent = m.party
+        ? 'Please enter a party name for this ledger entry.'
+        : 'Please complete all required transaction fields.';
+      $('formError').classList.remove('hidden');
+      return;
+    }
+
+    const i = state.transactions.findIndex(x => x.id === id);
+    if (i >= 0) state.transactions[i] = tx;
+    else state.transactions.push(tx);
+
+    if (m.party) state.selectedParty = m.role + ':' + tx.party.toLowerCase();
+
+    resetForm();
+    save();
+    toast(i >= 0 ? 'Transaction updated' : 'Transaction saved', 'success');
+  };
+
+  $('cancelEditBtn').onclick = resetForm;
+
+  // Quick party transaction shortcut (Debtor -> Debtor receive, Creditor -> Creditor pay)
+  $('quickPartyTxBtn').onclick = () => {
+    const c = compute();
+    const acct = c.accounts[state.selectedParty];
+    if (!acct) return;
+    showTab('transactions');
+    resetForm();
+    $('txType').value = acct.role === 'DEBTOR' ? 'COLLECT' : 'REPAY';
+    typeChanged();
+    $('txParty').value = acct.name;
+    $('txAmount').focus();
+  };
+
+  // Register filters
+  ['filterPeriod', 'filterType'].forEach(id => ($(id).onchange = renderTransactions));
+  $('search').oninput = renderTransactions;
+
+  // Reconcile
+  $('actualCash').oninput = () => { state.settings.actualCash = round($('actualCash').value); save(); };
+  $('matchBookBtn').onclick = () => { state.settings.actualCash = compute().bookCash; save(); toast('Actual cash matched to book', 'success'); };
+
+  // Appearance Controls
+  $('themePicker').onclick = e => {
+    const btn = e.target.closest('button[data-theme-choice]');
+    if (!btn) return;
+    state.settings.theme = btn.dataset.themeChoice;
+    save();
+    toast(`Theme: ${btn.textContent.trim()}`, 'info', 1800);
+  };
+  ['standardAccents', 'premiumAccents'].forEach(id => {
+    $(id).onclick = e => {
+      const btn = e.target.closest('button[data-accent-choice]');
+      if (!btn) return;
+      state.settings.accent = btn.dataset.accentChoice;
+      save();
+    };
+  });
+  $('animToggle').onclick = e => {
+    const btn = e.target.closest('button[data-anim]');
+    if (!btn) return;
+    state.settings.animations = btn.dataset.anim;
+    save();
+  };
+
+  // PWA Install & Companion File Downloads
+  $('topbarInstallBtn').onclick = triggerPwaInstall;
+  $('settingsInstallBtn').onclick = triggerPwaInstall;
+  $('dlManifestBtn').onclick = () => triggerBlobDownload('manifest.json', generateManifestJson(), 'application/manifest+json', false, true);
+  $('dlSwBtn').onclick = () => triggerBlobDownload('sw.js', generateServiceWorkerJs(), 'application/javascript', false, true);
+
+  // Topbar quick actions
+  $('themeBtn').onclick = () => {
+    const cur = document.documentElement.dataset.theme;
+    state.settings.theme = (cur === 'dark' || cur === 'oled') ? 'light' : 'dark';
+    save();
+  };
+  $('lockBtn').onclick = () => (hasPin() ? lock('unlock') : toast('Set a PIN in Settings to use lock', 'info'));
+  $('printBtn').onclick = () => print();
+
+  // Preferences
+  $('currency').onchange = () => { state.settings.currency = $('currency').value; save(); };
+  $('openingCash').oninput = () => { state.settings.openingCash = round($('openingCash').value); save(); };
+  $('autoLock').onchange = () => { state.settings.autoLock = num($('autoLock').value); save(); resetInactivity(); };
+
+  // PIN Security
+  $('changePinBtn').onclick = async () => {
+    const verified = !hasPin() || (await showPinVerifyDialog());
+    if (verified) lock('setup');
+  };
+  $('removePinBtn').onclick = async () => {
+    if (await showPinVerifyDialog()) {
+      localStorage.removeItem(PIN_KEY);
+      syncPinUi();
+      toast('PIN lock removed', 'info');
+    }
+  };
+
+  // Backup & Restore Center
+  $('shareBackupBtn').onclick = () => {
+    sharePayload({
+      filename: `finledger-backup-${localISO()}.json`,
+      mime: 'application/json',
+      text: buildJsonBackupString(),
+      title: 'FinLedger Pro Next Backup',
+      mode: 'json'
+    });
+  };
+  $('copyJsonBtn').onclick = async () => {
+    const ok = await copyTextSafe(buildJsonBackupString());
+    if (ok) {
+      markBackupCompleted();
+      toast('JSON backup copied! Paste it into Notes, WhatsApp, or Drive.', 'success', 3400);
+    } else {
+      openTextExportModal('json');
+      toast('Tap Select All then Copy', 'info');
+    }
+  };
+  $('viewBackupTextBtn').onclick = () => openTextExportModal('json');
+  $('csvCenterBtn').onclick = () => openTextExportModal('csv');
+
+  $('textExportClose').onclick = closeTextExportModal;
+  $('textExportModal').onclick = e => { if (e.target === $('textExportModal')) closeTextExportModal(); };
+  $('textSelectAllBtn').onclick = () => {
+    const box = $('textExportBox');
+    box.focus(); box.select(); box.setSelectionRange(0, box.value.length);
+    toast('All text selected', 'info', 1600);
+  };
+  $('textCopyBtn').onclick = async () => {
+    const ok = await copyTextSafe(currentExportPayload.text);
+    if (ok) {
+      if (currentExportPayload.mode === 'json') markBackupCompleted();
+      toast(currentExportPayload.mode === 'csv' ? 'CSV copied to clipboard' : 'JSON backup copied', 'success');
+    } else {
+      $('textExportBox').select();
+      toast('Text selected — tap Copy on your keyboard', 'warn');
+    }
+  };
+  $('textShareBtn').onclick = () => {
+    sharePayload({
+      filename: currentExportPayload.filename,
+      mime: currentExportPayload.mime,
+      text: currentExportPayload.text,
+      title: currentExportPayload.mode === 'csv' ? 'FinLedger CSV Export' : 'FinLedger Pro Next Backup',
+      mode: currentExportPayload.mode
+    });
+  };
+  $('textDownloadBtn').onclick = () => {
+    triggerBlobDownload(currentExportPayload.filename, currentExportPayload.text, currentExportPayload.mime, currentExportPayload.mode === 'json');
+  };
+
+  $('pasteRestoreBtn').onclick = openPasteRestoreModal;
+  $('pasteRestoreClose').onclick = closePasteRestoreModal;
+  $('pasteRestoreCancelBtn').onclick = closePasteRestoreModal;
+  $('pasteRestoreModal').onclick = e => { if (e.target === $('pasteRestoreModal')) closePasteRestoreModal(); };
+  $('pasteRestoreInput').oninput = inspectPastedBackup;
+
+  $('pasteClipboardBtn').onclick = async () => {
+    try {
+      if (navigator.clipboard && typeof navigator.clipboard.readText === 'function') {
+        const txt = await navigator.clipboard.readText();
+        if (txt) {
+          $('pasteRestoreInput').value = txt;
+          inspectPastedBackup();
+          toast('Pasted from clipboard', 'info', 1800);
+          return;
+        }
+      }
+      throw new Error('blocked');
+    } catch {
+      $('pasteRestoreInput').focus();
+      toast('Long-press the text box and tap Paste', 'info', 2800);
+    }
+  };
+
+  $('pasteRestoreConfirmBtn').onclick = async () => {
+    if (!parsedPasteCandidate) return;
+    const count = parsedPasteCandidate.normalised.transactions.length;
+    const ok = await showConfirmDialog({
+      title: 'Confirm Restore',
+      message: `Replace your current ledger with ${count} ${count === 1 ? 'transaction' : 'transactions'}? A local recovery snapshot will be saved automatically.`,
+      confirmText: 'Restore Now'
+    });
+    if (!ok) return;
+    saveSnapshot('Auto-save before paste restore');
+    state = parsedPasteCandidate.normalised;
+    closePasteRestoreModal();
+    save();
+    toast('Backup restored successfully', 'success');
+  };
+
+  $('exportJsonBtn').onclick = () => {
+    triggerBlobDownload(`finledger-backup-${localISO()}.json`, buildJsonBackupString(), 'application/json', true);
+  };
+
+  $('importFile').onchange = e => {
+    const f = e.target.files[0];
+    if (!f) return;
+    const r = new FileReader();
+    r.onload = async () => {
+      try {
+        const parsed = parseAndValidateBackup(String(r.result || ''));
+        const count = parsed.normalised.transactions.length;
+        const ok = await showConfirmDialog({
+          title: 'Restore Backup File',
+          message: `Replace current data with ${count} imported ${count === 1 ? 'transaction' : 'transactions'}? A recovery snapshot will be auto-saved first.`,
+          confirmText: 'Restore Backup'
+        });
+        if (!ok) return;
+        saveSnapshot('Auto-save before file import');
+        state = parsed.normalised;
+        save();
+        toast('Backup file restored', 'success');
+      } catch (err) {
+        await showConfirmDialog({
+          title: 'Invalid Backup File',
+          message: err.message || 'The selected file is not a valid FinLedger Pro Next backup.',
+          confirmText: 'OK',
+          hideCancel: true
+        });
+      } finally {
+        e.target.value = '';
+      }
+    };
+    r.readAsText(f);
+  };
+
+  $('saveSnapshotBtn').onclick = () => {
+    const ok = saveSnapshot('Manual checkpoint');
+    toast(ok ? 'Recovery snapshot saved' : 'Could not save snapshot', ok ? 'success' : 'error');
+  };
+
+  $('resetBtn').onclick = async () => {
+    const ok = await showConfirmDialog({
+      title: 'Reset All Finance Data',
+      message: 'Permanently clear all transactions and reset balances? A local recovery snapshot will be saved automatically and your PIN stays intact.',
+      confirmText: 'Reset Everything',
+      danger: true
+    });
+    if (!ok) return;
+    if (state.transactions.length > 0 || state.settings.openingCash !== 0) saveSnapshot('Auto-save before reset');
+    const keep = {
+      theme: state.settings.theme,
+      accent: state.settings.accent,
+      animations: state.settings.animations,
+      currency: state.settings.currency,
+      budgets: state.settings.budgets
+    };
+    state = clone(defaults);
+    state.settings = { ...state.settings, ...keep };
+    save();
+    toast('Finance data reset', 'warn');
+  };
+
+  // PIN keypad & cancel
+  $('pinCancel').onclick = () => { pendingPin = ''; $('lockScreen').classList.add('hidden'); resetInactivity(); };
+  $('keypad').onclick = e => {
+    const btn = e.target.closest('button[data-key]');
+    if (!btn) return;
+    handlePinKey(btn.dataset.key);
+  };
+
+  // Physical keyboard support
+  document.addEventListener('keydown', e => {
+    if (!$('lockScreen').classList.contains('hidden')) {
+      if (/^\d$/.test(e.key)) { e.preventDefault(); handlePinKey(e.key); }
+      else if (e.key === 'Backspace') { e.preventDefault(); handlePinKey('⌫'); }
+      else if (e.key === 'Escape' || e.key === 'Delete') { e.preventDefault(); handlePinKey('Clear'); }
+      return;
+    }
+    if (e.key === 'Escape') {
+      if (!$('dateModal').classList.contains('hidden')) closeDateModal();
+      else if (!$('budgetModal').classList.contains('hidden')) closeBudgetModal();
+      else if (!$('textExportModal').classList.contains('hidden')) closeTextExportModal();
+      else if (!$('pasteRestoreModal').classList.contains('hidden')) closePasteRestoreModal();
+      else if (!$('dialogModal').classList.contains('hidden')) closeDialog(false);
+    }
+  });
+
+  ['click', 'keydown', 'touchstart'].forEach(ev =>
+    document.addEventListener(ev, resetInactivity, { passive: true })
+  );
+  matchMedia('(prefers-color-scheme: dark)').addEventListener?.('change', applyAppearance);
+
+  renderAll();
+  syncPinUi();
+  if (hasPin()) lock('unlock');
+  else $('lockScreen').classList.add('hidden');
+}
+
+init();
+</script>
+</body>
+</html>
